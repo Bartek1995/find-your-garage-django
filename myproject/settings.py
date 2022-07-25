@@ -50,6 +50,7 @@ INSTALLED_APPS = [
 
     # My Applications
     'accounts',
+    'main',
 
     # Third-party software
     'allauth',
