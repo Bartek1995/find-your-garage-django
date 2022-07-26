@@ -30,7 +30,7 @@ header {
   }
 }
 
-nav {
+.navbar {
   position: fixed;
   top: 0;
   width: 100%;
@@ -38,5 +38,25 @@ nav {
   text-transform: uppercase;
   background-color: rgba(black, 0.6);
   transition: background-color 0.3s;
-  
+
+  .navbar-brand:hover > .fa-solid {
+    color: greenyellow;
+  }
+  .nav-link {
+    color: white;
+    border-radius: 20px;
+  }
+
+  .nav-link:hover {
+    color: greenyellow;
+    background-color: rgba(black, 0.6);
+  }
+
+  .dropdown-menu {
+    background-color: transparent;
+    
+    li {
+      text-align: center;
+    }
+  }
 }
