@@ -49,7 +49,6 @@ header {
 
   .nav-link:hover {
     color: greenyellow;
-    background-color: rgba(black, 0.6);
   }
 
   .dropdown-menu {
@@ -57,6 +56,11 @@ header {
     
     li {
       text-align: center;
+    }
+
+    .nav-link:hover {
+      color: greenyellow;
+      background-color: rgba(black, 0.6);
     }
   }
 }
