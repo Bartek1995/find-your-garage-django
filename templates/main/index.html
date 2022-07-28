@@ -32,17 +32,33 @@
                   </ul>
               </li>
               <a class="nav-link active" href="#">Home</a>
-              <a class="nav-link" href="#">O nas</a>
+              <a class="nav-link" href="#">O aplikacji</a>
               <a class="nav-link" href="#">Funkcje</a>
           </div>
         </div>
     </div>
 </nav>
     <header style="background-image: url({% static 'img/main.jpg' %});">
-        <p>Szukasz mechanika?</p>
+      <div class="welcome-box container">
+        <p class="welcome-box__text welcome-box__text--large">Witaj na <span class="welcome-box__text--colour">Znajdź</span>Warsztacik</p>
+        <p class="welcome-box__text welcome-box__text--medium">Posiadasz warsztat i chciałbyś zdobyć więcej klientów?</p>
+        <p class="welcome-box__text welcome-box__text--medium">A może szukasz mechanika w okolicy?</p>
+      </div>
 
+      <div class="buttons">
+        <button class="buttons__btn buttons__btn--primary btn">Sprawdź co oferujemy</button>
+        <button class="buttons__btn buttons__btn--primary btn">Przejdź do logowania</button>
+      </div>
         <div class="bg-shadow"></div>
     </header>
+
+    <section class="about-app py-5">
+      <div class="logo">
+        <h2 class="logo__title">O aplikacji</h2>
+        <div class="logo_underscore"></div>
+      </div>
+    </section>
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js" integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK" crossorigin="anonymous"></script>
 </body>
