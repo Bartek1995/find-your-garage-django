@@ -1,9 +1,20 @@
 @use "utilities/colors";
 
+@mixin add-column-flex {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 body {
+  position: relative;
   font-family: "Roboto", sans-serif;
 }
 
+html {
+  scroll-padding-top: 55px;
+}
 .bg-shadow {
   position: absolute;
   width: 100%;
@@ -17,9 +28,14 @@ body {
   .logo__title {
     text-transform: uppercase;
   }
-  .logo_underscore {
-    height: 5px;
+  .logo__underscore {
+    height: 3px;
     width: 100%;
+  }
+  .logo__underscore--white{
+    background-color: white;
+  }
+  .logo__underscore--black{
     background-color: black;
   }
 }
@@ -98,7 +114,10 @@ header {
   }
 
   .dropdown-menu {
-    background-color: transparent;
+    margin-top: 7px;
+    background-color: rgba(0,0,0,.6);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 
     li {
       text-align: center;
@@ -109,13 +128,64 @@ header {
       background-color: rgba(black, 0.6);
     }
   }
+  .navbar-nav {
+    .active {
+      color: colors.$main-color;
+    }
+  }
 }
 
 .about-app {
   background-color: rgb(247, 247, 247);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  text-align: center;
+  @include add-column-flex();
+}
+
+.functions {
+  position: relative;
+  text-align: center;
+  background-size: cover;
+  background-attachment: fixed;
+  color: white;
+  z-index: 5;
+  @include add-column-flex();
+
+  .functions-boxes {
+    justify-content: space-around;
+    
+
+    .functions-boxes__column {
+      padding: 20px;
+      background-color: rgba(black, 0.5);
+      border-radius: 20px;
+
+      .column__title {
+        font-family: 'Kanit', sans-serif;
+        margin-bottom: 30px;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-style: italic;
+        letter-spacing: 1px;
+      }
+
+      .column-box {
+        margin-bottom: 25px;
+
+        .column-box__icon {
+          font-size: 30px;
+          margin-bottom: 10px;
+        }
+        .column-box__title {
+          font-size: 16px;
+          text-transform: uppercase;
+          font-weight: bold;
+        }
+        .column-box__text {
+          font-size: 14px;
+        }
+      }
+    }
+  }
 }
 
 @media (max-width: 526px) {
