@@ -35,6 +35,8 @@ ALLOWED_HOSTS = [
     'https://find-your-garage.herokuapp.com',
     'http://znajdzwarsztacik.me',
     'http://www.znajdzwarsztacik.me',
+    'http://znajdzwarsztacik.pl',
+    'http://www.znajdzwarsztacik.pl',
     'localhost',
     '127.0.0.1']
 
