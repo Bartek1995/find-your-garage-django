@@ -210,3 +210,9 @@ header {
     }
   }
 }
+
+@media (min-width:992px){
+  .navbar-nav {
+    align-items: center;
+  }
+}
