@@ -47,8 +47,12 @@ body {
     color: colors.$main-color;
   }
 
-  form {
-    max-width: 373px;
+  .accounts-box {
+    max-width: 400px;
+
+    p {
+      text-align: center;
+    }
 
     .form-check {
       .form-check-label {
@@ -100,7 +104,7 @@ body {
 
 @media (max-width: 397px) {
   .accounts {
-    .buttons-one,.buttons-two {
+    .buttons-one,.buttons-two, .buttons-three {
       flex-direction: column;
 
       .buttons__btn {
