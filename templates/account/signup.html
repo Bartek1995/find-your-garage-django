@@ -11,10 +11,11 @@
 <section class="accounts" style="background-image: url({% static 'img/accounts.jpg' %});">
   <div class="container d-flex justify-content-center">
     <div class="row my-5">
-        <div class="col-12">
+        <div class="col-12 accounts-box">
           <h1>{% trans "Sign Up" %}</h1>
   
           <p>{% blocktrans %}Posiadasz już konto? A więc <a class="accounts__link" href="{{ login_url }}">zaloguj się</a> na nie.{% endblocktrans %}</p>
+          
   
           <form class="signup form" id="signup_form" method="post" action="{% url 'account_signup' %}">
             {% csrf_token %}
@@ -24,7 +25,7 @@
             <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
             {% endif %}
             <div class="buttons-three">
-              <button type="submit" class="buttons__btn buttons__btn--primary mb-3 btn">{% trans "Sign Up" %} &raquo;</button>
+              <button type="submit" class="buttons__btn buttons__btn--primary mb-3 btn">{% trans "Sign Up" %}</button>
               <a class="buttons__btn buttons__btn--primary btn" href="{% url 'main' %}">Strona główna</a>
             </div>
           </form>
