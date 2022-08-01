@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static%}
+{% load static %}
 {% load i18n %}
 {% load account socialaccount %}
 {% load bootstrap5 %}
@@ -39,12 +39,12 @@
           {% if redirect_field_value %}
           <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
           {% endif %}
-          <div class="buttons-one">
+          <div class="buttons buttons-one">
             <button class="buttons__btn buttons__btn--primary btn" type="submit">{% trans "Sign In" %}</button>
             <a class="buttons__btn buttons__btn--primary btn" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
           </div>
-          <div class="buttons-two">
-            <a class="buttons__btn buttons__btn--secondary btn" href="{% url 'main' %}">Strona główna</a>
+          <div class="buttons buttons-two">
+            <a class="buttons__btn buttons__btn--primary btn" href="{% url 'main' %}">Strona główna</a>
           </div>
         </form>
       </div>
