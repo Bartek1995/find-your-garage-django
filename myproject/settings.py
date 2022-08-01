@@ -33,6 +33,8 @@ else:
 
 ALLOWED_HOSTS = [
     'https://find-your-garage.herokuapp.com',
+    'http://znajdzwarsztacik.me',
+    'http://www.znajdzwarsztacik.me',
     'localhost',
     '127.0.0.1']
 
@@ -63,6 +65,7 @@ SITE_ID = 1
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_UNIQUE = True
+ACCOUNT_USERNAME_REQUIRED = False
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
