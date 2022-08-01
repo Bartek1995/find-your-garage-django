@@ -103,15 +103,16 @@ header {
   transition: background-color 0.3s;
 
   .navbar-brand:hover > .fa-solid {
-    color: greenyellow;
+    color: colors.$main-color;
   }
-  .nav-link {
+  .nav-link,.dropdown-toggle {
     color: white;
     border-radius: 20px;
+    text-decoration: none;
   }
 
-  .nav-link:hover {
-    color: greenyellow;
+  .nav-link:hover,.dropdown-toggle:hover {
+    color: colors.$main-color;
   }
 
   .dropdown-menu {
@@ -125,7 +126,7 @@ header {
     }
 
     .nav-link:hover {
-      color: greenyellow;
+      color: colors.$main-color;
       background-color: rgba(black, 0.6);
     }
   }
