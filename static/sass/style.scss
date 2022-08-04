@@ -32,6 +32,21 @@ body {
   z-index: 10;
   color: white;
 
+  .messages {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    text-align: center;
+    background-color: rgba(black, 0.5);
+
+    ul {
+      margin: 0;
+      li {
+        list-style-type: none;
+      }
+    }
+  }
+
   h1 {
     text-align: center;
     margin-bottom: 30px;
@@ -69,7 +84,7 @@ body {
     display: flex;
     justify-content: center;
   }
-  .buttons-three{
+  .buttons-three {
     display: flex;
     flex-direction: column;
   }
@@ -98,13 +113,15 @@ body {
 
   .buttons__btn--secondary:hover {
     background-color: colors.$main-color;
-    color: black
+    color: black;
   }
 }
 
 @media (max-width: 397px) {
   .accounts {
-    .buttons-one,.buttons-two, .buttons-three {
+    .buttons-one,
+    .buttons-two,
+    .buttons-three {
       flex-direction: column;
 
       .buttons__btn {
