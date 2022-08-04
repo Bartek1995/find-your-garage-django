@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
+import sys
 import django_heroku
 
 
@@ -127,17 +128,34 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DBNAME'),
-        'USER': os.environ.get('DBUSER'),
-        'PASSWORD': os.environ.get('DBPASSWORD'),
-        'HOST': os.environ.get('DBENDPOINT'),
-        'PORT': os.environ.get('DBPORT'),
+if 'test' in sys.argv:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ.get('DBNAME_TEST'),
+            'USER': os.environ.get('DBUSER_TEST'),
+            'PASSWORD': os.environ.get('DBPASSWORD_TEST'),
+            'HOST': os.environ.get('DBENDPOINT_TEST'),
+            'PORT': os.environ.get('DBPORT'),
+            'TEST': {
+                'NAME': os.environ.get('DBNAME_TEST'),
+            }
+        }
     }
-}
-
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ.get('DBNAME'),
+            'USER': os.environ.get('DBUSER'),
+            'PASSWORD': os.environ.get('DBPASSWORD'),
+            'HOST': os.environ.get('DBENDPOINT'),
+            'PORT': os.environ.get('DBPORT'),
+            'TEST': {
+                'NAME': os.environ.get('DBNAME'),
+            }
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
