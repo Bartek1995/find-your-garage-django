@@ -62,7 +62,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'bootstrap5',
-    'anymail'
+    'anymail',
+    'address',
 ]
 
 SITE_ID = 1
@@ -87,6 +88,8 @@ ANYMAIL = {
     "MAILGUN_API_URL": "https://api.eu.mailgun.net/v3",
     "MAILGUN_SENDER_DOMAIN": 'mg.znajdzwarsztacik.pl',
 }
+
+GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
