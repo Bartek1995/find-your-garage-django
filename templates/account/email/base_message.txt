@@ -1,10 +1,10 @@
 {% load i18n %}
 {% autoescape off %}
-Witaj.
+Witaj,
 
-Z tej strony obsługa aplikacji {{current_site.name}}
+z tej strony obsługa aplikacji {{current_site.name}}
 
 {% block content %}{% endblock %}
 
-Dziękujemy za skorzystanie z {{current_site.name}}!
+Dziękujemy za skorzystanie z {{current_site.name}} !
 {% endautoescape %}
