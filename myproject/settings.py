@@ -71,7 +71,9 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_UNIQUE = True
 ACCOUNT_USERNAME_REQUIRED = False
-
+ACCOUNT_FORMS = {
+    'signup': 'accounts.forms.CustomSignupForm',
+}
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
 # EMAIL_HOST = os.environ.get('EMAIL_SMTP')
