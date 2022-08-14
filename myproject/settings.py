@@ -75,7 +75,7 @@ ACCOUNT_FORMS = {
     'signup': 'accounts.forms.CustomSignupForm',
 }
 AUTH_USER_MODEL = 'accounts.CustomUser'
-
+LOGIN_REDIRECT_URL = 'dashboard'
 LOGIN_URL = 'accounts/login'
 
 # EMAIL_HOST = os.environ.get('EMAIL_SMTP')
