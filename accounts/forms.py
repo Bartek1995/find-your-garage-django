@@ -6,8 +6,8 @@ isCustomer = 'is_customer'
 isEntrepreneur = 'is_entrepreneur'
 
 type_of_user_account = [
-    (isCustomer, 'Jestem Klientem'),
-    (isEntrepreneur, 'Jestem Przedsiębiorcą')
+    (isCustomer, 'Klient'),
+    (isEntrepreneur, 'Przedsiębiorca')
 ]
 
 
@@ -16,7 +16,7 @@ class CustomSignupForm(SignupForm):
     password1 = SetPasswordField()
     password2 = PasswordField()
     usertype = forms.ChoiceField(
-        widget=forms.RadioSelect, choices=type_of_user_account, label='', required=True)
+        widget=forms.RadioSelect(attrs={'class': 'd-none'}), choices=type_of_user_account, label='', required=True)
 
     def save(self, request):
         user = super(CustomSignupForm, self).save(request)
