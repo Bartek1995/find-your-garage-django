@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kanit&family=Roboto:ital,wght@0,400;0,700;1,700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/cc1b9b8a5d.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="stylesheet" href="{% static 'css/main_page.css' %}">
     <title>Znajdź Warsztacik</title>
 </head>
@@ -40,12 +41,12 @@
 </nav>
     <header style="background-image: url({% static 'img/main.jpg' %});" id="home">
       <div class="welcome-box container">
-        <p class="welcome-box__text welcome-box__text--large">Witaj na <span class="welcome-box__text--colour">Znajdź</span>Warsztacik</p>
-        <p class="welcome-box__text welcome-box__text--medium">Posiadasz warsztat i chciałbyś zdobyć więcej klientów?</p>
-        <p class="welcome-box__text welcome-box__text--medium">A może szukasz mechanika w okolicy?</p>
+        <p class="welcome-box__text welcome-box__text--large" data-aos="fadeInUp" data-aos-delay="50">Witaj na <span class="welcome-box__text--colour">Znajdź</span>Warsztacik</p>
+        <p class="welcome-box__text welcome-box__text--medium" data-aos="fadeInUp" data-aos-delay="300">Posiadasz warsztat i chciałbyś zdobyć więcej klientów?</p>
+        <p class="welcome-box__text welcome-box__text--medium" data-aos="fadeInUp" data-aos-delay="500">A może szukasz mechanika w okolicy?</p>
       </div>
 
-      <div class="buttons">
+      <div class="buttons" data-aos="flip-up" data-aos-delay="700">
         <a href="#about-app" class="buttons__btn buttons__btn--primary btn">Sprawdź co oferujemy</a>
         <a href="{% url 'account_login' %}" class="buttons__btn buttons__btn--primary btn">Przejdź do logowania</a>
       </div>
@@ -59,7 +60,7 @@
       </div>
       
         <div class="description container">
-          <p class="description__text">Aplikacja została stworzona dla osób szukających warsztatu samochodowego lub przedsiębiorców, którzy chcieliby pozyskać nowych klientów oraz zarządzać zleceniami w swojej placówce.</p>
+          <p class="description__text" data-aos="flip-up" data-aos-delay="200">Aplikacja została stworzona dla osób szukających warsztatu samochodowego lub przedsiębiorców, którzy chcieliby pozyskać nowych klientów oraz zarządzać zleceniami w swojej placówce.</p>
         </div>
     </section>
 
@@ -75,56 +76,56 @@
           <div class="col-12 col-md-5 functions-boxes__column m-2">
             <h4 class="column__title">Przedsiębiorca</h4>
 
-            <div class="column-box">
+            <div class="column-box" data-aos="fade-up">
               <i class="column-box__icon fa-solid fa-clipboard-list"></i>
               <p class="column-box__title mb-0">Zlecenia</p>
               <p class="column-box__text">Zarządzaj zleceniami w warsztacie</p>
             </div>
 
-            <div class="column-box">
+            <div class="column-box" data-aos="fade-up" data-aos-delay="100">
               <i class="column-box__icon fa-solid fa-calendar-days"></i>
               <p class="column-box__title mb-0">Kalendarz</p>
               <p class="column-box__text">Korzystaj z kalendarza aby przeglądać terminy zleceń</p>
             </div>
 
-            <div class="column-box">
+            <div class="column-box" data-aos="fade-up" data-aos-delay="200">
               <i class="column-box__icon fa-solid fa-chart-column"></i>
               <p class="column-box__title mb-0">Statystyki</p>
-              <p class="column-box__text">Sprawdzaj statystyki swojego warsztatu</p>
+              <p class="column-box__text">Sprawdzaj i analizuj statystyki swojego warsztatu</p>
             </div>
 
-            <div class="column-box">
+            <div class="column-box" data-aos="fade-up" data-aos-delay="300">
               <i class="column-box__icon fa-solid fa-map-location-dot"></i>
               <p class="column-box__title mb-0">Mapy</p>
-              <p class="column-box__text">Dodaj swój warsztat do mapy</p>
+              <p class="column-box__text">Umieść swój warsztat na naszej mapie</p>
             </div>
           </div>
 
           <div class="col-12 col-md-5 functions-boxes__column m-2">
             <h4 class="column__title">Klient</h4>
 
-            <div class="column-box">
+            <div class="column-box" data-aos="fade-up">
               <i class="column-box__icon fa-solid fa-magnifying-glass"></i>
               <p class="column-box__title mb-0">Wyszukiwanie</p>
               <p class="column-box__text">Wyszukaj warsztat odpowiedni dla Ciebie</p>
             </div>
 
-            <div class="column-box">
+            <div class="column-box" data-aos="fade-up" data-aos-delay="100">
               <i class="column-box__icon fa-solid fa-calendar-check"></i>
               <p class="column-box__title mb-0">Rezerwacje</p>
               <p class="column-box__text">Zarządzaj rezerwacjami terminów w wybranym warsztacie</p>
             </div>
 
-            <div class="column-box">
+            <div class="column-box" data-aos="fade-up" data-aos-delay="200">
               <i class="column-box__icon fa-solid fa-car"></i>
               <p class="column-box__title mb-0">Pojazdy</p>
               <p class="column-box__text">Dodawaj pojazdy do swojego konta oraz zarządzaj nimi</p>
             </div>
 
-            <div class="column-box">
+            <div class="column-box" data-aos="fade-up" data-aos-delay="300">
               <i class="column-box__icon fa-solid fa-file-lines"></i>
               <p class="column-box__title mb-0">Dokumenty</p>
-              <p class="column-box__text">Przechowuj faktury wystawione przez warsztat</p>
+              <p class="column-box__text">Przechowuj otrzymane faktury</p>
             </div>
 
 
@@ -135,6 +136,10 @@
       <div class="bg-shadow"></div>
     </section>
 
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js" integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK" crossorigin="anonymous"></script>
     <script src="{% static 'js/main_page.js' %}"></script>
