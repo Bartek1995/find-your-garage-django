@@ -14,12 +14,23 @@ body {
 .bg-shadow {
   position: absolute;
   top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(black, 0.7);
   z-index: -5;
 }
 
+.hidden {
+  display: none!important;
+}
+
+.visuallyHidden {
+  opacity: 0;
+}
+.visuallyVisible {
+  opacity: 1;
+}
 // LOGIN/REGISTRATION/PASSWORD-FORGET STYLES
 .accounts {
   position: relative;
@@ -62,10 +73,12 @@ body {
     color: colors.$main-color;
   }
 
+
+
   .accounts-box {
     min-width: 300px;
     max-width: 400px;
-
+  
     p {
       text-align: center;
     }
@@ -76,6 +89,58 @@ body {
       }
     }
   }
+
+  .select-account-type-box {
+    text-align: center;
+    transition: opacity 0.5s;
+
+
+    .select-box {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      transition: transform 0.3s;
+
+      h4 {
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .select-box__benefit-title {
+        text-transform: uppercase;
+      }
+      .select-box__description {
+        font-size: 15px;
+      }
+      .fa-solid {
+        color: rgb(21, 201, 21);
+      }
+    }
+  }
+  .select-box:hover {
+    transform: scale(1.05);
+  }
+
+  .select-acount-type-carousel {
+    text-align: center;
+    .select-box__benefit-title,h4{
+      text-transform: uppercase;
+    }
+    .fa-solid {
+      color: rgb(21, 201, 21);
+    }
+    .carousel-indicators{
+      bottom: -40px;
+    }
+  }
+
+  .signup-form {
+    transition: opacity 0.5s;
+  }
+
+
+
   .buttons-one {
     display: flex;
     flex-direction: row;
