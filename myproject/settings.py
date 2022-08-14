@@ -76,6 +76,8 @@ ACCOUNT_FORMS = {
 }
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
+LOGIN_URL = 'accounts/login'
+
 # EMAIL_HOST = os.environ.get('EMAIL_SMTP')
 # EMAIL_PORT = os.environ.get('EMAIL_PORT')
 # EMAIL_USE_TLS = True
