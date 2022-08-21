@@ -3,9 +3,15 @@ document.addEventListener("DOMContentLoaded", function () {
   const hamburgerSwitch = document.querySelector("#hamburger-switch");
   const navButtons = document.querySelectorAll(".item-expand__button");
   const collapseContainers = document.querySelectorAll(".collapse");
+  const bodyContent = document.querySelector("#body-content");
 
   hamburgerSwitch.addEventListener("click", function () {
     nav.classList.toggle("active");
+    hideNavElements();
+  });
+
+  bodyContent.addEventListener("click", function () {
+    nav.classList.remove("active");
     hideNavElements();
   });
 
