@@ -4,5 +4,78 @@
 
 {% block content %}
 
+<nav class="sidenav" id="nav">
+    <div class="logo-content">
+        <div class="logo">
+            <i class="fa-solid fa-magnifying-glass-location"></i>
+            <p class="logo__name"><span>Znajdź</span>Warsztacik</p>
+        </div>
+    </div>
+
+    <div class="profile-content">
+        <img src="{% static 'img/anonymous-user-image.jpg' %}" alt="Obrazek użytkownika anonimowego">
+        <div class="profile_information">
+            <p class="m-0 profile_information__name">Bartłomiej Swatek</p>
+            <p class="m-0 profile_information__account-type">Przedsiębiorca</p>
+        </div>
+    </div>
+
+    <i class="fa-solid fa-bars hamburger-switch" id="hamburger-switch"></i>
+
+    <ul class="nav-items" id="nav-items">
+        <li class="nav-items__item">
+            <a href="#" class="item-expand__button collapsed">
+                <i class="main-icon fa-solid fa-house"></i>
+                <span>Panel główny</span>
+            </a>
+        </li>
+        <li class="nav-items__item">
+            <a class="item-expand__button collapsed" data-bs-toggle="collapse" href="#account" role="button" aria-expanded="false" aria-controls="collapseExample" id="account-button">
+                <i class="main-icon fa-solid fa-circle-user"></i>
+                <span>Konto</span>
+                <i class="collapse-arrow fa-solid fa-angle-left"></i>
+            </a>
+            <div class="collapse" id="account" data-bs-parent="#nav-items">
+                <ul>
+                    <li><a class="item-expnd__link" href="">Profil</a></li>
+                    <li><a class="item-expnd__link" href="">Edytuj dane</a></li>
+                    <li><a class="item-expnd__link" href="">Zmień hasło</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-items__item">
+            <a class="item-expand__button collapsed" data-bs-toggle="collapse" href="#cars" role="button" aria-expanded="false" aria-controls="collapseExample" >
+                <i class="main-icon fa-solid fa-car"></i>
+                <span>Pojazdy</span>
+                <i class="collapse-arrow fa-solid fa-angle-left"></i>
+            </a>
+            <div class="collapse" id="cars" data-bs-parent="#nav-items">
+                <ul>
+                    <li><a class="item-expnd__link" href="">Twoje pojazdy</a></li>
+                    <li><a class="item-expnd__link" href="">Dodaj pojazd</a></li>
+                    <li><a class="item-expnd__link" href="">Edytuj pojazd</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-items__item">
+            <a class="item-expand__button collapsed" data-bs-toggle="collapse" href="#orders" role="button" aria-expanded="false" aria-controls="collapseExample">
+                <i class="main-icon fa-solid fa-calendar-days"></i>
+                <span>Zlecenia</span>
+                <i class="collapse-arrow fa-solid fa-angle-left"></i>
+            </a>
+            <div class="collapse" id="orders" data-bs-parent="#nav-items">
+                <ul>
+                    <li><a class="item-expnd__link" href="">Utwórz zlecenie</a></li>
+                    <li><a class="item-expnd__link" href="">Historia zleceń</a></li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+    <div class="logout-content">
+        <a href="#"><span>Wyloguj się</span><i class="fa-solid fa-right-from-bracket log-out"></i></a>
+    </div>
+</nav>
+
+
 {% endblock %}
 
