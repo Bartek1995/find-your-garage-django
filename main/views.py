@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpRequest
 
 
 class MainPage(TemplateView):
@@ -8,4 +9,12 @@ class MainPage(TemplateView):
 
 
 class Dashboard(TemplateView, LoginRequiredMixin):
-    template_name = 'main/dashboard.html'
+
+    def get_context_data(self, **kwargs):
+        if self.request.user.is_customer:
+            self.template_name = 'main/dashboard_customer.html'
+
+        elif self.request.user.is_entrepreneur:
+            self.template_name = 'main/dashboard_entrepreneur.html'
+        return super().get_context_data(**kwargs)
+
