@@ -1,93 +1,10 @@
 {% extends "main/application_base_template.html" %} {% load static %}
  {% block title %}Panel główny{% endblock %} {% block extra_head %} {% block content %}
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-<script>
-  var options = {
-    series: [75],
-    chart: {
-      height: "auto",
-      type: "radialBar",
-      toolbar: {
-        show: true,
-      },
-    },
-    plotOptions: {
-      radialBar: {
-        startAngle: -135,
-        endAngle: 225,
-        hollow: {
-          margin: 0,
-          size: "70%",
-          background: "#fff",
-          image: undefined,
-          imageOffsetX: 0,
-          imageOffsetY: 0,
-          position: "front",
-          dropShadow: {
-            enabled: true,
-            top: 3,
-            left: 0,
-            blur: 4,
-            opacity: 0.24,
-          },
-        },
-        track: {
-          background: "#fff",
-          strokeWidth: "67%",
-          margin: 0, // margin is in pixels
-          dropShadow: {
-            enabled: true,
-            top: -3,
-            left: 0,
-            blur: 4,
-            opacity: 0.35,
-          },
-        },
-
-        dataLabels: {
-          show: true,
-          name: {
-            offsetY: -10,
-            show: true,
-            color: "#888",
-            fontSize: "17px",
-          },
-          value: {
-            formatter: function (val) {
-              return parseInt(val);
-            },
-            color: "#111",
-            fontSize: "36px",
-            show: true,
-          },
-        },
-      },
-    },
-    fill: {
-      type: "gradient",
-      gradient: {
-        shade: "dark",
-        type: "horizontal",
-        shadeIntensity: 0.5,
-        gradientToColors: ["#ABE5A1"],
-        inverseColors: true,
-        opacityFrom: 1,
-        opacityTo: 1,
-        stops: [0, 100],
-      },
-    },
-    stroke: {
-      lineCap: "round",
-    },
-    labels: ["Ocena klientów"],
-  };
-
-  var chart = new ApexCharts(document.querySelector("#chart"), options);
-  chart.render();
-</script>
+<script src="{% static 'js/entrepreneur_dashboard_charts.js' %}"></script>
 {% endblock %}
 
-<nav class="sidenav" id="nav">
+<nav class="sidenav d-none d-md-flex" id="nav">
   <div class="logo-content">
     <div class="logo">
       <i class="fa-solid fa-magnifying-glass-location"></i>
@@ -131,9 +48,9 @@
       </a>
       <div class="collapse" id="account" data-bs-parent="#nav-items">
         <ul>
-          <li><a class="item-expnd__link" href="">Profil</a></li>
-          <li><a class="item-expnd__link" href="">Edytuj dane</a></li>
-          <li><a class="item-expnd__link" href="">Zmień hasło</a></li>
+          <li><a class="item-expnd__link" href="#">Profil</a></li>
+          <li><a class="item-expnd__link" href="#">Edytuj dane</a></li>
+          <li><a class="item-expnd__link" href="#">Zmień hasło</a></li>
         </ul>
       </div>
     </li>
@@ -152,9 +69,9 @@
       </a>
       <div class="collapse" id="cars" data-bs-parent="#nav-items">
         <ul>
-          <li><a class="item-expnd__link" href="">Twoje pojazdy</a></li>
-          <li><a class="item-expnd__link" href="">Dodaj pojazd</a></li>
-          <li><a class="item-expnd__link" href="">Edytuj pojazd</a></li>
+          <li><a class="item-expnd__link" href="#">Twoje pojazdy</a></li>
+          <li><a class="item-expnd__link" href="#">Dodaj pojazd</a></li>
+          <li><a class="item-expnd__link" href="#">Edytuj pojazd</a></li>
         </ul>
       </div>
     </li>
@@ -173,8 +90,8 @@
       </a>
       <div class="collapse" id="orders" data-bs-parent="#nav-items">
         <ul>
-          <li><a class="item-expnd__link" href="">Utwórz zlecenie</a></li>
-          <li><a class="item-expnd__link" href="">Historia zleceń</a></li>
+          <li><a class="item-expnd__link" href="#">Utwórz zlecenie</a></li>
+          <li><a class="item-expnd__link" href="#">Historia zleceń</a></li>
         </ul>
       </div>
     </li>
@@ -184,6 +101,93 @@
       ><span>Wyloguj się</span
       ><i class="fa-solid fa-right-from-bracket log-out"></i
     ></a>
+  </div>
+</nav>
+
+<nav class="navbar navbar-dark navbar-expand-lg topnav d-md-none">
+  <div class="container">
+    <div class="logo-content">
+      <div class="logo">
+        <i class="fa-solid fa-magnifying-glass-location"></i>
+        <p class="logo__name"><span>Znajdź</span>Warsztacik</p>
+      </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="nav-items" id="nav-items">
+        <li class="nav-items__item">
+          <a href="#" class="item-expand__button collapsed">
+            <i class="main-icon fa-solid fa-house"></i>
+            <span>Panel główny</span>
+          </a>
+        </li>
+        <li class="nav-items__item">
+          <a
+            class="item-expand__button collapsed"
+            data-bs-toggle="collapse"
+            href="#account"
+            role="button"
+            aria-expanded="false"
+            aria-controls="collapseExample"
+            id="account-button"
+          >
+            <i class="main-icon fa-solid fa-circle-user"></i>
+            <span>Konto</span>
+            <i class="collapse-arrow fa-solid fa-angle-left"></i>
+          </a>
+          <div class="collapse" id="account" data-bs-parent="#nav-items">
+            <ul>
+              <li><a class="item-expnd__link" href="#">Profil</a></li>
+              <li><a class="item-expnd__link" href="#">Edytuj dane</a></li>
+              <li><a class="item-expnd__link" href="#">Zmień hasło</a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav-items__item">
+          <a
+            class="item-expand__button collapsed"
+            data-bs-toggle="collapse"
+            href="#cars"
+            role="button"
+            aria-expanded="false"
+            aria-controls="collapseExample"
+          >
+            <i class="main-icon fa-solid fa-car"></i>
+            <span>Pojazdy</span>
+            <i class="collapse-arrow fa-solid fa-angle-left"></i>
+          </a>
+          <div class="collapse" id="cars" data-bs-parent="#nav-items">
+            <ul>
+              <li><a class="item-expnd__link" href="#">Twoje pojazdy</a></li>
+              <li><a class="item-expnd__link" href="#">Dodaj pojazd</a></li>
+              <li><a class="item-expnd__link" href="#">Edytuj pojazd</a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav-items__item">
+          <a
+            class="item-expand__button collapsed"
+            data-bs-toggle="collapse"
+            href="#orders"
+            role="button"
+            aria-expanded="false"
+            aria-controls="collapseExample"
+          >
+            <i class="main-icon fa-solid fa-calendar-days"></i>
+            <span>Zlecenia</span>
+            <i class="collapse-arrow fa-solid fa-angle-left"></i>
+          </a>
+          <div class="collapse" id="orders" data-bs-parent="#nav-items">
+            <ul>
+              <li><a class="item-expnd__link" href="#">Utwórz zlecenie</a></li>
+              <li><a class="item-expnd__link" href="#">Historia zleceń</a></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
 </nav>
 
@@ -229,7 +233,33 @@
       </div>
     </section>
 
-    
+    <section class="garage-information py-5">
+      <div class="row justify-content-center">
+
+        <div class="col-12 col-md-6 col-lg-5 col-xl-4">
+          <div class="garage-information__box about-garage pt-3">
+            <h4 class="about-garage__title">Informacje o warsztacie</h4>
+            <i class="fa-solid fa-warehouse about-garage__icon"></i>
+            <p class="about-garage__garage-name">RRCustoms</p>
+            <ul class="about-garage__address">
+              <li><i class="fa-solid fa-house address__icon"></i><span>Wiązów</span></li>
+              <li><i class="fa-solid fa-road address__icon"></i><span>1-go Maja 22</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-5 col-xl-4">
+          <div class="garage-information__box pt-3">
+            <div id="garageRate"></div>
+          </div>
+        </div>
+        <div class="col-12 col-lg-8">
+          <div class="garage-information__box pt-3">
+            <div id="lastDaysProfit"></div>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </div>
 
