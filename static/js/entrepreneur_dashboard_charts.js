@@ -117,6 +117,9 @@ var lastDaysProfit = {
   legend: {
     horizontalAlign: "left",
     offsetX: 40,
+    onItemClick: {
+      toggleDataSeries: false
+    },
   },
 };
 
