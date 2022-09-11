@@ -114,6 +114,31 @@ body {
       }
     }
   }
+  .profile-content {
+    position: absolute;
+    top: 65px;
+    width: 100%;
+    padding: 35px 10px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    color: white;
+    background-color: var(--secondary-background);
+    white-space: nowrap;
+    overflow: hidden;
+
+    .profile_information__account-type {
+      font-size: 13px;
+    }
+    
+    img {
+      height: 40px;
+      width: 40px;
+      margin-left: 8px;
+      margin-right: 18px;
+      border-radius: 10px;
+    }
+  }
 }
 
 .sidenav {
@@ -191,41 +216,6 @@ body {
     &:hover {
       color: colors.$main-color;
       cursor: pointer;
-    }
-  }
-
-
-  .profile-content {
-    position: absolute;
-    top: 65px;
-    width: 100%;
-    padding: 35px 10px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    color: white;
-    background-color: var(--secondary-background);
-    white-space: nowrap;
-    overflow: hidden;
-
-    .profile_information__account-type {
-      font-size: 13px;
-    }
-
-    img {
-      height: 40px;
-      margin-left: 8px;
-      margin-right: 18px;
-      border-radius: 10px;
-    }
-
-    .log-out {
-      font-size: 23px;
-      margin-left: auto;
-      &:hover {
-        color: colors.$main-color;
-        cursor: pointer;
-      }
     }
   }
 
@@ -387,7 +377,12 @@ height: 95%;
   }
   .topnav {
     .nav-items {
-      margin-top: 15px;
+      max-height: 280px;
+      overflow-y: auto;
+      margin-top: 90px;
+    }
+    .profile-content {
+      background-color: transparent;
     }
   }
   .body-content {

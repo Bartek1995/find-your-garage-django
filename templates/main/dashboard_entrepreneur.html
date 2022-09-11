@@ -25,28 +25,21 @@
 
   <i class="fa-solid fa-bars hamburger-switch" id="hamburger-switch"></i>
 
-  <ul class="nav-items" id="nav-items">
+  <ul class="nav-items" id="side-nav-items">
     <li class="nav-items__item">
       <a href="#" class="item-expand__button collapsed">
         <i class="main-icon fa-solid fa-house"></i>
         <span>Panel główny</span>
       </a>
     </li>
+
     <li class="nav-items__item">
-      <a
-        class="item-expand__button collapsed"
-        data-bs-toggle="collapse"
-        href="#account"
-        role="button"
-        aria-expanded="false"
-        aria-controls="collapseExample"
-        id="account-button"
-      >
+      <a class="item-expand__button collapsed" href="#" type="button" id="accountExpand" data-bs-toggle="collapse" data-bs-target="#accountCollapse" aria-expanded="true" aria-controls="accountCollapse">
         <i class="main-icon fa-solid fa-circle-user"></i>
         <span>Konto</span>
         <i class="collapse-arrow fa-solid fa-angle-left"></i>
       </a>
-      <div class="collapse" id="account" data-bs-parent="#nav-items">
+      <div class="collapse" id="accountCollapse" data-bs-parent="#side-nav-items" aria-labelledby="accountExpand">
         <ul>
           <li><a class="item-expnd__link" href="#">Profil</a></li>
           <li><a class="item-expnd__link" href="#">Edytuj dane</a></li>
@@ -54,20 +47,14 @@
         </ul>
       </div>
     </li>
+
     <li class="nav-items__item">
-      <a
-        class="item-expand__button collapsed"
-        data-bs-toggle="collapse"
-        href="#cars"
-        role="button"
-        aria-expanded="false"
-        aria-controls="collapseExample"
-      >
+      <a class="item-expand__button collapsed" href="#" type="button" id="carsExpand" data-bs-toggle="collapse" data-bs-target="#carsCollapse" aria-expanded="true" aria-controls="carsCollapse">
         <i class="main-icon fa-solid fa-car"></i>
         <span>Pojazdy</span>
         <i class="collapse-arrow fa-solid fa-angle-left"></i>
       </a>
-      <div class="collapse" id="cars" data-bs-parent="#nav-items">
+      <div class="collapse" id="carsCollapse" data-bs-parent="#side-nav-items" aria-labelledby="carsExpand">
         <ul>
           <li><a class="item-expnd__link" href="#">Twoje pojazdy</a></li>
           <li><a class="item-expnd__link" href="#">Dodaj pojazd</a></li>
@@ -75,20 +62,14 @@
         </ul>
       </div>
     </li>
+
     <li class="nav-items__item">
-      <a
-        class="item-expand__button collapsed"
-        data-bs-toggle="collapse"
-        href="#orders"
-        role="button"
-        aria-expanded="false"
-        aria-controls="collapseExample"
-      >
+      <a class="item-expand__button collapsed" href="#" type="button" id="ordersExpand" data-bs-toggle="collapse" data-bs-target="#ordersCollapse" aria-expanded="true" aria-controls="ordersCollapse">
         <i class="main-icon fa-solid fa-calendar-days"></i>
         <span>Zlecenia</span>
         <i class="collapse-arrow fa-solid fa-angle-left"></i>
       </a>
-      <div class="collapse" id="orders" data-bs-parent="#nav-items">
+      <div class="collapse" id="ordersCollapse" data-bs-parent="#side-nav-items" aria-labelledby="ordersExpand">
         <ul>
           <li><a class="item-expnd__link" href="#">Utwórz zlecenie</a></li>
           <li><a class="item-expnd__link" href="#">Historia zleceń</a></li>
@@ -116,28 +97,31 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="nav-items" id="nav-items">
+      <div class="profile-content">
+        <img
+          src="{% static 'img/anonymous-user-image.jpg' %}"
+          alt="Obrazek użytkownika anonimowego"
+        />
+        <div class="profile_information">
+          <p class="m-0 profile_information__name">Bartłomiej Swatek</p>
+          <p class="m-0 profile_information__account-type">Przedsiębiorca</p>
+        </div>
+      </div>
+      <ul class="nav-items" id="top-nav-items">
         <li class="nav-items__item">
           <a href="#" class="item-expand__button collapsed">
             <i class="main-icon fa-solid fa-house"></i>
             <span>Panel główny</span>
           </a>
         </li>
+    
         <li class="nav-items__item">
-          <a
-            class="item-expand__button collapsed"
-            data-bs-toggle="collapse"
-            href="#account"
-            role="button"
-            aria-expanded="false"
-            aria-controls="collapseExample"
-            id="account-button"
-          >
+          <a class="item-expand__button collapsed" href="#" type="button" id="accountExpand" data-bs-toggle="collapse" data-bs-target="#accountCollapse" aria-expanded="true" aria-controls="accountCollapse">
             <i class="main-icon fa-solid fa-circle-user"></i>
             <span>Konto</span>
             <i class="collapse-arrow fa-solid fa-angle-left"></i>
           </a>
-          <div class="collapse" id="account" data-bs-parent="#nav-items">
+          <div class="collapse" id="accountCollapse" data-bs-parent="#top-nav-items" aria-labelledby="accountExpand">
             <ul>
               <li><a class="item-expnd__link" href="#">Profil</a></li>
               <li><a class="item-expnd__link" href="#">Edytuj dane</a></li>
@@ -145,20 +129,14 @@
             </ul>
           </div>
         </li>
+    
         <li class="nav-items__item">
-          <a
-            class="item-expand__button collapsed"
-            data-bs-toggle="collapse"
-            href="#cars"
-            role="button"
-            aria-expanded="false"
-            aria-controls="collapseExample"
-          >
+          <a class="item-expand__button collapsed" href="#" type="button" id="carsExpand" data-bs-toggle="collapse" data-bs-target="#carsCollapse" aria-expanded="true" aria-controls="carsCollapse">
             <i class="main-icon fa-solid fa-car"></i>
             <span>Pojazdy</span>
             <i class="collapse-arrow fa-solid fa-angle-left"></i>
           </a>
-          <div class="collapse" id="cars" data-bs-parent="#nav-items">
+          <div class="collapse" id="carsCollapse" data-bs-parent="#top-nav-items" aria-labelledby="carsExpand">
             <ul>
               <li><a class="item-expnd__link" href="#">Twoje pojazdy</a></li>
               <li><a class="item-expnd__link" href="#">Dodaj pojazd</a></li>
@@ -166,20 +144,14 @@
             </ul>
           </div>
         </li>
+    
         <li class="nav-items__item">
-          <a
-            class="item-expand__button collapsed"
-            data-bs-toggle="collapse"
-            href="#orders"
-            role="button"
-            aria-expanded="false"
-            aria-controls="collapseExample"
-          >
+          <a class="item-expand__button collapsed" href="#" type="button" id="ordersExpand" data-bs-toggle="collapse" data-bs-target="#ordersCollapse" aria-expanded="true" aria-controls="ordersCollapse">
             <i class="main-icon fa-solid fa-calendar-days"></i>
             <span>Zlecenia</span>
             <i class="collapse-arrow fa-solid fa-angle-left"></i>
           </a>
-          <div class="collapse" id="orders" data-bs-parent="#nav-items">
+          <div class="collapse" id="ordersCollapse" data-bs-parent="#top-nav-items" aria-labelledby="ordersExpand">
             <ul>
               <li><a class="item-expnd__link" href="#">Utwórz zlecenie</a></li>
               <li><a class="item-expnd__link" href="#">Historia zleceń</a></li>
