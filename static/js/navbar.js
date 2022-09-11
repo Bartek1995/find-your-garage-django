@@ -30,12 +30,13 @@ document.addEventListener("DOMContentLoaded", function () {
   //IF USER DOESN'T  MANUALLY SWITCH NAV SIZE
 
     window.addEventListener("resize", function () {
-      if (window.innerWidth < 1000 && !navManualControl) {
-        nav.classList.remove("active");
-        hideNavElements();
-      } else nav.classList.add("active");
+      if (navManualControl == false){
+        if (window.innerWidth < 1000) {
+          nav.classList.remove("active");
+          hideNavElements();
+        } else nav.classList.add("active");
+      }
     });
-  
 
 //   FUNCTION USED TO HIDE ALL NAV ELEMENTS
   function hideNavElements() {
