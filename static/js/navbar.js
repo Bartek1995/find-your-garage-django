@@ -1,3 +1,5 @@
+let navManualControl = false;
+
 document.addEventListener("DOMContentLoaded", function () {
   const nav = document.querySelector("#nav");
   const hamburgerSwitch = document.querySelector("#hamburger-switch");
@@ -6,13 +8,17 @@ document.addEventListener("DOMContentLoaded", function () {
   const bodyContent = document.querySelector("#body-content");
 
   hamburgerSwitch.addEventListener("click", function () {
+    navManualControl = true;
     nav.classList.toggle("active");
     hideNavElements();
   });
 
   bodyContent.addEventListener("click", function () {
-    nav.classList.remove("active");
-    hideNavElements();
+    if (!navManualControl)
+    {
+      nav.classList.remove("active");
+      hideNavElements();
+    }
   });
 
   navButtons.forEach((button) => {
@@ -21,12 +27,15 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  window.addEventListener("resize", function () {
-    if (window.innerWidth < 1000) {
-      nav.classList.remove("active");
-      hideNavElements();
-    } else nav.classList.add("active");
-  });
+  //IF USER DOESN'T  MANUALLY SWITCH NAV SIZE
+
+    window.addEventListener("resize", function () {
+      if (window.innerWidth < 1000 && !navManualControl) {
+        nav.classList.remove("active");
+        hideNavElements();
+      } else nav.classList.add("active");
+    });
+  
 
 //   FUNCTION USED TO HIDE ALL NAV ELEMENTS
   function hideNavElements() {
