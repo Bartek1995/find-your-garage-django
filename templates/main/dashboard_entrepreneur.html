@@ -78,10 +78,10 @@
     </li>
   </ul>
   <div class="logout-content">
-    <a href="#">
+    <button type="button" data-bs-toggle="modal" data-bs-target="#logoutWindow">
       <span>Wyloguj się</span>
       <i class="fa-solid fa-right-from-bracket log-out"></i>
-    </a>
+    </button>
   </div>
 </nav>
 
@@ -108,9 +108,9 @@
           </div>
         </div>
         <div class="logout-content col-2">
-          <a href="#">
+          <button type="button" data-bs-toggle="modal" data-bs-target="#logoutWindow">
             <i class="fa-solid fa-right-from-bracket log-out"></i>
-          </a>
+          </button>
         </div>
       </div>
       <ul class="nav-items" id="top-nav-items">
@@ -238,6 +238,30 @@
         </div>
       </div>
     </section>
+  </div>
+</div>
+
+<div class="modal fade" id="logoutWindow" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Wyloguj</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Czy na pewno chcesz się wylogować?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <form method="post" action="{% url 'account_logout' %}">
+          {% csrf_token %}
+          {% if redirect_field_value %}
+          <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+          {% endif %}
+          <button type="submit" class="btn btn-primary">Wyloguj</button>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
 
