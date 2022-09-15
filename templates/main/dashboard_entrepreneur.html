@@ -78,10 +78,10 @@
     </li>
   </ul>
   <div class="logout-content">
-    <a href="#"
-      ><span>Wyloguj się</span
-      ><i class="fa-solid fa-right-from-bracket log-out"></i
-    ></a>
+    <a href="#">
+      <span>Wyloguj się</span>
+      <i class="fa-solid fa-right-from-bracket log-out"></i>
+    </a>
   </div>
 </nav>
 
@@ -97,14 +97,20 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <div class="profile-content">
-        <img
-          src="{% static 'img/anonymous-user-image.jpg' %}"
-          alt="Obrazek użytkownika anonimowego"
-        />
-        <div class="profile_information">
-          <p class="m-0 profile_information__name">Bartłomiej Swatek</p>
-          <p class="m-0 profile_information__account-type">Przedsiębiorca</p>
+
+
+      <div class="row align-items-center">
+        <div class="profile-content col">
+          <img src="{% static 'img/anonymous-user-image.jpg' %}" alt="Obrazek użytkownika anonimowego"/>
+          <div class="profile_information">
+            <p class="m-0 profile_information__name">Bartłomiej Swatek</p>
+            <p class="m-0 profile_information__account-type">Przedsiębiorca</p>
+          </div>
+        </div>
+        <div class="logout-content col-2">
+          <a href="#">
+            <i class="fa-solid fa-right-from-bracket log-out"></i>
+          </a>
         </div>
       </div>
       <ul class="nav-items" id="top-nav-items">
