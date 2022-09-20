@@ -15,6 +15,20 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
+.app-btn {
+  font-size: 14px;
+  color: white;
+  text-transform: uppercase;
+}
+
+.app-primary-btn {
+  background: #1d1b30;
+}
+
+.app-cancel-btn {
+  background: #555555;
+}
+
 .sidenav, .topnav {
     .nav-items {
     list-style: none;
@@ -219,8 +233,11 @@ body {
     font-size: 20px;
     height: 50px;
     width: 50px;
-    color: black;
+    color: white;
+    background-color: #11101d;
     transition: 0.3s;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
 
     &:hover {
       color: colors.$main-color;
@@ -318,37 +335,47 @@ body {
   background-color: #458606;
 }
 
-.garage-information{
+.garage-information,.car-information{
 
-  .garage-information__box {
-    margin: 10px;
-height: 95%;
+  .garage-information__info-box,.car-information__info-box {
+    height: 100%;
+    width: 100%;
     background-color: white;
     border-radius: 15px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 18px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
   }
-  .about-garage {
+  .about-garage, .about-car, .last-service {
     display: flex;
     flex-direction: column;
     align-items: center;
  
-
-    .about-garage__title{
-      margin-bottom: 20px;
+    hr {
+      margin: 5px;
+      width: 60%;
+    }
+    .info-box__title{
       font-size: 20px;
       font-weight: bold;
       text-align: center;
     }
-    .about-garage__icon{
+    .info-box__icon{
       font-size: 30px;
       margin: 20px 0;
     }
-    .about-garage__garage-name{
+
+    .about-car__review-icon-ok{
+      color: rgb(48, 191, 48);
+    }
+    .info-box__garage-name{
       font-size: 18px;
       font-weight: bold;
-      margin-bottom: 50px;
+      margin-bottom: 50p;
+    }
 
+    .info-box__details {
+      span {
+        font-weight: bold;
+      }
     }
     .about-garage__address{
       list-style: none;
