@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     # My Applications
     'accounts',
     'main',
+    'garages',
 
     # Third-party software
     'allauth',
@@ -64,6 +65,7 @@ INSTALLED_APPS = [
     'bootstrap5',
     'anymail',
     'address',
+    'places'
 ]
 
 SITE_ID = 1
@@ -78,11 +80,6 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGIN_URL = 'accounts/login'
 
-# EMAIL_HOST = os.environ.get('EMAIL_SMTP')
-# EMAIL_PORT = os.environ.get('EMAIL_PORT')
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = os.environ.get('EMAIL_USERNAME')
-# EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
 DEFAULT_FROM_EMAIL = 'support@znajdzwarsztacik.pl'
 
 EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
@@ -93,7 +90,11 @@ ANYMAIL = {
     "MAILGUN_SENDER_DOMAIN": 'mg.znajdzwarsztacik.pl',
 }
 
+
 GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY')
+PLACES_MAPS_API_KEY = os.environ.get('GOOGLE_API_KEY')
+PLACES_MARKER_OPTIONS = '{"draggable": true}'
+PLACES_MAP_WIDGET_HEIGHT = 480
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
