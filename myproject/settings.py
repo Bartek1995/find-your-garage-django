@@ -65,7 +65,8 @@ INSTALLED_APPS = [
     'bootstrap5',
     'anymail',
     'address',
-    'places'
+    'places',
+    'widget_tweaks',
 ]
 
 SITE_ID = 1
