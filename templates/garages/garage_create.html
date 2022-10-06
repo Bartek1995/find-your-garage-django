@@ -1,0 +1,82 @@
+{% extends "main/application_base_template.html" %} 
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}Panel główny{% endblock %} 
+{% block extra_head %} 
+{% endblock %}
+ 
+ 
+ {% block content %}
+
+ 
+
+<div class="body-content" id="body-content">
+  <div class="container">
+    <h2>Utwórz warsztat</h2>
+
+    <section class="garage-create py-5">
+
+      <form method="post">
+        {% csrf_token %}
+        <div class="row justify-content-center">
+  
+          <div class="col-md-8 mb-3">
+            <h3 class="mb-4">Podstwowe informacje</h3>
+            {{ form.name.label }}
+            {% render_field form.name class+="form-control mb-2" %}
+            {% if form.name.errors %}
+            <div class="alert alert-danger p-3">
+                <strong>{{ form.name.errors.as_text | cut:"* " }}</strong>
+            </div>
+         {% endif %}
+            <p class="form-text">Podaj nazwe swojego warsztatu.</p>
+            <p class="form-text">Nazwa powinna się składać z maksymalnie 50 znaków oraz nie powwinna zawierać znaków specjalnych oraz cyfr.</p>
+            <hr class="m-1">
+          </div>
+  
+          <div class="col-md-8 mb-3">
+            {{ form.nip_number.label }}
+            {% render_field form.nip_number class+="form-control mb-2" %}
+            {% if form.nip_number.errors %}
+              <div class="alert alert-dange p-3">
+                  <strong>{{ form.nip_number.errors.as_text | cut:"* " }}</strong>
+              </div>
+           {% endif %}
+            <p class="form-text">Podaj numer NIP swojej firmy.</p>
+            <p class="form-text">Jest to 10-cio cyfrowy numer identyfikacji podatkowej, ktory posiada każda legalnie funkcjonująca firma w Polsce.</p>
+            <hr class="m-1">
+          </div>
+  
+          <div class="col-md-8 mb-3">
+            {{ form.website_url.label }}
+            {% render_field form.website_url class+="form-control mb-2" %}
+            <p class="form-text">Podaj adres strony internetowej, która reprezentuje placówkę.</p>
+            <p class="form-text">Adres powinien posiadać format <span>https://twojastrona.pl</span> Jeśli warsztat nie posiada indywidualnej strony internetowej to pozostaw to pole puste.</p>
+            <hr class="m-1">
+          </div>
+
+          <div class="col-md-8 mb-3">
+            {{ form.description.label }}
+            {% render_field form.description class+="form-control mb-2" %}
+            <p class="form-text">Dokonaj opisu swojego warsztatu. Maksymalna ilość znaków to 300.</p>
+            <p class="form-text">Opis nie jest wymagany. Możesz pozostawić to pole puste.</p>
+          </div>
+  
+  
+          <div class="col-md-8">
+            <h3 class="mb-4">Dane lokalizacyjne</h3>
+            <p class="form-text">Wprowadź lokalizację swojego warsztatu.</p>
+            <p class="form-text mb-3">Możesz wprowadzić pełny adres, lub poprostu wprowadzić nazwe miejscowości. Do skorygowania pozycji na mapie skorzystaj z możliwości recznego przesuwania znacznika na mapie.</p>
+            {{ form.location.label }}
+            {% render_field form.location class+="form-control mb-3" %}
+            {{ form.media }}
+            <input type="submit" value="Utwórz" class="btn app-btn app-primary-btn my-3">
+          </div>
+  
+        </div>
+      </form>
+    </div>
+   
+  </div>
+
+{% endblock %}

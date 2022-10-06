@@ -10,7 +10,7 @@ body {
   position: absolute;
   top: 0;
   right: 0;
-  width: calc(100vw - 97px);
+  width: 100%;
   background-color: rgb(247, 247, 247);
   font-family: "Roboto", sans-serif;
 }
@@ -29,6 +29,14 @@ body {
   background: #555555;
 }
 
+.form-text {
+  margin: 0;
+  font-size: 14px;
+  color: grey;
+  span {
+    font-weight: bold;
+  }
+}
 .sidenav, .topnav {
     .nav-items {
     list-style: none;
@@ -282,8 +290,13 @@ body {
 }
 
 .body-content {
-  padding: 30px 0px;
+  padding: 30px 10px;
   height: 100vh;
+
+  h2 {
+  margin-bottom: 30px;  
+  text-align: center; 
+  }
 }
 
 .info-box {
@@ -402,6 +415,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     text-align: center;
     a {
       padding: 10px 30px;
@@ -413,7 +427,37 @@ body {
   }
 }
 
+.garage-create{
+  h3 {
+    text-decoration: underline;
+  }
+  input {
+    width: 50%;
+  }
+  .places-widget {
+    overflow: visible!important;
+
+    input:first-child {
+      width: 50%!important;
+    }
+    #id_location_1, #id_location_2 {
+      display: none;
+    }
+  }
+}
 @media (max-width:576px) {
+  .garage-create {
+    input {
+      width: 100%;
+    }
+  }
+  .places-widget {
+    overflow: visible!important;
+
+    input:first-child {
+      width: 100%!important;
+    }
+  }
   .info-box{
     padding: 10px 0px;
     .info-box__title {
@@ -423,9 +467,6 @@ body {
 }
 
 @media (max-width:768px) {
-  body {
-    width: 100%;
-  }
   .topnav {
     .nav-items {
       max-height: 280px;
