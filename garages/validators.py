@@ -3,11 +3,8 @@ from string import printable
 
 
 def validate_special_characters(word):
-
-    special_characters = "!@#$%^&*()-+?_=,<>/.{}÷"
-
     for char in word:
-        if not(char.isalpha()):
+        if not(char.isalpha()) and char != " ":
             raise ValidationError("Nazwa warsztatu zawiera nieprawidłowe znaki.")
 
 
