@@ -4,10 +4,7 @@
  
  {% block content %}
 
- {% if user_garage != None %}
- <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
- <script src="{% static 'js/entrepreneur_dashboard_charts.js' %}"></script>
- {% endif %}
+
  
 
 <div class="body-content" id="body-content">
@@ -121,5 +118,8 @@
     </div>
   </div>
 </div>
-
+{% if user_garage != None %}
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="{% static 'js/entrepreneur_dashboard_charts.js' %}"></script>
+{% endif %}
 {% endblock %}
