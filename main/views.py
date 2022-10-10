@@ -20,9 +20,10 @@ class Dashboard(TemplateView, LoginRequiredMixin):
         return super().get(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
+        context = super(Dashboard, self).get_context_data(**kwargs)
         if self.request.user.is_entrepreneur:
             try:
-                user_garage = Garage.objects.get(user=self.request.user)
+                context['user_garage'] = Garage.objects.get(user=self.request.user)
             except Garage.DoesNotExist:
-                user_garage = None
-        return super().get_context_data(**kwargs)
+                context['user_garage'] = None
+        return context
