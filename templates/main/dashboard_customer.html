@@ -1,13 +1,13 @@
 {% extends "main/application_base_template.html" %} {% load static %}
  {% block title %}Panel główny{% endblock %} {% block extra_head %} 
- <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
- <script src="{% static 'js/customer_dashboard_charts.js' %}"></script>
+
  {% endblock %}
  
  
  {% block content %}
 <div class="body-content" id="body-content">
   <div class="container">
+    {% if user_car != None %}
     <section class="car-information">
       <div class="row justify-content-center">
         <div class="col-12 col-md-6 col-xl-5">
@@ -47,12 +47,25 @@
         <div class="col-12 col-md-6 col-xl-5 my-3">
           <div class="car-information__info-box d-flex align-items-center justify-content-center">
             <div id="sumOfCarCosts"></div>
-
           </div>
         </div>
-
       </div>
     </section>
+    {% else %}
+    <section class="no-car">
+      <div class="row justify-content-center">
+        <div class="col col-md-8 col-lg-6 no-car__box">
+          <h3 class="box__title mb-2">Witaj Kliencie!</h3>
+          <hr>
+          <p>Dziękujemy za skorzystanie z naszego serwisu.</p>
+          <p>Aby w pełni wykorzystać potencjał naszego serwisu zalecamy abyś w pierwszej kolejności dodał swój pierwszy pojazd.</p>
+          <p>Dzięki temu będziesz miał możliwość przesłania informacji na jego temat odrazu podczas tworzenia zlecenia w wybranej przez siebie placówce.</p>
+          <p>Użyj przycisku poniżej aby dodać pojazd do naszego systemu.</p>
+          <a href="" class="btn app-btn app-primary-btn">Dodaj pojazd</a>
+        </div>
+      </div>
+    </section>
+    {% endif %}
   </div>
 </div>
 
@@ -79,5 +92,8 @@
     </div>
   </div>
 </div>
-
+{% if user_garage != None %}
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="{% static 'js/customer_dashboard_charts.js' %}"></script>
+{% endif %}
 {% endblock %}
