@@ -409,9 +409,9 @@ body {
   }
 }
 
-.no-garage {
+.no-garage, .no-car {
   margin-top: 100px;
-  .no-garage__box{
+  .no-garage__box, .no-car__box{
     display: flex;
     flex-direction: column;
     align-items: center;
