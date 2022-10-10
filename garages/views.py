@@ -1,8 +1,9 @@
 from django.views.generic.edit import CreateView
 from .forms import GarageForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class GarageCreateView(CreateView):
+class GarageCreateView(LoginRequiredMixin, CreateView):
     template_name = 'garages/garage_create.html'
     form_class = GarageForm
     success_url = '/garage/create_complete'
