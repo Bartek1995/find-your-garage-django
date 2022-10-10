@@ -79,7 +79,7 @@ ACCOUNT_FORMS = {
 }
 AUTH_USER_MODEL = 'accounts.CustomUser'
 LOGIN_REDIRECT_URL = 'dashboard'
-LOGIN_URL = 'accounts/login'
+LOGIN_URL = 'account_login'
 
 DEFAULT_FROM_EMAIL = 'support@znajdzwarsztacik.pl'
 
