@@ -9,7 +9,7 @@ class MainPage(TemplateView):
     template_name = 'main/index.html'
 
 
-class Dashboard(TemplateView, LoginRequiredMixin):
+class Dashboard(LoginRequiredMixin, TemplateView):
 
     def get(self, *args, **kwargs):
         if self.request.user.is_customer:
@@ -27,3 +27,4 @@ class Dashboard(TemplateView, LoginRequiredMixin):
             except Garage.DoesNotExist:
                 context['user_garage'] = None
         return context
+
