@@ -30,7 +30,15 @@
           <img src="{% static 'img/anonymous-user-image.jpg' %}" alt="Obrazek użytkownika anonimowego"/>
           <div class="profile_information">
             <p class="m-0 profile_information__name">Bartłomiej Swatek</p>
-            <p class="m-0 profile_information__account-type">Przedsiębiorca</p>
+            <p class="m-0 profile_information__account-type">
+              {% if request.user.is_entrepreneur %}
+              Przedsiębiorca
+              {% elif request.user.is_customer %}
+              Klient
+              {% else %}
+              Administrator
+              {% endif %}
+            </p>
           </div>
         </div>
       
@@ -141,7 +149,15 @@
             <img src="{% static 'img/anonymous-user-image.jpg' %}" alt="Obrazek użytkownika anonimowego"/>
             <div class="profile_information">
                 <p class="m-0 profile_information__name">Bartłomiej Swatek</p>
-                <p class="m-0 profile_information__account-type">Przedsiębiorca</p>
+                <p class="m-0 profile_information__account-type">
+                  {% if request.user.is_entrepreneur %}
+                  Przedsiębiorca
+                  {% elif request.user.is_customer %}
+                  Klient
+                  {% else %}
+                  Administrator
+                  {% endif %}
+                </p>
             </div>
             </div>
             <div class="logout-content col-2">
@@ -173,7 +189,7 @@
             </div>
             </li>
 
-            {% if request.user.customer %}
+            {% if request.user.is_customer %}
             <li class="nav-items__item">
             <a class="item-expand__button collapsed" href="#" type="button" id="carsExpand" data-bs-toggle="collapse" data-bs-target="#carsCollapse" aria-expanded="true" aria-controls="carsCollapse">
                 <i class="main-icon fa-solid fa-car"></i>
@@ -235,7 +251,7 @@
     
     {% if messages %}
     {% for message in messages %}
-    <div class="alert alert-{{ message.tags }}" id="alert-{{ message.tags }}">
+    <div class="alert alert-dashboard alert-{{ message.tags }}" id="alert-{{ message.tags }}">
         <p class="m-0">{{ message }}</p>
         <button type="button" class="btn-close" data-bs-dismiss="alert" data-bs-target="#alert-{{ message.tags }}" aria-label="Close"></button>
     </div>
