@@ -15,7 +15,16 @@
     <title>Znajdź Warsztacik</title>
 </head>
 <body>
-
+  {% if messages %}
+  <div class="messages py-3">
+    <ul>
+      {% for message in messages %}
+      <li>{{message}}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+  
 <nav class="navbar navbar-expand-lg navbar-dark shadow-5-strong" id="navbar">
     <div class="container">
         <a class="navbar-brand" href="#">Znajdź warsztacik<i class="fa-solid fa-magnifying-glass-location ms-2"></i></a>
