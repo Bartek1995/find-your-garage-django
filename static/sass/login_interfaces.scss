@@ -11,6 +11,24 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
+
+.messages {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  text-align: center;
+  color: white;
+  background-color: rgba(black, 0.5);
+  z-index: 10;
+
+  ul {
+    margin: 0;
+    li {
+      list-style-type: none;
+    }
+  }
+}
+
 .bg-shadow {
   position: absolute;
   top: 0;
@@ -19,6 +37,15 @@ body {
   height: 100%;
   background-color: rgba(black, 0.7);
   z-index: -5;
+}
+
+.form-text {
+  margin: 0;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 1);
+  span {
+    font-weight: bold;
+  }
 }
 
 .hidden {
@@ -31,10 +58,15 @@ body {
 .visuallyVisible {
   opacity: 1;
 }
+
+.btn:disabled {
+  color: black;
+}
 // LOGIN/REGISTRATION/PASSWORD-FORGET STYLES
 .accounts {
   position: relative;
-  height: 100vh;
+  min-height: 100vh;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -43,17 +75,62 @@ body {
   z-index: 10;
   color: white;
 
-  .messages {
-    position: absolute;
-    width: 100%;
-    bottom: 0;
+  h3, h5 {
+    text-transform: uppercase;
     text-align: center;
-    background-color: rgba(black, 0.5);
+  }
 
-    ul {
-      margin: 0;
-      li {
-        list-style-type: none;
+  .user-type-select-normal, .user-type-select-mobile {
+    .card {
+      height: 100%;
+      background-color: transparent;
+      border: none;
+      border-radius: 15px;
+      transition: transform 0.3s;
+  
+      .card-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+  
+        .card-body__benefits {
+          white-space: nowrap;
+        }
+        .card-title {
+          text-transform: uppercase;
+        }
+        .card-body__description {
+          font-size: 15px;
+        }
+        .fa-solid {
+          color: rgb(21, 201, 21);
+        }
+      }
+      img {
+        height: 250px;
+        object-fit: cover;
+      }
+    }
+  }
+  .user-type-select-normal {
+    &:hover {
+      .card {
+        transform: scale(1.05);
+        background-color: rgba(white, 0.1);
+      }
+    }
+  }
+
+  .user-type-select-mobile {
+    .carousel{
+      overflow: hidden;
+
+      .carousel-control-prev {
+        justify-content: start;
+      }
+      .carousel-control-next {
+        justify-content: end;
       }
     }
   }
@@ -76,9 +153,7 @@ body {
 
 
   .accounts-box {
-    min-width: 300px;
-    max-width: 400px;
-  
+
     p {
       text-align: center;
     }
@@ -118,28 +193,6 @@ body {
       }
     }
   }
-  .select-box:hover {
-    transform: scale(1.05);
-  }
-
-  .select-acount-type-carousel {
-    text-align: center;
-    .select-box__benefit-title,h4{
-      text-transform: uppercase;
-    }
-    .fa-solid {
-      color: rgb(21, 201, 21);
-    }
-    .carousel-indicators{
-      bottom: -40px;
-    }
-  }
-
-  .signup-form {
-    transition: opacity 0.5s;
-  }
-
-
 
   .buttons-one {
     display: flex;
