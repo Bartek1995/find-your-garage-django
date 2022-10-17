@@ -12,6 +12,8 @@ type_of_user_account = [
 
 
 class CustomSignupForm(SignupForm):
+    first_name = forms.CharField(max_length=30, label='Imię')
+    last_name = forms.CharField(max_length=30, label='Nazwisko')
     email = forms.EmailField(required=True)
     password1 = SetPasswordField()
     password2 = PasswordField()
