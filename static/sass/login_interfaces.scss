@@ -224,15 +224,10 @@ body {
     color: colors.$main-color;
   }
 
-  .buttons__btn--secondary {
+  .buttons__btn--selected {
     background-color: black;
     border: 1px solid colors.$main-color;
     color: colors.$main-color;
-  }
-
-  .buttons__btn--secondary:hover {
-    background-color: colors.$main-color;
-    color: black;
   }
 }
 

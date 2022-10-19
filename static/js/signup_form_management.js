@@ -13,6 +13,15 @@ function changeTextOfButtons(buttons, text){
         button.innerHTML = text;
     })}
 
+function addClassToButtons(buttons, className){
+    buttons.forEach(button => {
+        button.classList.add(className);
+    })}
+    
+function removeClassfromButtons(buttons, className){
+    buttons.forEach(button => {
+        button.classList.remove(className);
+    })}
 
 document.addEventListener('DOMContentLoaded', function(){
     const customerButtons = document.querySelectorAll('#customer_button_0, #customer_button_1');
@@ -25,12 +34,14 @@ document.addEventListener('DOMContentLoaded', function(){
     {
         addDisabledToButtons(customerButtons);
         changeTextOfButtons(customerButtons, 'Wybrano');
+        addClassToButtons(customerButtons, 'buttons__btn--selected');
         signupButton.removeAttribute('disabled');
     }
     else if (entrepreneurSelectCheckbox.checked)
     {
         addDisabledToButtons(entrepreneurButtons);
         changeTextOfButtons(entrepreneurButtons, 'Wybrano');
+        addClassToButtons(entrepreneurButtons, 'buttons__btn--selected');
         signupButton.removeAttribute('disabled');
     }
 
@@ -42,6 +53,8 @@ document.addEventListener('DOMContentLoaded', function(){
         entrepreneurSelectCheckbox.checked = false;
 
         addDisabledToButtons(customerButtons);
+        addClassToButtons(customerButtons, 'buttons__btn--selected');
+        removeClassfromButtons(entrepreneurButtons, 'buttons__btn--selected');
         changeTextOfButtons(customerButtons, 'Wybrano');
         removeDisabledFromButtons(entrepreneurButtons);
         changeTextOfButtons(entrepreneurButtons, 'Wybierz');
@@ -55,6 +68,8 @@ document.addEventListener('DOMContentLoaded', function(){
         customerSelectCheckbox.checked = false;
 
         addDisabledToButtons(entrepreneurButtons);
+        addClassToButtons(entrepreneurButtons, 'buttons__btn--selected');
+        removeClassfromButtons(customerButtons, 'buttons__btn--selected');
         changeTextOfButtons(entrepreneurButtons, 'Wybrano');
         removeDisabledFromButtons(customerButtons);
         changeTextOfButtons(customerButtons, 'Wybierz');
