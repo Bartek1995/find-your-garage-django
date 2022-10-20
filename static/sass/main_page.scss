@@ -117,7 +117,7 @@ header {
   width: 100%;
   z-index: 10;
   text-transform: uppercase;
-  background-color: rgba(black, 0.6);
+  background-color: rgba(black, 0.75);
   transition: background-color 0.3s;
 
   .navbar-brand:hover > .fa-solid {
@@ -134,18 +134,15 @@ header {
   }
 
   .dropdown-menu {
+    top: 32px;
     margin-top: 7px;
-    background-color: rgba(0,0,0,.6);
+    background-color: rgba(0,0,0,.75);
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+    border: none;
 
     li {
-      text-align: center;
-    }
-
-    .nav-link:hover {
-      color: colors.$main-color;
-      background-color: rgba(black, 0.6);
+      margin-left: 20px;
     }
   }
   .navbar-nav {
@@ -172,14 +169,12 @@ header {
 
   .functions-boxes {
     justify-content: space-around;
-    
 
     .functions-boxes__column {
       padding: 20px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      // background-color: rgba(black, 0.5);
       border-radius: 20px;
 
       .column__title {
@@ -211,6 +206,25 @@ header {
   }
 }
 
+@media (max-width: 992px) {
+ .navbar {
+  .dropdown-menu {
+    background-color: transparent;
+    border: none;
+  }
+ }
+}
+
+@media (min-width: 992px) {
+ .navbar {
+  .dropdown-menu {
+    li {
+      margin-left: 0;
+      text-align: center;
+    }
+  }
+ }
+}
 @media (max-width: 526px) {
   header {
     .welcome-box {
