@@ -62,7 +62,7 @@
               <ul>
                 <li><a class="item-expnd__link" href="#">Profil</a></li>
                 <li><a class="item-expnd__link" href="#">Edytuj dane</a></li>
-                <li><a class="item-expnd__link" href="#">Zmień hasło</a></li>
+                <li><a class="item-expnd__link" href="{% url 'account_change_password' %}">Zmień hasło</a></li>
               </ul>
             </div>
           </li>
@@ -182,9 +182,9 @@
             </a>
             <div class="collapse" id="accountCollapse" data-bs-parent="#top-nav-items" aria-labelledby="accountExpand">
                 <ul>
-                <li><a class="item-expnd__link" href="#">Profil</a></li>
-                <li><a class="item-expnd__link" href="#">Edytuj dane</a></li>
-                <li><a class="item-expnd__link" href="#">Zmień hasło</a></li>
+                  <li><a class="item-expnd__link" href="#">Profil</a></li>
+                  <li><a class="item-expnd__link" href="#">Edytuj dane</a></li>
+                  <li><a class="item-expnd__link" href="{% url 'account_change_password' %}">Zmień hasło</a></li>
                 </ul>
             </div>
             </li>

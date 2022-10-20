@@ -52,6 +52,12 @@ body {
   }
 }
 
+.alert {
+  ul {
+    margin-bottom: 0;
+    list-style: none;
+  }
+}
 .alert-error {
   background-color: #f8d7da;
 }
@@ -319,6 +325,19 @@ body {
   margin-bottom: 30px;  
   text-align: center; 
   }
+
+  .body-content__item {
+    margin-top: 50px;
+
+    a {
+      text-decoration: none;
+      color: black;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
 }
 
 .info-box {
@@ -468,6 +487,12 @@ body {
   }
 }
 @media (max-width:576px) {
+  .buttons-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
   .garage-create {
     input {
       width: 100%;
@@ -509,7 +534,7 @@ body {
 }
 
 @media (min-width:760px) {
-  .alert {
+  .alert-dashboard {
     width: calc(100% - 78px);
   }
 }
