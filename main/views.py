@@ -1,12 +1,18 @@
-from django.shortcuts import render
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpRequest
+
+from django.views.decorators.gzip import gzip_page
+from django.utils.decorators import method_decorator
+
 from garages.models import Garage
 
 
+@method_decorator(gzip_page, name='dispatch')
 class MainPage(TemplateView):
     template_name = 'main/index.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
 
 class Dashboard(LoginRequiredMixin, TemplateView):
@@ -27,4 +33,3 @@ class Dashboard(LoginRequiredMixin, TemplateView):
             except Garage.DoesNotExist:
                 context['user_garage'] = None
         return context
-
