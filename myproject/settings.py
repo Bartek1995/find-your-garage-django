@@ -32,12 +32,14 @@ if os.environ.get('DEBUGMODE') == 'True':
 else:
     DEBUG = (os.environ.get('DEBUGMODE') != 'False')
 
+if os.environ.get('PRODUCTIONVERSION') == 'True':
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_SSL_REDIRECT = True
+    
 ALLOWED_HOSTS = [
     'https://find-your-garage.herokuapp.com',
-    'http://znajdzwarsztacik.me',
-    'http://www.znajdzwarsztacik.me',
-    'http://znajdzwarsztacik.pl',
-    'http://www.znajdzwarsztacik.pl',
+    'https://znajdzwarsztacik.pl',
+    'https://www.znajdzwarsztacik.pl',
     'localhost',
     '127.0.0.1']
 
