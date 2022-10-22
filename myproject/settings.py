@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     'address',
     'places',
     'widget_tweaks',
+    "compressor",
 ]
 
 SITE_ID = 1
@@ -168,9 +169,6 @@ else:
         }
     }
 
-# Password validation
-# https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -187,9 +185,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/4.0/topics/i18n/
-
 LANGUAGE_CODE = 'pl-pl'
 
 TIME_ZONE = 'Europe/Warsaw'
@@ -199,16 +194,19 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.0/howto/static-files/
-
 STATIC_URL = '/static/'
 STATICFILES_DIRS = ['static']
 STATIC_ROOT = BASE_DIR / "staticfiles"
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+)
+
+COMPRESS_ENABLED = True
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
