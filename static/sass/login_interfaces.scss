@@ -206,6 +206,8 @@ body {
   .buttons-three {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
   .buttons__btn {
     padding: 7px 21px;
@@ -242,6 +244,14 @@ body {
         font-size: 13px;
         margin: 10px 0;
       }
+    }
+  }
+}
+
+@media (min-width: 772px) {
+  .accounts {
+    .buttons-three {
+      flex-direction: row;
     }
   }
 }
