@@ -95,29 +95,6 @@
   </div>
 </div>
 
-<div class="modal fade" id="logoutWindow" tabindex="-1" aria-labelledby="Logout Window" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Wyloguj</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p class="m-0">Czy na pewno chcesz się wylogować?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
-        <form method="post" action="{% url 'account_logout' %}">
-          {% csrf_token %}
-          {% if redirect_field_value %}
-          <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
-          {% endif %}
-          <button type="submit" class="btn btn-primary">Wyloguj</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
 {% if user_garage != None %}
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script src="{% static 'js/entrepreneur_dashboard_charts.js' %}"></script>
