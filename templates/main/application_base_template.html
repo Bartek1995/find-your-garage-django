@@ -29,7 +29,7 @@
         <div class="profile-content">
           <img src="{% static 'img/anonymous-user-image.webp' %}" alt="Obrazek użytkownika anonimowego"/>
           <div class="profile_information">
-            <p class="m-0 profile_information__name">Bartłomiej Swatek</p>
+            <p class="m-0 profile_information__name">{{user.first_name}} {{user.last_name}}</p>
             <p class="m-0 profile_information__account-type">
               {% if request.user.is_entrepreneur %}
               Przedsiębiorca
@@ -46,7 +46,7 @@
       
         <ul class="nav-items" id="side-nav-items">
           <li class="nav-items__item">
-            <a href="#" class="item-expand__button collapsed">
+            <a href="{% url 'dashboard' %}" class="item-expand__button collapsed">
               <i class="main-icon fa-solid fa-house"></i>
               <span>Panel główny</span>
             </a>
@@ -61,7 +61,7 @@
             <div class="collapse" id="accountCollapse" data-bs-parent="#side-nav-items" aria-labelledby="accountExpand">
               <ul>
                 <li><a class="item-expnd__link" href="#">Profil</a></li>
-                <li><a class="item-expnd__link" href="#">Edytuj dane</a></li>
+                <li><a class="item-expnd__link" href="{% url 'edit_profile' %}">Edytuj dane</a></li>
                 <li><a class="item-expnd__link" href="{% url 'account_change_password' %}">Zmień hasło</a></li>
               </ul>
             </div>
@@ -148,7 +148,7 @@
             <div class="profile-content col">
             <img src="{% static 'img/anonymous-user-image.webp' %}" alt="Obrazek użytkownika anonimowego"/>
             <div class="profile_information">
-                <p class="m-0 profile_information__name">Bartłomiej Swatek</p>
+                <p class="m-0 profile_information__name">{{ user.first_name }} {{user.last_name}}</p>
                 <p class="m-0 profile_information__account-type">
                   {% if request.user.is_entrepreneur %}
                   Przedsiębiorca
@@ -168,7 +168,7 @@
         </div>
         <ul class="nav-items" id="top-nav-items">
             <li class="nav-items__item">
-            <a href="#" class="item-expand__button collapsed">
+            <a href="{% url 'dashboard' %}" class="item-expand__button collapsed">
                 <i class="main-icon fa-solid fa-house"></i>
                 <span>Panel główny</span>
             </a>
@@ -183,7 +183,7 @@
             <div class="collapse" id="accountCollapse" data-bs-parent="#top-nav-items" aria-labelledby="accountExpand">
                 <ul>
                   <li><a class="item-expnd__link" href="#">Profil</a></li>
-                  <li><a class="item-expnd__link" href="#">Edytuj dane</a></li>
+                  <li><a class="item-expnd__link" href="{% url 'edit_profile' %}">Edytuj dane</a></li>
                   <li><a class="item-expnd__link" href="{% url 'account_change_password' %}">Zmień hasło</a></li>
                 </ul>
             </div>
