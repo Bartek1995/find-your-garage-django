@@ -1,18 +1,18 @@
 import os
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
-from .validators import validate_special_characters, validate_poland_country
+from main.validators import validate_special_characters_and_numbers
+from .validators import validate_poland_country
 from accounts.models import CustomUser
 from places.fields import PlacesField
 import googlemaps
-from django.core.exceptions import ValidationError
 
 
 class Garage(models.Model):
 
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     
-    name = models.CharField(verbose_name="Name", max_length=50, null=False, blank=True, validators=[validate_special_characters])
+    name = models.CharField(verbose_name="Name", max_length=50, null=False, blank=True, validators=[validate_special_characters_and_numbers(message="Nazwa warsztatu nie może zawierać znaków specjalnych oraz cyfr")])
     nip_number = models.BigIntegerField(verbose_name="NIP Number", null=False, blank=True, validators=[MaxValueValidator(9999999999, message="Niepoprawny numer NIP"), MinValueValidator(1000000000, message="Niepoprawny numer NIP")])
     description = models.TextField(verbose_name="Description", max_length=300, null=True, blank=True)
     website_url = models.URLField(verbose_name="Website URL", max_length=50, null=False, blank=True)

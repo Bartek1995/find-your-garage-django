@@ -2,6 +2,9 @@ from django import forms
 from allauth.account.forms import SetPasswordField, PasswordField, SignupForm
 from django.contrib.auth.models import Group
 
+from main.validators import validate_special_characters_and_numbers
+from .models import CustomUser
+
 isCustomer = 'is_customer'
 isEntrepreneur = 'is_entrepreneur'
 
@@ -12,8 +15,8 @@ type_of_user_account = [
 
 
 class CustomSignupForm(SignupForm):
-    first_name = forms.CharField(max_length=30, label='Imię')
-    last_name = forms.CharField(max_length=30, label='Nazwisko')
+    first_name = forms.CharField(max_length=30, label='Imię', validators=[validate_special_characters_and_numbers(message="Imię nie może zawierać znaków specjalnych oraz cyfr")])
+    last_name = forms.CharField(max_length=30, label='Nazwisko', validators=[validate_special_characters_and_numbers(message="Nazwisko nie może zawierać znaków specjalnych oraz cyfr")])
     email = forms.EmailField(required=True)
     password1 = SetPasswordField()
     password2 = PasswordField()
@@ -34,3 +37,12 @@ class CustomSignupForm(SignupForm):
         user.groups.add(group)
         user.save()
         return user
+
+
+class ProfileEditForm(forms.ModelForm):
+    first_name = forms.CharField(max_length=30, label='Imię', validators=[validate_special_characters_and_numbers(message="Imię nie może zawierać znaków specjalnych oraz cyfr")])
+    last_name = forms.CharField(max_length=30, label='Nazwisko', validators=[validate_special_characters_and_numbers(message="Nazwisko nie może zawierać znaków specjalnych oraz cyfr")])
+    
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'first_name', 'last_name']
