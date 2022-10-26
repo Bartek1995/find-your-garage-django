@@ -15,12 +15,12 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='garage',
             name='country',
-            field=models.CharField(blank=True, max_length=30, null=True, validators=[garages.validators.validate_poland_country], verbose_name='Country'),
+            field=models.CharField(blank=True, max_length=30, null=True, verbose_name='Country'),
         ),
         migrations.AlterField(
             model_name='garage',
             name='name',
-            field=models.CharField(blank=True, max_length=50, validators=[garages.validators.validate_special_characters], verbose_name='Name'),
+            field=models.CharField(blank=True, max_length=50, verbose_name='Name'),
         ),
         migrations.AlterField(
             model_name='garage',
