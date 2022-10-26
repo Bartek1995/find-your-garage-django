@@ -413,15 +413,6 @@ body {
 
   .body-content__item {
     margin-top: 50px;
-
-    a {
-      text-decoration: none;
-      color: black;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
   }
 }
 
@@ -553,7 +544,7 @@ body {
   }
 }
 
-.garage-create{
+.garage-create, .profile-edit{
   h3 {
     text-decoration: underline;
   }
@@ -578,7 +569,7 @@ body {
     align-items: center;
   }
   
-  .garage-create {
+  .garage-create, .profile-edit {
     input {
       width: 100%;
     }

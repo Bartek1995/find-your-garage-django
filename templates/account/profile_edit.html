@@ -1,0 +1,54 @@
+{% extends "main/application_base_template.html" %}
+{% load widget_tweaks %}
+{% load i18n %}
+
+{% block head_title %}Edycja profilu{% endblock %}
+
+{% block content %}
+<div class="body-content" id="body-content">
+    <div class="container">
+    <h2>Edycja profilu</h2>
+    <section class="profile-edit body-content__item">
+        <div class="row justify-content-center m-0">
+            <div class="col-md-8">
+                <form method="POST" class="">
+                    {% csrf_token %}
+                    <h3 class="mb-4">Podstawowe informacje</h3>
+                    <p>Skorzystaj z poniższego formularza aby edytować informacje o swoim koncie użytkownika.</p>
+                    {{ form.username.label }}
+                    {% render_field form.username class+="form-control mb-2" %}
+                    {% if form.username.errors %}
+                    <div class="alert alert-danger p-3 col-12 col-xl-6">
+                        <strong>{{ form.username.errors.as_text | cut:"* " }}</strong>
+                    </div>
+                    {% endif %}
+                    <p class="form-text">Podaj nazwe użytkownika, nazwa musi być unikatowa. Oznacza to że nie ma możliwości posiadania takiej samej nazwy jak inny użytkownik.</p>
+                    <hr>
+
+                    {{ form.first_name.label }}
+                    {% render_field form.first_name class+="form-control mb-2" %}
+                    {% if form.first_name.errors %}
+                    <div class="alert alert-danger p-3 col-12 col-xl-6">
+                        <strong>{{ form.first_name.errors.as_text | cut:"* " }}</strong>
+                    </div>
+                    {% endif %}
+
+                    {{ form.last_name.label }}
+                    {% render_field form.last_name class+="form-control mb-2" %}
+                    {% if form.last_name.errors %}
+                    <div class="alert alert-danger p-3 col-12 col-xl-6">
+                        <strong>{{ form.last_name.errors.as_text | cut:"* " }}</strong>
+                    </div>
+                    {% endif %}
+                    <p class="form-text">Podaj swoje imie oraz nazwisko.</p>
+                    <p class="form-text">Dane te nie mogą zawierać znaków specjalnych oraz cyfr.</p>
+                    
+                    <button type="submit" class="btn app-btn app-primary-btn me-3 my-3">Zatwierdź</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    </div>
+</div>
+
+{% endblock %}
