@@ -4,6 +4,7 @@ from django.contrib.auth.models import Group
 
 from main.validators import validate_special_characters_and_numbers
 from .models import CustomUser
+# from myproject.azure_blob_storage import AzureStorage
 
 isCustomer = 'is_customer'
 isEntrepreneur = 'is_entrepreneur'
@@ -42,7 +43,9 @@ class CustomSignupForm(SignupForm):
 class ProfileEditForm(forms.ModelForm):
     first_name = forms.CharField(max_length=30, label='Imię', validators=[validate_special_characters_and_numbers(message="Imię nie może zawierać znaków specjalnych oraz cyfr")])
     last_name = forms.CharField(max_length=30, label='Nazwisko', validators=[validate_special_characters_and_numbers(message="Nazwisko nie może zawierać znaków specjalnych oraz cyfr")])
+    avatar = forms.ImageField(label="Zdjęcie", required=False, widget=forms.FileInput(attrs={'class': 'custom-file-input'}))
+    clean_profile_image = forms.BooleanField(required=False, label="Usuń zdjęcie profilowe", widget=forms.CheckboxInput())
     
     class Meta:
         model = CustomUser
-        fields = ['username', 'first_name', 'last_name']
+        fields = ['username', 'first_name', 'last_name', 'avatar']

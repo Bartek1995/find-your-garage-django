@@ -548,8 +548,18 @@ body {
   h3 {
     text-decoration: underline;
   }
-  input {
+  input:not([type='checkbox']) {
     width: 50%;
+  }
+  .current-profile-image {
+    margin-bottom: 10px;
+
+    .current-profile-image__image{
+      margin-bottom: 5px;
+      width: 100px;
+      height: 100px;
+      border-radius: 20px;
+    }
   }
   .places-widget {
     overflow: visible!important;
@@ -570,7 +580,7 @@ body {
   }
   
   .garage-create, .profile-edit {
-    input {
+    :not(input[type='checkbox']) {  
       width: 100%;
     }
   }

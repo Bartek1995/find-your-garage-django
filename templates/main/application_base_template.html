@@ -27,7 +27,11 @@
         </div>
       
         <div class="profile-content">
-          <img src="{% static 'img/anonymous-user-image.webp' %}" alt="Obrazek użytkownika anonimowego"/>
+          {% if request.user.avatar %}
+          <img src="{{request.user.avatar.url}}" alt="Zdjęcie profilowe użytkownika"/>
+          {% else %}
+          <img src="{% static 'img/anonymous-user-image.webp' %}" alt="Zdjęcie Anonimowego użytkownika"/>
+          {% endif %}
           <div class="profile_information">
             <p class="m-0 profile_information__name">{{user.first_name}} {{user.last_name}}</p>
             <p class="m-0 profile_information__account-type">
@@ -146,7 +150,11 @@
     
         <div class="row align-items-center">
             <div class="profile-content col">
-            <img src="{% static 'img/anonymous-user-image.webp' %}" alt="Obrazek użytkownika anonimowego"/>
+            {% if request.user.avatar %}
+            <img src="{{request.user.avatar.url}}" alt="Zdjęcie profilowe użytkownika"/>
+            {% else %}
+            <img src="{% static 'img/anonymous-user-image.webp' %}" alt="Zdjęcie Anonimowego użytkownika"/>
+            {% endif %}
             <div class="profile_information">
                 <p class="m-0 profile_information__name">{{ user.first_name }} {{user.last_name}}</p>
                 <p class="m-0 profile_information__account-type">

@@ -1,5 +1,6 @@
 {% extends "main/application_base_template.html" %}
 {% load widget_tweaks %}
+{% load static %}
 {% load i18n %}
 
 {% block head_title %}Edycja profilu{% endblock %}
@@ -11,7 +12,7 @@
     <section class="profile-edit body-content__item">
         <div class="row justify-content-center m-0">
             <div class="col-md-8">
-                <form method="POST" class="">
+                <form method="POST" class="" enctype="multipart/form-data">
                     {% csrf_token %}
                     <h3 class="mb-4">Podstawowe informacje</h3>
                     <p>Skorzystaj z poniższego formularza aby edytować informacje o swoim koncie użytkownika.</p>
@@ -43,6 +44,33 @@
                     <p class="form-text">Podaj swoje imie oraz nazwisko.</p>
                     <p class="form-text">Dane te nie mogą zawierać znaków specjalnych oraz cyfr.</p>
                     
+                    <h3 class="my-4">Zdjęcie profilowe</h3>
+                    <p>Dookonaj modyfikacji swojego zdjęcia profilowego.</p>
+                    <div class="current-profile-image">
+                        {% if request.user.avatar %}
+                            <img class="current-profile-image__image"src="{{request.user.avatar.url}}" alt="Zdjęcie profilowe użytkownika"/>
+                            <p class="form-text">Aktualne zdjecie profilowe</p>
+                            <div class="form-check mb-3">
+                                {{ form.clean_profile_image.label }}
+                                {% render_field form.clean_profile_image class+="form-check-input mb-2" %}
+                            </div>
+                        {% else %}
+                            <img class="current-profile-image__image" src="{% static 'img/anonymous-user-image.webp' %}" alt="Zdjęcie Anonimowego użytkownika"/>
+                            <p class="form-text">Brak zdjęcia profilowego</p>
+                        {% endif %}
+                    </div>
+
+                    <div id="avatar_select">
+                        {{ form.avatar.label }}
+                        {% render_field form.avatar class+="form-control mb-2" %}
+                        {% if form.avatar.errors %}
+                        <div class="alert alert-danger p-3 col-12 col-xl-6">
+                            <strong>{{ form.avatar.errors.as_text | cut:"* " }}</strong>
+                        </div>
+                        {% endif %}
+                        <p class="form-text">Wybierz plik graficzny aby zaktualizować zdjęcie profilowe</p>    
+                    </div>
+                    
                     <button type="submit" class="btn app-btn app-primary-btn my-3 me-3">Zatwierdź</button>
                     <a href="." class="btn app-btn app-primary-btn">Zresetuj zmiany<i class="fa-solid fa-arrow-rotate-right ms-2"></i> </a>
                 </form>
@@ -52,4 +80,5 @@
     </div>
 </div>
 
+<script src="{% static 'js/edit_profile.js' %}"></script>
 {% endblock %}
