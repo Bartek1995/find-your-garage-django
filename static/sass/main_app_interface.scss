@@ -264,10 +264,11 @@ body {
     
     img {
       height: 40px;
-      width: 40px;
+      min-width: 40px;
       margin-left: 8px;
-      margin-right: 18px;
       border-radius: 10px;
+      object-fit: cover;
+      margin-right: 18px;
     }
   }
   .logout-content {
@@ -312,6 +313,10 @@ body {
   }
 
   &:not(.active) .profile-content {
+    img {
+      margin-right: 0;
+      min-width: 40px;
+    }
     .profile_information {
       display: none;
     }
@@ -559,6 +564,7 @@ body {
       width: 100px;
       height: 100px;
       border-radius: 20px;
+      object-fit: cover;
     }
   }
   .places-widget {
