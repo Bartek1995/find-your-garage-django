@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'accounts',
     'main',
     'garages',
+    'cars',
 
     # Third-party software
     'allauth',
