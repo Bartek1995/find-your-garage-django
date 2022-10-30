@@ -1,9 +1,11 @@
 import os
 from django.core.files.storage import Storage
 from azure.storage.blob import BlobServiceClient
+from django.utils.deconstruct import deconstructible
 import uuid
 
 
+@deconstructible
 class OverwriteStorage(Storage):
     container = 'avatars'
     account_name = os.environ.get('BLOB_STORAGE_ACCOUNT_NAME')
