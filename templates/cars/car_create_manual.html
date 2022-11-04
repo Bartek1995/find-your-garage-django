@@ -1,0 +1,146 @@
+{% extends "main/application_base_template.html" %} 
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}Panel główny{% endblock %} 
+{% block extra_head %} 
+{% endblock %}
+ 
+{% block content %}
+
+<div class="body-content" id="body-content">
+  <div class="container">
+    <h2>Dodaj pojazd</h2>
+    <section class="car-create py-5">
+      <div class="row justify-content-center m-0">
+        <div class="col-md-8">
+          <form method="post">
+            {% csrf_token %}
+              <h3 class="mb-4">Informacje o samochodzie</h3>
+
+              {{ form.brand.label }}
+              {% render_field form.brand class+="form-control mb-2" %}
+              {% if form.brand.errors %}
+              <div class="alert alert-danger p-3">
+                  <strong>{{ form.brand.errors.as_text | cut:"* " }}</strong>
+              </div>
+              {% endif %}
+              <p class="form-text">Podaj markę pojazdu</p>
+              <p class="form-text">Wartość obowiązkowa.</p>
+              <hr>
+
+              {{ form.model.label }}
+              {% render_field form.model class+="form-control mb-2" %}
+              {% if form.model.errors %}
+              <div class="alert alert-danger p-3">
+                  <strong>{{ form.model.errors.as_text | cut:"* " }}</strong>
+              </div>
+              {% endif %}
+              <p class="form-text">Podaj model pojazdu</p>
+              <p class="form-text">Wartość obowiązkowa.</p>
+              <hr>
+
+              {{ form.vin_number.label }}
+              {% render_field form.vin_number class+="form-control mb-2" %}
+              {% if form.vin_number.errors %}
+              <div class="alert alert-danger p-3">
+                  <strong>{{ form.vin_number.errors.as_text | cut:"* " }}</strong>
+              </div>
+              {% endif %}
+              <p class="form-text">Podaj numer VIN swojego pojazdu.</p>
+              <p class="form-text">Numer powinien składać się z maksymalnie 17 znaków. W numerze nie mogą znajdować się znaki "O", "I", oraz "Q".</p>
+              <p class="form-text">Wartość obowiązkowa</p>
+              <hr>
+
+              {{ form.production_year.label }}
+              {% render_field form.production_year class+="form-control mb-2" %}
+              {% if form.production_year.errors %}
+              <div class="alert alert-danger p-3">
+                  <strong>{{ form.production_year.errors.as_text | cut:"* " }}</strong>
+              </div>
+              {% endif %}
+              <p class="form-text">Podaj rok produkcji samochodu.</p>
+              <p class="form-text">Wymagany jest do prawidłowej identyfikacji numeru VIN.</p>
+              <hr>
+
+              {{ form.body_type.label }}
+              {% render_field form.body_type class+="form-select mb-2" %}
+              {% if form.body_type.errors %}
+              <div class="alert alert-danger p-3">
+                  <strong>{{ form.body_type.errors.as_text | cut:"* " }}</strong>
+              </div>
+              {% endif %}
+              <p class="form-text">Wybierz typ nadowzia.</p>
+              <p class="form-text">Wartość nie obowiązkowa.</p>
+              <hr>
+
+              {{ form.engine_type.label }}
+              {% render_field form.engine_type class+="form-select mb-2" %}
+              {% if form.engine_type.errors %}
+              <div class="alert alert-danger p-3">
+                  <strong>{{ form.engine_type.errors.as_text | cut:"* " }}</strong>
+              </div>
+              {% endif %}
+              <p class="form-text">Podaj typ silnika.</p>
+              <p class="form-text">Wartość nie obowiązkowa.</p>
+              <hr>
+
+              {{ form.engine_capacity.label }}
+              <div class="input-group mb-2">
+                {% render_field form.engine_capacity class+="form-control" %}
+                <span class="input-group-text" id="basic-addon2">cm3</span>
+              </div>
+              {% if form.engine_capacity.errors %}
+              <div class="alert alert-danger p-3">
+                  <strong>{{ form.engine_capacity.errors.as_text | cut:"* " }}</strong>
+              </div>
+              {% endif %}
+              <p class="form-text">Podaj pojemność silnika.</p>
+              <p class="form-text">Pozostaw tą wartość pustą jeżeli Twój pojazd jest pojazdem elektrycznym.</p>
+              <hr>
+
+              {{ form.engine_power.label }}
+              <div class="input-group mb-2">
+                {% render_field form.engine_power class+="form-control" %}
+                <span class="input-group-text">KM</span>
+              </div>
+              {% if form.engine_power.errors %}
+              <div class="alert alert-danger p-3">
+                  <strong>{{ form.engine_power.errors.as_text | cut:"* " }}</strong>
+              </div>
+              {% endif %}
+              <p class="form-text">Podaj moc silnika.</p>
+              <p class="form-text">Wartość nie obowiązkowa.</p>
+              <hr>
+
+              {{ form.gearbox_type.label }}
+              {% render_field form.gearbox_type class+="form-select mb-2" %}
+              {% if form.gearbox_type.errors %}
+              <div class="alert alert-danger p-3">
+                  <strong>{{ form.gearbox_type.errors.as_text | cut:"* " }}</strong>
+              </div>
+              {% endif %}
+              <p class="form-text">Wybierz typ skrzyni biegów.</p>
+              <p class="form-text">Wartość nie obowiązkowa.</p>
+              <hr>
+
+              {{ form.engine_code.label }}
+              {% render_field form.engine_code class+="form-conrol mb-2" %}
+              {% if form.engine_code.errors %}
+              <div class="alert alert-danger p-3">
+                  <strong>{{ form.engine_code.errors.as_text | cut:"* " }}</strong>
+              </div>
+              {% endif %}
+              <p class="form-text">Podaj kod silnika.</p>
+              <p class="form-text">Wartość nie obowiązkowa.</p>
+              <hr>
+
+              <button type="submit" class="btn app-btn app-primary-btn my-3 me-3">Zatwierdź</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends "main/application_base_template.html" %} 
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}Panel główny{% endblock %} 
+{% block extra_head %} 
+{% endblock %}
+ 
+{% block content %}
+
+<div class="body-content" id="body-content">
+  <div class="container">
+    <h2>Wybór metody dodania pojazdu</h2>
+    <section class="car-create-select-method py-5">
+      <div class="row justify-content-center m-0">
+
+        <div class="col-5 d-none d-sm-flex car-create-select-method__box">
+          <h3 class="car-create-select-method__title">Ręczny</h3>
+          <div class="car-create-select-method__method_recommendation">
+            <p class="m-0"><i class="fa-solid fa-circle-check"></i>Zalecana</p>
+          </div>
+          <p class="car-create-select-method__description">Tworzenie pojazdu obdywa się na zasadzie ręcznego wypełnienie każdego pola w formularzu tworzenia pojazdu. Zapewnia do elastyczność w procesie uzupełniania informacji o swoim samochodzie.</p>
+          <a href="{% url 'car_create_manual' %}" class="btn app-btn app-primary-btn">Wybierz</a>
+        </div>
+
+        <div class="col-5 d-none d-sm-flex car-create-select-method__box">
+          <h3 class="car-create-select-method__title">Dekoder vin</h3>
+          <div class="car-create-select-method__method_recommendation">
+            <p class="m-0"><i class="fa-solid fa-xmark"></i>Nie zalecana</p>
+          </div>
+          <p class="car-create-select-method__description">Tworzenie pojazdu obdywa się na zasadzie dekodowania numeru VIN za pomocą naszego systemu. Prawdopodobnie będziesz musiał uzupełnić niektóre informacje o samochodzę korzystając z tej metody</p>
+          <a href="{% url 'car_create_vin_decoding' %}" class="btn app-btn app-primary-btn">Wybierz</a>
+          <p class="text-danger mt-2">Metoda ta jest w trakcie aktualizacji, dlatego zalecamy ręczne dodanie pojazdu.</p>
+        </div>
+
+        <div class="col d-sm-none px-0">
+          <div id="carMethodSelect" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              
+              <div class="carousel-item active">
+                <div class="car-create-select-method__box-mobile">
+                  <h3 class="car-create-select-method__title">Ręczny</h3>
+                  <div class="car-create-select-method__method_recommendation">
+                    <p class="m-0"><i class="fa-solid fa-circle-check"></i>Zalecana</p>
+                  </div>
+                  <p class="car-create-select-method__description">Tworzenie pojazdu obdywa się na zasadzie ręcznego wypełnienie każdego pola w formularzu tworzenia pojazdu. Zapewnia do elastyczność w procesie uzupełniania informacji o swoim samochodzie.</p>
+                  <a href="{% url 'car_create_manual' %}" class="btn app-btn app-primary-btn">Wybierz</a>
+                </div>
+              </div>
+
+              <div class="carousel-item">
+                <div class="car-create-select-method__box-mobile">
+                  <h3 class="car-create-select-method__title">Dekoder vin</h3>
+                  <div class="car-create-select-method__method_recommendation">
+                    <p class="m-0"><i class="fa-solid fa-xmark"></i>Nie zalecana</p>
+                  </div>
+                  <p class="car-create-select-method__description">Tworzenie pojazdu obdywa się na zasadzie dekodowania numeru VIN za pomocą naszego systemu. Prawdopodobnie będziesz musiał uzupełnić niektóre informacje o samochodzie korzystając z tej metody</p>
+                  <a href="{% url 'car_create_vin_decoding' %}" class="btn app-btn app-primary-btn">Wybierz</a>
+                  <p class="text-danger text-center mt-2">Metoda ta jest w trakcie aktualizacji, dlatego zalecamy ręczne dodanie pojazdu.</p>
+                </div>
+              </div>
+
+            </div>
+            <button class="carousel-control-prev carousel-control-buttons" type="button" data-bs-target="#carMethodSelect" data-bs-slide="prev">
+              <i class="fa-solid fa-chevron-left"></i>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next carousel-control-buttons" type="button" data-bs-target="#carMethodSelect" data-bs-slide="next">
+              <i class="fa-solid fa-chevron-right"></i>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+</div>
+
+{% endblock %}

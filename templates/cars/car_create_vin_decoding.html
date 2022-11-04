@@ -1,0 +1,47 @@
+{% extends "main/application_base_template.html" %} 
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}Panel główny{% endblock %} 
+{% block extra_head %} 
+{% endblock %}
+ 
+{% block content %}
+
+<div class="body-content" id="body-content">
+  <div class="container">
+    <h2>Dodaj pojazd</h2>
+    <section class="car-create py-5">
+      <div class="row justify-content-center m-0">
+        <div class="col-md-8">
+          <form method="post">
+            {% csrf_token %}
+              <h3 class="mb-4">Informacje o samochodzie</h3>
+              {{ form.vin_number.label }}
+              {% render_field form.vin_number class+="form-control mb-2" %}
+              {% if form.vin_number.errors %}
+              <div class="alert alert-danger p-3">
+                  <strong>{{ form.vin_number.errors.as_text | cut:"* " }}</strong>
+              </div>
+              {% endif %}
+              <p class="form-text">Podaj numer VIN swojego pojazdu.</p>
+              <p class="form-text">Numer powinien składać się z maksymalnie 17 znaków. W numerze nie mogą znajdować się znaki "O", "I", oraz "Q".</p>
+              <hr>
+              {{ form.production_year.label }}
+              {% render_field form.production_year class+="form-control mb-2" %}
+              {% if form.production_year.errors %}
+              <div class="alert alert-danger p-3">
+                  <strong>{{ form.production_year.errors.as_text | cut:"* " }}</strong>
+              </div>
+              {% endif %}
+              <p class="form-text">Podaj rok produkcji samochodu.</p>
+              <p class="form-text">Wymagany jest do prawidłowej identyfikacji numeru VIN.</p>
+              <button type="submit" class="btn app-btn app-primary-btn my-3 me-3">Zatwierdź</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+{% endblock %}
