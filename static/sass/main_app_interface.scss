@@ -608,7 +608,7 @@ body {
   h3 {
     text-decoration: underline;
   }
-  input:not([type='checkbox']) {
+  input:not([type='checkbox']), .input-group, select {
     width: 50%;
   }
   .current-profile-image {
@@ -642,10 +642,15 @@ body {
   }
   
   .garage-create, .profile-edit, .car-create{
-    :not(input[type='checkbox']) {  
+      input[type='text'],input[type='number']:not(.number-form), select {  
+        width: 100%;
+    }
+    
+    .input-group {
       width: 100%;
     }
   }
+
   .places-widget {
     overflow: visible!important;
 

@@ -1,4 +1,4 @@
-from django.views.generic import CreateView, TemplateView
+from django.views.generic import CreateView, TemplateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.contrib import messages
@@ -71,3 +71,34 @@ class CarCreateViewManual(LoginRequiredMixin, GroupRequiredMixin, CreateView):
         self.request.messages = messages.success(
             self.request, 'Samochód został dodany do bazy danych.')
         return super().form_valid(form)
+
+
+class CarEditView(LoginRequiredMixin, GroupRequiredMixin, UpdateView):
+    model = Car
+    fields = ['brand', 'model', 'vin_number', 'production_year', 'engine_capacity',
+              'gearbox_type', 'engine_type', 'engine_code', 'engine_power', 'body_type', ]
+    template_name = 'cars/car_edit.html'
+    success_url = '/dashboard'
+    required_group = "Customer"
+
+    def get(self, request, *args, **kwargs):
+        try:
+            car = self.get_object()
+        except Car.DoesNotExist:
+            self.messages = messages.error(self.request, "Nie znaleziono pojazdu o podanym ID.")
+            return redirect('/dashboard')
+        
+        if self.request.user.id == car.user_id:
+            return super().get(request, *args, **kwargs)
+        else:
+            self.messages = messages.error(self.request, "Nie masz uprawnień do edycji tego pojazdu.")
+            return redirect('/dashboard')
+        
+    def form_valid(self, form):
+        form.instance.user_id = self.request.user.id
+        self.request.messages = messages.success(
+            self.request, 'Samochód został zaktualizowany.')
+        return super().form_valid(form)
+
+    def get_object(self, queryset=None):
+        return Car.objects.get(id=self.kwargs['car_id'])
