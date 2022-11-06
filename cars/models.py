@@ -29,9 +29,9 @@ ENGINE_TYPE_CHOICES = (
 
 # DECLARATION OF GEARBOX TYPES
 
-MANUAL = 'manual'
-AUTOMATIC = 'automatic'
-SEMI_AUTOMATIC = 'semi-automatic'
+MANUAL = 'Manualna'
+AUTOMATIC = 'Automatyczna'
+SEMI_AUTOMATIC = 'Półautomatyczna'
 
 GEARBOX_TYPE_CHOICES = (
     (MANUAL, 'Manualna'),
@@ -44,7 +44,7 @@ HATCHBACK = 'Hatchback'
 COMBI = 'Combi'
 SEDAN = 'Sedan'
 COUPE = 'Coupe'
-CABRIOLLET = 'Cabriollet'
+CABRIOLLET = 'Kabriolet'
 SUV = 'SUV'
 VAN = 'Van'
 PICKUP = 'Pickup'
