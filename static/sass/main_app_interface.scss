@@ -58,6 +58,7 @@ body {
     list-style: none;
   }
 }
+
 .alert-error {
   background-color: #f8d7da;
 }
@@ -555,16 +556,27 @@ body {
     span {
       font-weight: bold;
     }
-    a {
-      padding: 8px;
-      background-color: #e1ecfb;
-      color: #09356a;
-      border-radius: 50%;
-      transition: background-color 0.3s, color 0.3s;
 
-      &:hover {
-        background-color: #09356a;
-        color: white;
+    .buttons {
+      display: flex;
+      justify-content: flex-end;
+
+      a, button {
+
+        background-color: #e1ecfb;
+        color: #09356a;
+        border-radius: 50%;
+        transition: background-color 0.3s, color 0.3s;
+        border: none;
+  
+        i {
+          padding: 10px;
+          font-size: 24px;
+        }
+        &:hover {
+          background-color: #09356a;
+          color: white;
+        }
       }
     }
   }

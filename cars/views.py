@@ -1,7 +1,8 @@
-from django.views.generic import CreateView, TemplateView, UpdateView, ListView
+from django.views.generic import CreateView, TemplateView, UpdateView, ListView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.contrib import messages
+from django.urls import reverse_lazy
 from .models import Car
 import requests
 
@@ -79,7 +80,7 @@ class CarEditView(LoginRequiredMixin, GroupRequiredMixin, UpdateView):
     fields = ['brand', 'model', 'vin_number', 'production_year', 'engine_capacity',
               'gearbox_type', 'engine_type', 'engine_code', 'engine_power', 'body_type', ]
     template_name = 'cars/car_edit.html'
-    success_url = '/dashboard'
+    success_url = reverse_lazy('car_list')
     required_group = "Customer"
 
     def get(self, request, *args, **kwargs):
@@ -117,3 +118,29 @@ class CarListView(LoginRequiredMixin, GroupRequiredMixin, ListView):
         context['cars'] = self.get_queryset()
         return context
 
+
+class CarDeleteView(LoginRequiredMixin, GroupRequiredMixin, DeleteView):
+    model = Car
+    required_group = "Customer"
+    success_url = '/dashboard'
+    
+    def get(self, request, *args, **kwargs):
+        self.messages = messages.error(self.request, "Skorzystaj z przycisku usuń, korzystając z funkcji wyświetlenia listy pojazdów, aby usunąć pojazd.")
+        return redirect('/dashboard')
+    
+    def post(self, *args, **kwargs):
+        try:
+            car = self.get_object()
+        except Car.DoesNotExist:
+            self.messages = messages.error(self.request, "Nie znaleziono pojazdu o podanym ID.")
+            return redirect('/dashboard')
+        
+        if self.request.user.id == car.user_id:
+            self.messages = messages.success(self.request, "Pojazd został usunięty")
+            return super().post(*args, **kwargs)
+        else:
+            self.messages = messages.error(self.request, "Nie masz uprawnień do usunięcia tego pojazdu.")
+            return redirect('/dashboard')
+        
+    def get_object(self, queryset=None):
+        return Car.objects.get(id=self.kwargs['car_id'])

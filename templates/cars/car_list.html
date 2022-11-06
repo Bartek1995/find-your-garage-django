@@ -13,55 +13,90 @@
     <section class="car-list py-5">
       <div class="row justify-content-center m-0">
 
-        {% for car in cars %}
-          <div class="col col-sm-6 col-md-5 col-lg-4">
-            <div class="card mb-4">
-              <div class="card-body">
-                <h5 class="card-title"><span>
-                  {% if car.brand or car.model %}
-                    {{ car.brand }} {{ car.model }}
-                  {% else %}
-                    Brak informacji o marce i modelu
-                  {% endif %}
-                </span></h5>
-                <p class="card-text">Rok produkcji: <span>{{ car.production_year }}</span></p>
-                <p class="card-text">Numer VIN: <span>{{ car.vin_number }}</span></p>
-                <p class="card-text">Moc silnika: <span>
-                  {% if car.engine_power %}
-                    {{ car.engine_power }} KM
-                  {% else %}
-                    Nie ustalono
-                  {% endif %}
-                </span></p>
-                <p class="card-text">Moc silnika: <span>
-                  {% if car.engine_capacity %}
-                    {{ car.engine_capacity }} cm3
-                  {% else %}
-                    Nie ustalono
-                  {% endif %}
-                </span></p>
-                <p class="card-text">Typ skrzyni biegów: <span>
-                  {% if car.gearbox_type %}
-                    {{ car.gearbox_type }}
-                  {% else %}
-                    Nie ustalono
-                  {% endif %}
-                </span></p>
-                <p class="card-text">Typ nadwozia: <span>
-                  {% if car.body_type %}
-                    {{ car.body_type }}
-                  {% else %}
-                    Nie ustalono
-                  {% endif %}
-                </span></p>
-                <hr>
-                <a href="{% url 'car_edit' car.id %}" class="me-2"><i class="fa-solid fa-pencil"></i></a>
-                <a href="" class=""><i class="fa-solid fa-trash-can"></i></a>
+        {% if cars %}
+          {% for car in cars %}
+            <div class="col col-sm-6 col-md-5 col-lg-4">
+              <div class="card mb-4">
+                <div class="card-body">
+                  <h5 class="card-title"><span>
+                    {% if car.brand or car.model %}
+                      {{ car.brand }} {{ car.model }}
+                    {% else %}
+                      Brak informacji o marce i modelu
+                    {% endif %}
+                  </span></h5>
+                  <p class="card-text">Rok produkcji: <span>{{ car.production_year }}</span></p>
+                  <p class="card-text">Numer VIN: <span>{{ car.vin_number }}</span></p>
+                  <p class="card-text">Moc silnika: <span>
+                    {% if car.engine_power %}
+                      {{ car.engine_power }} KM
+                    {% else %}
+                      Nie ustalono
+                    {% endif %}
+                  </span></p>
+                  <p class="card-text">Moc silnika: <span>
+                    {% if car.engine_capacity %}
+                      {{ car.engine_capacity }} cm3
+                    {% else %}
+                      Nie ustalono
+                    {% endif %}
+                  </span></p>
+                  <p class="card-text">Typ skrzyni biegów: <span>
+                    {% if car.gearbox_type %}
+                      {{ car.gearbox_type }}
+                    {% else %}
+                      Nie ustalono
+                    {% endif %}
+                  </span></p>
+                  <p class="card-text">Typ nadwozia: <span>
+                    {% if car.body_type %}
+                      {{ car.body_type }}
+                    {% else %}
+                      Nie ustalono
+                    {% endif %}
+                  </span></p>
+                  <hr>
+                  <div class="buttons">
+                    <a href="{% url 'car_edit' car.id %}" class="me-3"><i class="fa-solid fa-pencil"></i></a>
+                    <button class="me-2"><i class="fa-solid fa-trash-can" data-bs-toggle="modal" data-bs-target="#deleteCarModal-{{ car.id }}"></i></button>
+                  </div>
+                  <div class="modal fade" tabindex="-1" id="deleteCarModal-{{ car.id }}">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Potwierdzenie usunięcia</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <p>Czy na pewno chcesz usunąć ten pojazd?</p>
+                          <p>Tej operacji nie można cofnąć.</p>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn app-btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
+                          <form method="POST" class="d-inline" action="{% url 'car_delete' car.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn app-btn app-primary-btn">Usuń pojazd</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
+                </div>
               </div>
             </div>
+          {% endfor %}
+        {% else %}
+        <div class="col col-sm-8 col-md-8 col-lg-6">
+          <div class="card mb-4">
+            <div class="card-body">
+              <h5 class="card-title"><span>Brak pojazdów</span></h5>
+              <p class="card-text">Nie masz jeszcze żadnych pojazdów w bazie.</p>
+              <p class="card-text">Dodaj nowy pojazd, aby móc zacząć korzystać z aplikacji.</p>
+            </div>
           </div>
-        {% endfor %}
+        </div>
+        {% endif %}
 
       </div>
     </section>
