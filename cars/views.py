@@ -1,4 +1,4 @@
-from django.views.generic import CreateView, TemplateView, UpdateView
+from django.views.generic import CreateView, TemplateView, UpdateView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.contrib import messages
@@ -74,6 +74,7 @@ class CarCreateViewManual(LoginRequiredMixin, GroupRequiredMixin, CreateView):
 
 
 class CarEditView(LoginRequiredMixin, GroupRequiredMixin, UpdateView):
+    
     model = Car
     fields = ['brand', 'model', 'vin_number', 'production_year', 'engine_capacity',
               'gearbox_type', 'engine_type', 'engine_code', 'engine_power', 'body_type', ]
@@ -102,3 +103,17 @@ class CarEditView(LoginRequiredMixin, GroupRequiredMixin, UpdateView):
 
     def get_object(self, queryset=None):
         return Car.objects.get(id=self.kwargs['car_id'])
+    
+    
+class CarListView(LoginRequiredMixin, GroupRequiredMixin, ListView):
+    template_name = 'cars/car_list.html'
+    required_group = "Customer"
+    
+    def get_queryset(self):
+        return Car.objects.filter(user_id=self.request.user.id)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['cars'] = self.get_queryset()
+        return context
+

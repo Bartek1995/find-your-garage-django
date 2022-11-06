@@ -549,6 +549,27 @@ body {
   }
 }
 
+.car-list {
+  .card {
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+    span {
+      font-weight: bold;
+    }
+    a {
+      padding: 8px;
+      background-color: #e1ecfb;
+      color: #09356a;
+      border-radius: 50%;
+      transition: background-color 0.3s, color 0.3s;
+
+      &:hover {
+        background-color: #09356a;
+        color: white;
+      }
+    }
+  }
+}
+
 .car-create-select-method {
   .carousel {
 
@@ -604,6 +625,7 @@ body {
     }
   }
 }
+
 .garage-create, .profile-edit, .car-create{
   h3 {
     text-decoration: underline;

@@ -65,7 +65,6 @@
             </a>
             <div class="collapse" id="accountCollapse" data-bs-parent="#side-nav-items" aria-labelledby="accountExpand">
               <ul>
-                <li><a class="item-expnd__link" href="#">Profil</a></li>
                 <li><a class="item-expnd__link" href="{% url 'edit_profile' %}">Edytuj dane</a></li>
                 <li><a class="item-expnd__link" href="{% url 'account_change_password' %}">Zmień hasło</a></li>
               </ul>
@@ -103,7 +102,7 @@
             </a>
             <div class="collapse" id="carsCollapse" data-bs-parent="#side-nav-items" aria-labelledby="carsExpand">
               <ul>
-                <li><a class="item-expnd__link" href="#">Twoje pojazdy</a></li>
+                <li><a class="item-expnd__link" href="{% url 'car_list' %}">Twoje pojazdy</a></li>
                 <li><a class="item-expnd__link" href="{% url 'car_create_select_method' %}">Dodaj pojazd</a></li>
                 <li><a class="item-expnd__link" href="#">Edytuj pojazd</a></li>
               </ul>
@@ -191,7 +190,6 @@
             </a>
             <div class="collapse" id="accountCollapse" data-bs-parent="#top-nav-items" aria-labelledby="accountExpand">
                 <ul>
-                  <li><a class="item-expnd__link" href="#">Profil</a></li>
                   <li><a class="item-expnd__link" href="{% url 'edit_profile' %}">Edytuj dane</a></li>
                   <li><a class="item-expnd__link" href="{% url 'account_change_password' %}">Zmień hasło</a></li>
                 </ul>
@@ -207,7 +205,7 @@
             </a>
             <div class="collapse" id="carsCollapse" data-bs-parent="#top-nav-items" aria-labelledby="carsExpand">
                 <ul>
-                <li><a class="item-expnd__link" href="#">Twoje pojazdy</a></li>
+                <li><a class="item-expnd__link" href="{% url 'car_list' %}">Twoje pojazdy</a></li>
                 <li><a class="item-expnd__link" href="{% url 'car_create_select_method' %}">Dodaj pojazd</a></li>
                 <li><a class="item-expnd__link" href="#">Edytuj pojazd</a></li>
                 </ul>

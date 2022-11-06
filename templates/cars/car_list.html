@@ -1,0 +1,71 @@
+{% extends "main/application_base_template.html" %} 
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}Panel główny{% endblock %} 
+{% block extra_head %} 
+{% endblock %}
+ 
+{% block content %}
+
+<div class="body-content" id="body-content">
+  <div class="container">
+    <h2>Lista Twoich pojazdów</h2>
+    <section class="car-list py-5">
+      <div class="row justify-content-center m-0">
+
+        {% for car in cars %}
+          <div class="col col-sm-6 col-md-5 col-lg-4">
+            <div class="card mb-4">
+              <div class="card-body">
+                <h5 class="card-title"><span>
+                  {% if car.brand or car.model %}
+                    {{ car.brand }} {{ car.model }}
+                  {% else %}
+                    Brak informacji o marce i modelu
+                  {% endif %}
+                </span></h5>
+                <p class="card-text">Rok produkcji: <span>{{ car.production_year }}</span></p>
+                <p class="card-text">Numer VIN: <span>{{ car.vin_number }}</span></p>
+                <p class="card-text">Moc silnika: <span>
+                  {% if car.engine_power %}
+                    {{ car.engine_power }} KM
+                  {% else %}
+                    Nie ustalono
+                  {% endif %}
+                </span></p>
+                <p class="card-text">Moc silnika: <span>
+                  {% if car.engine_capacity %}
+                    {{ car.engine_capacity }} cm3
+                  {% else %}
+                    Nie ustalono
+                  {% endif %}
+                </span></p>
+                <p class="card-text">Typ skrzyni biegów: <span>
+                  {% if car.gearbox_type %}
+                    {{ car.gearbox_type }}
+                  {% else %}
+                    Nie ustalono
+                  {% endif %}
+                </span></p>
+                <p class="card-text">Typ nadwozia: <span>
+                  {% if car.body_type %}
+                    {{ car.body_type }}
+                  {% else %}
+                    Nie ustalono
+                  {% endif %}
+                </span></p>
+                <hr>
+                <a href="{% url 'car_edit' car.id %}" class="me-2"><i class="fa-solid fa-pencil"></i></a>
+                <a href="" class=""><i class="fa-solid fa-trash-can"></i></a>
+
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+
+      </div>
+    </section>
+  </div>
+</div>
+
+{% endblock %}
