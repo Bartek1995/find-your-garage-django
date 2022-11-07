@@ -86,7 +86,7 @@
 
               {{ form.engine_capacity.label }}
               <div class="input-group mb-2">
-                {% render_field form.engine_capacity class+="form-control" %}
+                {% render_field form.engine_capacity class+="form-control number-form" %}
                 <span class="input-group-text" id="basic-addon2">cm3</span>
               </div>
               {% if form.engine_capacity.errors %}
@@ -100,7 +100,7 @@
 
               {{ form.engine_power.label }}
               <div class="input-group mb-2">
-                {% render_field form.engine_power class+="form-control" %}
+                {% render_field form.engine_power class+="form-control number-form" %}
                 <span class="input-group-text">KM</span>
               </div>
               {% if form.engine_power.errors %}
