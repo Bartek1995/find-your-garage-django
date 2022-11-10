@@ -3,7 +3,10 @@ from accounts.models import CustomUser
 from pyvin import VIN
 from .validators import validate_vin
 from django.core.validators import MaxValueValidator, MinValueValidator
+
 import datetime
+import json
+import random
 
 # GET THE CURRENT YEAR
 date = datetime.datetime.today()
@@ -62,7 +65,6 @@ BODY_TYPE_CHOICES = (
 
 
 class Car(models.Model):
-    
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     
     brand = models.CharField(verbose_name="Marka", max_length=50, null=False, blank=True)
@@ -78,3 +80,11 @@ class Car(models.Model):
     
     def __str__(self):
         return f"{self.vin_number} - {self.brand} {self.model} {self.production_year}"
+    
+    def mock_information_about_orders(self):
+        """
+        Temporary method to mock information about orders.
+        """
+        self.cost_of_repairs = random.randint(100, 5000)
+        self.cost_of_parts = random.randint(100, 5000)
+        self.cost_of_anothers = random.randint(100, 5000)
