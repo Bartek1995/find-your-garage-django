@@ -1,35 +1,15 @@
-var options = {
-  series: [2500, 2500, 500],
-  chart: {
-  width: 450,
-  type: 'pie',
-},
-labels: ['Części', 'Koszty naprawy', 'Inne'],
-legend: {
-  position: 'right'
-},
-responsive: [
-  {
-  breakpoint: 500,
-  options: {
+carData.forEach(element => {
+  const options = {
+    series: [element.cost_of_parts, element.cost_of_repairs, element.cost_of_anothers],
     chart: {
-      width: 420
-    },
-    legend: {
-      position: 'right'
-    }
+    width: 350,
+    type: 'pie',
   },
-  breakpoint: 992,
-  options: {
-    chart: {
-      width: 350
-    },
-    legend: {
-      position: 'bottom'
-    }
-  }
-}]
-};
-
-var chart = new ApexCharts(document.querySelector("#sumOfCarCosts"), options);
-chart.render();
+  labels: ['Części', 'Koszty naprawy', 'Inne'],
+  legend: {
+    position: 'bottom'
+  },
+  };
+  const chart = new ApexCharts(document.querySelector("#sumOfCarCosts-" + element.id), options);
+  chart.render();
+});
