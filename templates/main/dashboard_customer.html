@@ -1,76 +1,108 @@
 {% extends "main/application_base_template.html" %} {% load static %}
  {% block title %}Panel główny{% endblock %} {% block extra_head %} 
+ 
 
  {% endblock %}
- 
- 
- {% block content %}
-<div class="body-content" id="body-content">
-  <div class="container">
-    {% if user_car != None %}
-    <section class="car-information">
-      <div class="row justify-content-center">
-        <div class="col-12 col-md-6 col-xl-5">
-          <div class="car-information__info-box about-car py-3">
-              <p class="info-box__title m-0">Pojazd</p>
-              <hr>
-              <i class="fa-solid fa-car info-box__icon"></i>
-              <p class="info-box__details">Marka: <span>Audi</span></p>
-              <p class="info-box__details">Model: <span>RS7</span></p>
-              <p class="info-box__details">Rok produkcji: <span>2007</span></p>
-              <p class="info-box__details m-0">VIN: <span>WF0KXXGCBKBL81843</span></p>
-          </div>
-        </div>
-        <div class="col-12 col-md-6 col-xl-5 mt-3 mt-md-0">
-          <div class="car-information__info-box about-car py-3">
-              <p class="info-box__title m-0">Terminy</p>
-              <hr>
-              <i class="fa-solid fa-calendar-day info-box__icon"></i>
-              <p class="m-0">Badanie techniczne:</p>
-              <p class="m-0">Aktualne <i class="fa-solid fa-circle-check about-car__review-icon-ok"></i></p>
-              <p class="info-box__details">Termin: <span>22.02.2022</span></p>
-              <p class="m-0">Ubezpiecznie pojazdu:</p>
-              <p class="info-box__details m-0">Ważne do: <span>11.10.2022</span></p>
-          </div>
-        </div>
-        <div class="col-12 col-md-6 col-xl-5 my-3">
-          <div class="car-information__info-box last-service py-3">
-            <p class="info-box__title m-0">Ostatnia wykonywana usługa</p>
-            <hr>
-            <i class="fa-solid fa-toolbox info-box__icon"></i>
-            <p class="info-box__details">Nazwa warsztatu: <span>Auto Sudacki</span></p>
-            <p class="info-box__details">Data wykonania: <span>19.07.2022</span></p>
-            <p class="info-box__details">Koszt: <span>370zł</span></p>
-            <button class="btn app-btn app-primary-btn">Więcej informacji</button>
-          </div>
-        </div>
-        <div class="col-12 col-md-6 col-xl-5 my-3">
-          <div class="car-information__info-box d-flex align-items-center justify-content-center">
-            <div id="sumOfCarCosts"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-    {% else %}
-    <section class="no-car">
-      <div class="row justify-content-center">
-        <div class="col col-md-8 col-lg-6 no-car__box">
-          <h3 class="box__title mb-2">Witaj Kliencie!</h3>
-          <hr>
-          <p>Dziękujemy za skorzystanie z naszego serwisu.</p>
-          <p>Aby w pełni wykorzystać potencjał naszego serwisu zalecamy abyś w pierwszej kolejności dodał swój pierwszy pojazd.</p>
-          <p>Dzięki temu będziesz miał możliwość przesłania informacji na jego temat odrazu, podczas tworzenia zlecenia w wybranej przez siebie placówce.</p>
-          <p>Użyj przycisku poniżej aby dodać pojazd do naszego systemu.</p>
-          <a href="{% url 'car_create_select_method' %}" class="btn app-btn app-primary-btn">Dodaj pojazd</a>
-        </div>
-      </div>
-    </section>
-    {% endif %}
-  </div>
-</div>
 
-{% if user_garage != None %}
-<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-<script src="{% static 'js/customer_dashboard_charts.js' %}"></script>
-{% endif %}
+{% block content %}
+  <div class="body-content" id="body-content">
+    <div class="container p-0">
+      {% if user_cars != None %}
+
+      <div class="d-flex justify-content-between mb-3">
+        <button class="btn app-btn app-primary-btn" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev"><i class="fa-solid fa-arrow-left"></i></button>
+        <h2 class="mb-0">Pulpit</h2>
+        <button class="btn app-btn app-primary-btn" data-bs-target="#carouselExampleIndicators" data-bs-slide="next"><i class="fa-solid fa-arrow-right"></i></button>
+      </div>
+
+      <div id="carouselExampleIndicators" class="carousel slide dashboard-carousel" data-ride="carousel" data-interval="false">
+        <div class="carousel-indicators">
+          {% for car in user_cars %}
+            {% if forloop.first %}
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            {% else %}
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ forloop.counter0 }}"aria-current="true" aria-label="Slide {{ forloop.counter }}"></button>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        <div class="carousel-inner p-2">
+          {% for car in user_cars %}
+            {% if forloop.first %}
+              <div class="carousel-item active">
+            {% else %}
+              <div class="carousel-item">
+            {% endif %}
+              <section class="car-information">
+                <div class="row justify-content-center">
+                  <div class="col-12 col-md-6 col-xl-5">
+                    <div class="car-information__info-box about-car py-3">
+                        <p class="info-box__title m-0">Pojazd</p>
+                        <hr>
+                        <i class="fa-solid fa-car info-box__icon"></i>
+                        <p class="info-box__details">Marka: <span>{{ car.brand }}</span></p>
+                        <p class="info-box__details">Model: <span>{{ car.model }}</span></p>
+                        <p class="info-box__details">Rok produkcji: <span>{{ car.production_year }}</span></p>
+                        <p class="info-box__details m-0">VIN: <span>WF0KXXGCBKBL81843</span></p>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-6 col-xl-5 mt-3 mt-md-0">
+                    <div class="car-information__info-box about-car py-3">
+                        <p class="info-box__title m-0">Terminy</p>
+                        <hr>
+                        <i class="fa-solid fa-calendar-day info-box__icon"></i>
+                        <p class="m-0">Badanie techniczne:</p>
+                        <p class="m-0">Aktualne <i class="fa-solid fa-circle-check about-car__review-icon-ok"></i></p>
+                        <p class="info-box__details">Termin: <span>22.02.2022</span></p>
+                        <p class="m-0">Ubezpiecznie pojazdu:</p>
+                        <p class="info-box__details m-0">Ważne do: <span>11.10.2022</span></p>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-6 col-xl-5 my-3">
+                    <div class="car-information__info-box last-service py-3">
+                      <p class="info-box__title m-0">Ostatnia wykonywana usługa</p>
+                      <hr>
+                      <i class="fa-solid fa-toolbox info-box__icon"></i>
+                      <p class="info-box__details">Nazwa warsztatu: <span>Auto Sudacki</span></p>
+                      <p class="info-box__details">Data wykonania: <span>19.07.2022</span></p>
+                      <p class="info-box__details">Koszt: <span>370zł</span></p>
+                      <button class="btn app-btn app-primary-btn">Więcej informacji</button>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-6 col-xl-5 my-3">
+                    <div class="car-information__info-box d-flex align-items-center justify-content-center p-3">
+                      <div id="sumOfCarCosts-{{car.id}}"></div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+              </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      {% else %}
+      <section class="no-car">
+        <div class="row justify-content-center">
+          <div class="col col-md-8 col-lg-6 no-car__box">
+            <h3 class="box__title mb-2">Witaj Kliencie!</h3>
+            <hr>
+            <p>Dziękujemy za skorzystanie z naszego serwisu.</p>
+            <p>Aby w pełni wykorzystać potencjał naszego serwisu zalecamy abyś w pierwszej kolejności dodał swój pierwszy pojazd.</p>
+            <p>Dzięki temu będziesz miał możliwość przesłania informacji na jego temat odrazu, podczas tworzenia zlecenia w wybranej przez siebie placówce.</p>
+            <p>Użyj przycisku poniżej aby dodać pojazd do naszego systemu.</p>
+            <a href="{% url 'car_create_select_method' %}" class="btn app-btn app-primary-btn">Dodaj pojazd</a>
+          </div>
+        </div>
+      </section>
+      {% endif %}
+    </div>
+
+  {% if user_cars != None %}
+  <script type="text/javascript">
+    const carData = JSON.parse('{{ user_cars_json|safe }}');
+  </script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="{% static 'js/customer_dashboard_charts.js' %}"></script>
+  {% endif %}
 {% endblock %}
