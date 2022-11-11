@@ -59,7 +59,6 @@
               </div>
               {% endif %}
               <p class="form-text">Podaj rok produkcji samochodu.</p>
-              <p class="form-text">Wymagany jest do prawidłowej identyfikacji numeru VIN.</p>
               <hr>
 
               {{ form.body_type.label }}
@@ -124,7 +123,7 @@
               <hr>
 
               {{ form.engine_code.label }}
-              {% render_field form.engine_code class+="form-conrol mb-2" %}
+              {% render_field form.engine_code class+="form-control mb-2" %}
               {% if form.engine_code.errors %}
               <div class="alert alert-danger p-3">
                   <strong>{{ form.engine_code.errors.as_text | cut:"* " }}</strong>
