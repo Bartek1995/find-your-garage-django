@@ -25,7 +25,7 @@
               </div>
               {% endif %}
               <p class="form-text">Podaj markę pojazdu</p>
-              <p class="form-text">Wartość obowiązkowa.</p>
+              <p class="form-text">Pole obowiązkowe.</p>
               <hr>
 
               {{ form.model.label }}
@@ -36,7 +36,7 @@
               </div>
               {% endif %}
               <p class="form-text">Podaj model pojazdu</p>
-              <p class="form-text">Wartość obowiązkowa.</p>
+              <p class="form-text">Pole obowiązkowe.</p>
               <hr>
 
               {{ form.vin_number.label }}
@@ -48,7 +48,7 @@
               {% endif %}
               <p class="form-text">Podaj numer VIN swojego pojazdu.</p>
               <p class="form-text">Numer powinien składać się z maksymalnie 17 znaków. W numerze nie mogą znajdować się znaki "O", "I", oraz "Q".</p>
-              <p class="form-text">Wartość obowiązkowa</p>
+              <p class="form-text">Pole obowiązkowe.</p>
               <hr>
 
               {{ form.production_year.label }}
@@ -59,6 +59,7 @@
               </div>
               {% endif %}
               <p class="form-text">Podaj rok produkcji samochodu.</p>
+              <p class="form-text">Pole obowiązkowe.</p>
               <hr>
 
               {{ form.body_type.label }}
@@ -69,7 +70,7 @@
               </div>
               {% endif %}
               <p class="form-text">Wybierz typ nadowzia.</p>
-              <p class="form-text">Wartość nie obowiązkowa.</p>
+              <p class="form-text">Pole nie obowiązkowe.</p>
               <hr>
 
               {{ form.engine_type.label }}
@@ -80,7 +81,7 @@
               </div>
               {% endif %}
               <p class="form-text">Podaj typ silnika.</p>
-              <p class="form-text">Wartość nie obowiązkowa.</p>
+              <p class="form-text">Pole nie obowiązkowe.</p>
               <hr>
 
               {{ form.engine_capacity.label }}
@@ -94,7 +95,7 @@
               </div>
               {% endif %}
               <p class="form-text">Podaj pojemność silnika.</p>
-              <p class="form-text">Pozostaw tą wartość pustą jeżeli Twój pojazd jest pojazdem elektrycznym.</p>
+              <p class="form-text">Pozostaw te pole puste jeżeli Twój pojazd jest pojazdem elektrycznym.</p>
               <hr>
 
               {{ form.engine_power.label }}
@@ -108,7 +109,7 @@
               </div>
               {% endif %}
               <p class="form-text">Podaj moc silnika.</p>
-              <p class="form-text">Wartość nie obowiązkowa.</p>
+              <p class="form-text">Pole nie obowiązkowe.</p>
               <hr>
 
               {{ form.gearbox_type.label }}
@@ -119,7 +120,7 @@
               </div>
               {% endif %}
               <p class="form-text">Wybierz typ skrzyni biegów.</p>
-              <p class="form-text">Wartość nie obowiązkowa.</p>
+              <p class="form-text">Pole nie obowiązkowe.</p>
               <hr>
 
               {{ form.engine_code.label }}
@@ -130,7 +131,7 @@
               </div>
               {% endif %}
               <p class="form-text">Podaj kod silnika.</p>
-              <p class="form-text">Wartość nie obowiązkowa.</p>
+              <p class="form-text">Pole nie obowiązkowe.</p>
               <hr>
 
               <button type="submit" class="btn app-btn app-primary-btn my-3 me-3">Zatwierdź</button>
