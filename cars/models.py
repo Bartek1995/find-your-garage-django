@@ -67,16 +67,18 @@ BODY_TYPE_CHOICES = (
 class Car(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     
-    brand = models.CharField(verbose_name="Marka", max_length=50, null=False, blank=True)
-    model = models.CharField(verbose_name="Model", max_length=50, null=False, blank=True)
-    vin_number = models.CharField(verbose_name="Numer VIN", validators=[validate_vin], max_length=17, null=False, blank=True)
+    brand = models.CharField(verbose_name="Marka", max_length=50, null=False, blank=False)
+    model = models.CharField(verbose_name="Model", max_length=50, null=False, blank=False)
+    vin_number = models.CharField(verbose_name="Numer VIN", validators=[validate_vin], max_length=17, null=False, blank=False)
     engine_capacity = models.PositiveIntegerField(verbose_name="Pojemność silnika", null=True, blank=True)
-    production_year = models.IntegerField(verbose_name="Rok produkcji", validators=[MinValueValidator(1970, message="Rok produkcji nie może być mniejszy niż 1970"), MaxValueValidator(actual_year, message=f"Rok produkcji nie może być wyższy niż {actual_year}.")], null=True, blank=True)
+    production_year = models.IntegerField(verbose_name="Rok produkcji", validators=[MinValueValidator(1970, message="Rok produkcji nie może być mniejszy niż 1970"), MaxValueValidator(actual_year, message=f"Rok produkcji nie może być wyższy niż {actual_year}.")], null=True, blank=False)
     engine_type = models.CharField(verbose_name="Rodzaj silnika", choices=ENGINE_TYPE_CHOICES, max_length=50, null=True, blank=True)
     gearbox_type = models.CharField(verbose_name="Rodzaj skrzyni biegów", choices=GEARBOX_TYPE_CHOICES, max_length=50, null=True, blank=True)
     engine_power = models.PositiveIntegerField(verbose_name="Moc silnika", null=True, blank=True)
     engine_code = models.CharField(verbose_name="Kod silnika", max_length=30, null=True, blank=True)
     body_type = models.CharField(verbose_name="Typ nadwozia", choices=BODY_TYPE_CHOICES, max_length=50, null=True, blank=True)
+    date_of_expiry_of_insurance = models.DateField(verbose_name="Data ważności ubezpieczenia OC", null=True, blank=False)
+    date_of_expiry_of_technical_inspection = models.DateField(verbose_name="Data ważności przeglądu technicznego", null=True, blank=False)
     
     def __str__(self):
         return f"{self.vin_number} - {self.brand} {self.model} {self.production_year}"
