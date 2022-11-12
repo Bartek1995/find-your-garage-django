@@ -71,6 +71,7 @@ INSTALLED_APPS = [
     'places',
     'widget_tweaks',
     "compressor",
+    'storages',
 ]
 
 SITE_ID = 1
@@ -194,12 +195,10 @@ USE_I18N = True
 
 USE_TZ = True
 
+# Activate Django-Heroku for production environment before staticfiles storage settings
+if os.environ.get('PRODUCTIONVERSION') == 'True':
+    django_heroku.settings(locals())
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = ['static']
-STATIC_ROOT = BASE_DIR / "staticfiles"
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -207,7 +206,26 @@ STATICFILES_FINDERS = (
     'compressor.finders.CompressorFinder',
 )
 
+DEFAULT_FILE_STORAGE = 'myproject.azure_static_files_serving.AzureMediaStorage'
+STATICFILES_STORAGE = 'myproject.azure_static_files_serving.AzureStaticStorage'
+
+STATIC_LOCATION = "static"
+MEDIA_LOCATION = "media"
+
+
+AZURE_ACCOUNT_NAME = os.environ.get('BLOB_STORAGE_ACCOUNT_NAME')
+AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
+STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
+MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 COMPRESS_ENABLED = True
 
-# Activate Django-Heroku.
-django_heroku.settings(locals())
+# Activate Django-Heroku for local environment
+if os.environ.get('PRODUCTIONVERSION') == 'False':
+    django_heroku.settings(locals())
