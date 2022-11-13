@@ -15,7 +15,7 @@
         <div class="col-md-8">
           <form method="post">
             {% csrf_token %}
-              <h3 class="mb-4">Informacje o samochodzie</h3>
+              <h3 class="mb-4">Podstawowe informacje</h3>
 
               {{ form.brand.label }}
               {% render_field form.brand class+="form-control mb-2" %}
@@ -132,6 +132,27 @@
               {% endif %}
               <p class="form-text">Podaj kod silnika.</p>
               <p class="form-text">Pole nie obowiązkowe.</p>
+              <hr>
+              <h3 class="mb-4">Informacje dodatkowe</h3>
+
+              {{ form.date_of_expiry_of_insurance.label }}
+              {% render_field form.date_of_expiry_of_insurance type="date" class+="form-control mb-2" %}
+              {% if form.date_of_expiry_of_insurance.errors %}
+              <div class="alert alert-danger p-3">
+                  <strong>{{ form.date_of_expiry_of_insurance.errors.as_text | cut:"* " }}</strong>
+              </div>
+              {% endif %}
+              <p class="form-text">Podaj datę ważności ubezpieczenia</p>
+              <hr>
+
+              {{ form.date_of_expiry_of_technical_inspection.label }}
+              {% render_field form.date_of_expiry_of_technical_inspection type="date" class+="form-control mb-2" %}
+              {% if form.date_of_expiry_of_technical_inspection.errors %}
+              <div class="alert alert-danger p-3">
+                  <strong>{{ form.date_of_expiry_of_technical_inspection.errors.as_text | cut:"* " }}</strong>
+              </div>
+              {% endif %}
+              <p class="form-text">Podaj datę ważności przeglądu technicznego</p>
               <hr>
 
               <button type="submit" class="btn app-btn app-primary-btn my-3 me-3">Zatwierdź</button>
