@@ -52,10 +52,15 @@
                         <hr>
                         <i class="fa-solid fa-calendar-day info-box__icon"></i>
                         <p class="m-0">Badanie techniczne:</p>
+                        <hr>
+                        {% if car.date_of_expiry_of_technical_inspection_is_past_due %}
                         <p class="m-0">Aktualne <i class="fa-solid fa-circle-check about-car__review-icon-ok"></i></p>
-                        <p class="info-box__details">Termin: <span>22.02.2022</span></p>
+                        {% else %}
+                        <p class="m-0">Nieaktualne <i class="fa-solid fa-circle-xmark about-car__review-icon-not_ok"></i></p>
+                        {% endif %}
+                        <p class="info-box__details">Termin: <span>{{ car.date_of_expiry_of_technical_inspection }}</span></p>
                         <p class="m-0">Ubezpiecznie pojazdu:</p>
-                        <p class="info-box__details m-0">Ważne do: <span>11.10.2022</span></p>
+                        <p class="info-box__details m-0">Ważne do: <span>{{ car.date_of_expiry_of_insurance}}</span></p>
                     </div>
                   </div>
                   <div class="col-12 col-md-6 col-xl-5 my-3">
