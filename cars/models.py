@@ -90,3 +90,13 @@ class Car(models.Model):
         self.cost_of_repairs = random.randint(100, 5000)
         self.cost_of_parts = random.randint(100, 5000)
         self.cost_of_anothers = random.randint(100, 5000)
+        
+    @property
+    def date_of_expiry_of_insurance_is_past_due(self):
+        temp_date_of_expiry_of_insurance = datetime.datetime.strptime(self.date_of_expiry_of_insurance, "%Y-%m-%d")
+        return date.today() < temp_date_of_expiry_of_insurance
+    
+    @property
+    def date_of_expiry_of_technical_inspection_is_past_due(self):
+        temp_date_of_expiry_of_technical_inspection = datetime.datetime.strptime(self.date_of_expiry_of_technical_inspection, "%Y-%m-%d")
+        return date.today() < temp_date_of_expiry_of_technical_inspection
