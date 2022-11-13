@@ -2,11 +2,11 @@ from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.decorators.gzip import gzip_page
 from django.utils.decorators import method_decorator
-from django.core import serializers
 
 from garages.models import Garage
 from cars.models import Car
 
+import datetime
 from json import dumps
 
 
@@ -50,6 +50,7 @@ class Dashboard(LoginRequiredMixin, TemplateView):
                 context['user_cars'] = Car.objects.filter(user=self.request.user)
                 if not context['user_cars']:
                     raise Car.DoesNotExist
+                
                 for car in context['user_cars']:
                     # MOCKING CARS COSTS TO CONSTRUCT CHARTS - IT'S TEMPORARY SOLUTION
                     car.mock_information_about_orders()
@@ -57,6 +58,10 @@ class Dashboard(LoginRequiredMixin, TemplateView):
                     del car_as_dict['_state']
                     mocked_data.append(car_as_dict)
                 
+                for car in mocked_data:
+                    for key in car:
+                        if isinstance(car[key], datetime.date):
+                            car[key] = str(car[key])
                 dataJSON = dumps(mocked_data)
                 context['user_cars_json'] = dataJSON
                 
