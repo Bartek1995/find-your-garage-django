@@ -56,6 +56,21 @@
                     {% endif %}
                   </span></p>
                   <hr>
+                  <p class="card-text">Termin przeglądu: <span>
+                    {% if car.date_of_expiry_of_technical_inspection %}
+                      {{ car.date_of_expiry_of_technical_inspection }}
+                    {% else %}
+                      Nie ustalono
+                    {% endif %}
+                  </span></p>
+                  <p class="card-text">Termin ubezpiecznia: <span>
+                    {% if car.date_of_expiry_of_insurance %}
+                      {{ car.date_of_expiry_of_insurance }}
+                    {% else %}
+                      Nie ustalono
+                    {% endif %}
+                  </span></p>
+                  <hr>
                   <div class="buttons">
                     <a href="{% url 'car_edit' car.id %}" class="me-3"><i class="fa-solid fa-pencil"></i></a>
                     <button class="me-2"><i class="fa-solid fa-trash-can" data-bs-toggle="modal" data-bs-target="#deleteCarModal-{{ car.id }}"></i></button>
