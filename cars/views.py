@@ -7,6 +7,7 @@ import requests
 
 from .models import Car
 from accounts.mixins import GroupRequiredMixin
+from .forms import CarEditForm
 
 
 class CarCreateViewSelectMethod(LoginRequiredMixin, GroupRequiredMixin, TemplateView):
@@ -65,7 +66,7 @@ class CarCreateViewManual(LoginRequiredMixin, GroupRequiredMixin, CreateView):
     """
     model = Car
     fields = ['brand', 'model', 'vin_number', 'production_year', 'engine_capacity',
-              'gearbox_type', 'engine_type', 'engine_code', 'engine_power', 'body_type', ]
+              'gearbox_type', 'engine_type', 'engine_code', 'engine_power', 'body_type', 'date_of_expiry_of_insurance', 'date_of_expiry_of_technical_inspection']
     template_name = 'cars/car_create_manual.html'
     success_url = '/dashboard'
     required_group = "Customer"
@@ -82,12 +83,11 @@ class CarEditView(LoginRequiredMixin, GroupRequiredMixin, UpdateView):
     View used for editing car.
     """
     model = Car
-    fields = ['brand', 'model', 'production_year', 'engine_capacity',
-              'gearbox_type', 'engine_type', 'engine_code', 'engine_power', 'body_type']
+    form_class = CarEditForm
     template_name = 'cars/car_edit.html'
     success_url = reverse_lazy('car_list')
     required_group = "Customer"
-
+    
     def get(self, request, *args, **kwargs):
         try:
             car = self.get_object()
