@@ -55,8 +55,11 @@
 
         <div class="col-12 col-md-6 col-lg-6 col-xl-4 mb-3">
           <div class="garage-information__info-box about-garage pt-3">
-            <h4 class="info-box__title">Informacje o warsztacie</h4>
-            <i class="fa-solid fa-warehouse info-box__icon"></i>
+            <div class="garage-information__title-box">
+              <h4 class="info-box__title">Informacje o warsztacie</h4>
+              <hr>
+              <i class="fa-solid fa-warehouse info-box__icon"></i>
+            </div>
             <p class="info-box__garage-name">{{ user_garage.name}}</p>
             <ul class="about-garage__address">
               <li><i class="fa-solid fa-house address__icon"></i><span>{{ user_garage.city }}</span></li>
