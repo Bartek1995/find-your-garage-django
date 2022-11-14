@@ -83,10 +83,9 @@
                 {% if not user_garage %}
                 <li><a class="item-expnd__link" href="{% url 'garage_create' %}">Utwórz warsztat</a></li>
                 {% else %}
-                <li><a class="item-expnd__link" href="#">Edytuj dane</a></li>
+                <li><a class="item-expnd__link" href="{% url 'garage_edit' user_garage.id %}">Edytuj dane</a></li>
                 <li><a class="item-expnd__link" href="#">Wizytówka</a></li>
                 <li><a class="item-expnd__link" href="#">Usuń warsztat</a></li>
-                <li><a class="item-expnd__link" href="#">Zawieś działalność</a></li>
                 {% endif %}
               </ul>
             </div>
@@ -221,12 +220,11 @@
               <div class="collapse" id="garagesCollapse" data-bs-parent="#top-nav-items" aria-labelledby="garagesExpand">
                 <ul>
                   {% if not user_garage %}
-                  <li><a class="item-expnd__link" href="#">Dodaj warsztat</a></li
+                  <li><a class="item-expnd__link" href="{% url 'garage_create' %}">Utwórz warsztat</a></li>
                   {% else %}
-                  <li><a class="item-expnd__link" href="#">Edytuj dane</a></li>
+                  <li><a class="item-expnd__link" href="{% url 'garage_edit' user_garage.id %}">Edytuj dane</a></li>
                   <li><a class="item-expnd__link" href="#">Wizytówka</a></li>
                   <li><a class="item-expnd__link" href="#">Usuń warsztat</a></li>
-                  <li><a class="item-expnd__link" href="#">Zawieś działalność</a></li>
                   {% endif %}
                 </ul>
               </div>
