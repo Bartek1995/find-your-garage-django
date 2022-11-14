@@ -99,6 +99,7 @@ ANYMAIL = {
 
 GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY')
 PLACES_MAPS_API_KEY = os.environ.get('GOOGLE_API_KEY')
+PLACES_MAP_OPTIONS = '{"center": { "lat": 52, "lng": 19.145136 }, "zoom": 7}'
 PLACES_MARKER_OPTIONS = '{"draggable": true}'
 PLACES_MAP_WIDGET_HEIGHT = 480
 
