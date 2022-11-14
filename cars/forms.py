@@ -8,5 +8,5 @@ class CarEditForm(forms.ModelForm):
 
     class Meta:
         model = Car
-        fields = ['brand', 'model', 'vin_number', 'production_year', 'engine_capacity', 'gearbox_type', 'engine_type',
+        fields = ['brand', 'model', 'production_year', 'engine_capacity', 'gearbox_type', 'engine_type',
                   'engine_code', 'engine_power', 'body_type', 'date_of_expiry_of_insurance', 'date_of_expiry_of_technical_inspection']
