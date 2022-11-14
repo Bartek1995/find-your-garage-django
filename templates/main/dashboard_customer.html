@@ -37,9 +37,11 @@
                 <div class="row justify-content-center">
                   <div class="col-12 col-md-6 col-xl-5">
                     <div class="car-information__info-box about-car py-3">
-                        <p class="info-box__title m-0">Pojazd</p>
-                        <hr>
-                        <i class="fa-solid fa-car info-box__icon"></i>
+                        <div class="car-information__title-box">
+                          <p class="info-box__title m-0">Pojazd</p>
+                          <hr>
+                          <i class="fa-solid fa-car info-box__icon"></i>
+                        </div>
                         <p class="info-box__details">Marka: <span>{{ car.brand }}</span></p>
                         <p class="info-box__details">Model: <span>{{ car.model }}</span></p>
                         <p class="info-box__details">Rok produkcji: <span>{{ car.production_year }}</span></p>
@@ -48,26 +50,35 @@
                   </div>
                   <div class="col-12 col-md-6 col-xl-5 mt-3 mt-md-0">
                     <div class="car-information__info-box about-car py-3">
-                        <p class="info-box__title m-0">Terminy</p>
-                        <hr>
-                        <i class="fa-solid fa-calendar-day info-box__icon"></i>
-                        <p class="m-0">Badanie techniczne:</p>
-                        <hr>
+                        <div class="car-information__title-box">
+                          <p class="info-box__title m-0">Terminy</p>
+                          <hr>
+                          <i class="fa-solid fa-calendar-day info-box__icon"></i>
+                        </div>
+                        {% if car.date_of_expiry_of_technical_inspection != None  or car.date_of_expiry_of_insurance != None %}
                         {% if car.date_of_expiry_of_technical_inspection_is_past_due %}
-                        <p class="m-0">Aktualne <i class="fa-solid fa-circle-check about-car__review-icon-ok"></i></p>
+                          <p class="m-0">Badanie techniczne:</p>
+                          <p class="m-0">Aktualne <i class="fa-solid fa-circle-check about-car__review-icon-ok"></i></p>
+                          {% else %}
+                          <p class="m-0">Nieaktualne <i class="fa-solid fa-circle-xmark about-car__review-icon-not_ok"></i></p>
+                          {% endif %}
+                          <p class="info-box__details">Termin: <span>{{ car.date_of_expiry_of_technical_inspection }}</span></p>
+                          <hr>
+                          <p class="m-0">Ubezpiecznie pojazdu:</p>
+                          <p class="info-box__details m-0">Termin: <span>{{ car.date_of_expiry_of_insurance}}</span></p>
                         {% else %}
-                        <p class="m-0">Nieaktualne <i class="fa-solid fa-circle-xmark about-car__review-icon-not_ok"></i></p>
+                          <p class="m-0">Wymagana aktualizacja danych pojazdu</p>
+                          <a href="{% url 'car_edit' car.id %}" class="btn app-btn app-primary-btn">Uzupełnij</a>
                         {% endif %}
-                        <p class="info-box__details">Termin: <span>{{ car.date_of_expiry_of_technical_inspection }}</span></p>
-                        <p class="m-0">Ubezpiecznie pojazdu:</p>
-                        <p class="info-box__details m-0">Ważne do: <span>{{ car.date_of_expiry_of_insurance}}</span></p>
                     </div>
                   </div>
                   <div class="col-12 col-md-6 col-xl-5 my-3">
                     <div class="car-information__info-box last-service py-3">
-                      <p class="info-box__title m-0">Ostatnia wykonywana usługa</p>
-                      <hr>
-                      <i class="fa-solid fa-toolbox info-box__icon"></i>
+                      <div class="car-information__title-box">
+                        <p class="info-box__title m-0">Ostatnia wykonywana usługa</p>
+                        <hr>
+                        <i class="fa-solid fa-toolbox info-box__icon"></i>
+                      </div>
                       <p class="info-box__details">Nazwa warsztatu: <span>Auto Sudacki</span></p>
                       <p class="info-box__details">Data wykonania: <span>19.07.2022</span></p>
                       <p class="info-box__details">Koszt: <span>370zł</span></p>
