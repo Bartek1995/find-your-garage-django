@@ -26,3 +26,14 @@ class GarageForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'rows': '5'})
         }
        
+       
+class GarageEditForm(forms.ModelForm):
+    is_active = forms.BooleanField(widget=forms.CheckboxInput, label='Warsztat aktywny', required=False)
+    
+    class Meta:
+        model = Garage
+        fields = ['name', 'description', 'website_url', 'location', 'is_active']
+        
+        widgets = {
+            'description': forms.Textarea(attrs={'rows': '5'})
+        }
