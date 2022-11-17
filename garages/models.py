@@ -25,7 +25,7 @@ class Garage(models.Model):
     place_id = models.CharField(verbose_name="ID miejsca", max_length=100, null=True, blank=True, unique=True)
     location = PlacesField()
     
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(verbose_name="Warsztat aktywny", default=True)
     
     def clean(self) -> None:
         """
@@ -50,7 +50,6 @@ class Garage(models.Model):
                             
         self.full_address = reverse_geocode_result[0]['formatted_address']
         self.place_id = reverse_geocode_result[0]['place_id']
-        self.is_active = True
         
         return super().clean()
     
