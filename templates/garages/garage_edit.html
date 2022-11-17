@@ -1,0 +1,76 @@
+{% extends "main/application_base_template.html" %} 
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}Panel główny{% endblock %} 
+{% block extra_head %} 
+{% endblock %}
+ 
+{% block content %}
+
+<div class="body-content" id="body-content">
+  <div class="container">
+    <h2>Edycja warsztatu</h2>
+    <section class="garage-edit py-5">
+      <div class="row justify-content-center m-0">
+        <div class="col-md-8">
+          <form method="post">
+            {% csrf_token %}
+              <h3 class="mb-4">Podstawowe informacje</h3>
+
+              {{ form.name.label }}
+              {% render_field form.name class+="form-control mb-2" %}
+              {% if form.name.errors %}
+              <div class="alert alert-danger p-3">
+                  <strong>{{ form.name.errors.as_text | cut:"* " }}</strong>
+              </div>
+              {% endif %}
+              <p class="form-text">Podaj nazwe warsztatu</p>
+              <p class="form-text">Wartość obowiązkowa.</p>
+              <hr>
+
+              {{ form.website_url.label }}
+              {% render_field form.website_url class+="form-control mb-2" %}
+              {% if form.website_url.errors %}
+              <div class="alert alert-danger p-3">
+                  <strong>{{ form.website_url.errors.as_text | cut:"* " }}</strong>
+              </div>
+              {% endif %}
+              <p class="form-text">Adres powinien posiadać format <span>https://twojastrona.pl</span> Jeśli warsztat nie posiada indywidualnej strony internetowej to pozostaw to pole puste.</p>
+              <hr>
+
+              {{ form.description.label }}
+              {% render_field form.description class+="form-control mb-2" %}
+              {% if form.description.errors %}
+              <div class="alert alert-danger p-3">
+                  <strong>{{ form.description.errors.as_text | cut:"* " }}</strong>
+              </div>
+              {% endif %}
+              <p class="form-text">Adres powinien posiadać format <span>https://twojastrona.pl</span> Jeśli warsztat nie posiada indywidualnej strony internetowej to pozostaw to pole puste.</p>
+              <hr>
+
+              <h3 class="my-4">Dane lokalizacyjne</h3>
+              <p class="form-text">Wprowadź lokalizację swojego warsztatu.</p>
+              <p class="form-text mb-3">Możesz wprowadzić pełny adres, lub poprostu wprowadzić nazwe miejscowości. Do skorygowania pozycji na mapie skorzystaj z możliwości recznego przesuwania znacznika na mapie.</p>
+              {{ form.location.label }}
+              {% render_field form.location class+="form-control mb-3" %}
+              {{ form.media }}
+
+              <h3 class="my-4">Aktywność warsztatu</h3>
+              <p class="form-text">Istnieje możliwość deaktywacji warsztatu</p>
+              <p class="form-text mb-3">Podczas dodawania warsztatu do naszej aplikacji, domyślnie ta opcja jest włączona. Możesz deaktywować warsztat w naszym systemie. Dzięki temu nie będziesz otrzymywać zgłoszeń od klientów.</p>
+
+              <div class="form-check form-switch">
+                {{ form.is_active.label }}
+                {% render_field form.is_active class+="form-check-input mb-2" %}
+              </div>
+              
+              <button type="submit" class="btn app-btn app-primary-btn my-3 me-3">Zatwierdź</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+{% endblock %}

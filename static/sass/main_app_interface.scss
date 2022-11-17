@@ -665,7 +665,7 @@ body {
   }
 }
 
-.garage-create, .profile-edit, .car-create{
+.garage-create, .profile-edit, .car-create, .garage-edit{
   h3 {
     text-decoration: underline;
   }
@@ -687,7 +687,7 @@ body {
     overflow: visible!important;
 
     input:first-child {
-      width: 50%!important;
+      width: 50%;
     }
     #id_location_1, #id_location_2 {
       display: none;
@@ -702,8 +702,8 @@ body {
     align-items: center;
   }
   
-  .garage-create, .profile-edit, .car-create{
-      input[type='text'],input[type='number']:not(.number-form), select {  
+  .garage-create, .profile-edit, .car-create, .garage-edit{
+      input[type='text'],input[type='number']:not(.number-form), input[type='url'], .places, select {  
         width: 100%;
     }
     
