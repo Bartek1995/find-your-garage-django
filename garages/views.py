@@ -60,3 +60,8 @@ class GarageEditView(LoginRequiredMixin, GroupRequiredMixin, UpdateView):
         
     def get_object(self, queryset=None):
         return Garage.objects.get(id=self.kwargs['garage_id'])
+
+    def form_valid(self, form):
+        self.request.messages = messages.success(
+            self.request, 'Warsztat został zaktualizowany.')
+        return super().form_valid(form)
