@@ -63,10 +63,35 @@
                 {{ form.is_active.label }}
                 {% render_field form.is_active class+="form-check-input mb-2" %}
               </div>
+              <button type="submit" class="btn app-btn app-primary-btn my-3 me-3">Zatwierdź zmiany</button>
               
-              <button type="submit" class="btn app-btn app-primary-btn my-3 me-3">Zatwierdź</button>
+              <hr>
+              <h3 class="my-4">Usunięcie warsztatu</h3>
+              <p class="form-text">Aby skasować wasztat kliknij na poniższy przycisk</p>
+              <p class="form-text text-danger mb-3">Tej operacji nie można cofnąć!</p>
+              <button type="button" class="btn app-btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Skasuj warsztat</button>
             </div>
           </form>
+        </div>
+      </div>
+      <div class="modal fade" tabindex="-1" id="deleteModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Potwierdź usunięcie warsztatu</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Czy na pewno chcesz aby warsztat został usunięty?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
+              <form method="POST" action="{% url 'garage_delete' user_garage.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Potwierdzam usunięcie</button>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </section>
