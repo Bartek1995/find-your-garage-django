@@ -1,4 +1,4 @@
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
@@ -65,3 +65,34 @@ class GarageEditView(LoginRequiredMixin, GroupRequiredMixin, UpdateView):
         self.request.messages = messages.success(
             self.request, 'Warsztat został zaktualizowany.')
         return super().form_valid(form)
+
+
+class GarageDeleteView(DeleteView):
+    """
+    View for deleting garage.
+    """
+    success_url = '/dashboard'
+
+    def get(self, request, *args, **kwargs):
+        self.messages = messages.error(
+            self.request, "Skorzystaj z przycisku usuń, w menu edycji warsztatu aby go skasować.")
+        return redirect('/dashboard')
+
+    def post(self, *args, **kwargs):
+        try:
+            garage = self.get_object()
+        except Garage.DoesNotExist:
+            self.messages = messages.error(
+                self.request, "Nie znaleziono warsztatu o podanym ID.")
+            return redirect('/dashboard')
+
+        if self.request.user.id == garage.user_id:
+            self.messages = messages.success(self.request, "Warsztat został pomyślnie usunięty.")
+            return super().post(*args, **kwargs)
+        else:
+            self.messages = messages.error(
+                self.request, "Nie masz uprawnień do usunięcia tego warsztatu.")
+            return redirect('/dashboard')
+
+    def get_object(self, queryset=None):
+        return Garage.objects.get(id=self.kwargs['garage_id'])
