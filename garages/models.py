@@ -25,7 +25,7 @@ class Garage(models.Model):
     place_id = models.CharField(verbose_name="ID miejsca", max_length=100, null=True, blank=True, unique=True)
     location = PlacesField()
     
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
     
     def clean(self) -> None:
         """
