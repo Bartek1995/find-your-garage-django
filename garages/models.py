@@ -21,7 +21,7 @@ class Garage(models.Model):
     street_number = models.CharField(verbose_name="Numer budynku", max_length=10, null=True, blank=True)
     street = models.CharField(verbose_name="Ulica", max_length=100, null=True, blank=True)
     country = models.CharField(verbose_name="Kraj", max_length=30, null=True, blank=True)
-    postal_code = models.CharField(verbose_name="Kod pocztoqy", max_length=20, null=True, blank=True)
+    postal_code = models.CharField(verbose_name="Kod pocztowy", max_length=20, null=True, blank=True)
     place_id = models.CharField(verbose_name="ID miejsca", max_length=100, null=True, blank=True, unique=True)
     location = PlacesField()
     
