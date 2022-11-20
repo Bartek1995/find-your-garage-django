@@ -1,0 +1,106 @@
+{% extends "main/application_base_template.html" %} 
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}Panel główny{% endblock %} 
+{% block extra_head %} 
+<script async
+    src="https://maps.googleapis.com/maps/api/js?key={{map_api_key}}&callback=initMap">
+</script>
+<script type="text/javascript">
+  let map;
+  let garageLatitue = parseFloat('{{garage.location.latitude}}'.replace(',', '.'))
+  let garageLongitude = parseFloat('{{garage.location.longitude}}'.replace(',', '.'))
+  const myLatLng = { lat: garageLatitue, lng: garageLongitude };
+
+  function initMap() {
+    map = new google.maps.Map(document.querySelector('#map'), {
+      center: myLatLng,
+      zoom: 14,
+    });
+
+    new google.maps.Marker({
+      position: myLatLng,
+      map,
+      title: "Twój warsztat",
+    });
+  }
+
+  window.initMap = initMap;
+</script>
+{% endblock %}
+ 
+{% block content %}
+
+<div class="body-content" id="body-content">
+  <div class="container">
+    <h2>O Warsztacie</h2>
+
+    <section class="garage-card">
+      <div class="row justify-content-center m-0">
+        <div class="col-12 col-lg-6 mb-3 px-0 px-lg-2">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Informacje o warsztacie</h5>
+              <h6 class="card-subtitle mb-2 text-muted">{{ garage.name }}</h6>
+              <hr class="mb-4">
+
+              <p class="mb-0">Adres:</p>
+              <p class="card-text m-0"><span>{{ garage.city }} {{ garage.postal_code}}</span></p>
+              <p class="card-text m-0"><span>ul. {{ garage.street }} {{ garage.street_number}}</span></p>
+              <p class="card-text"><span>{{ garage.country }}</span></p>
+              <hr class="mb-4">
+
+              <p class="mb-0">Dodatkowe informacje:</p>
+              <p class="card-text m-0">Numer NIP - <span>{{ garage.nip_number }}</span></p>
+              <p class="card-text m-0">Adres WWW - 
+                {% if garage.website_url %} 
+                <span><a class="garage-url" href="{{ garage.website_url }}">{{ garage.website_url }}</a></span> 
+                {% else %} Brak 
+                {% endif %}
+              </p>
+              <hr class="mb-4">
+
+              <p class="mb-0">Opis:</p>
+              {% if garage.description %}
+              <p class="card-text">{{ garage.description }}</p>
+              {% else %}
+              <p class="card-text">Brak opisu</p>
+              {% endif %}
+
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6 mb-3 px-0 px-lg-2">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Lokalizacja</h5>
+              <div class="map" id="map"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6 px-0 px-lg-2">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Zakres wykonywanych usług</h5>
+              <hr class="mb-4">
+
+              <ul class="list-group">
+                <li class="list-group-item">Naprawy mechaniczne <span>Dostępna <i class="fa-solid fa-square-check"></i></span></li>
+                <li class="list-group-item">Naprawy elektryczne <span>Dostępna <i class="fa-solid fa-square-check"></i></span></li>
+                <li class="list-group-item">Konserwacja podwozia <span>Dostępna <i class="fa-solid fa-square-check"></i></span></li>
+                <li class="list-group-item">Wulkanizacja i wymiana opon <span>Niedostępna <i class="fa-solid fa-square-xmark"></i></span></li>
+                <li class="list-group-item">Naprawa i oczyszczanie klimatyzacji <span>Niedostępna <i class="fa-solid fa-square-xmark"></i></span></li>
+                <li class="list-group-item">Instalacje LPG i okresowe przeglądy <span>Niedostępna <i class="fa-solid fa-square-xmark"></i></span></li>
+                <li class="list-group-item">Naprawy blacharsko-lakiernicze <span>Niedostępna <i class="fa-solid fa-square-xmark"></i></span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+{% endblock %}
