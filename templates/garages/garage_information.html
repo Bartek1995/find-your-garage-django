@@ -3,30 +3,8 @@
 {% load widget_tweaks %}
 {% block title %}Panel główny{% endblock %} 
 {% block extra_head %} 
-<script async
-    src="https://maps.googleapis.com/maps/api/js?key={{map_api_key}}&callback=initMap">
-</script>
-<script type="text/javascript">
-  let map;
-  let garageLatitue = parseFloat('{{garage.location.latitude}}'.replace(',', '.'))
-  let garageLongitude = parseFloat('{{garage.location.longitude}}'.replace(',', '.'))
-  const myLatLng = { lat: garageLatitue, lng: garageLongitude };
 
-  function initMap() {
-    map = new google.maps.Map(document.querySelector('#map'), {
-      center: myLatLng,
-      zoom: 14,
-    });
 
-    new google.maps.Marker({
-      position: myLatLng,
-      map,
-      title: "Twój warsztat",
-    });
-  }
-
-  window.initMap = initMap;
-</script>
 {% endblock %}
  
 {% block content %}
@@ -103,4 +81,12 @@
   </div>
 </div>
 
+<script type="text/javascript">
+let garageLatitue = parseFloat('{{garage.location.latitude}}'.replace(',', '.'))
+let garageLongitude = parseFloat('{{garage.location.longitude}}'.replace(',', '.'))
+</script>
+<script src="{% static 'js/initialize_garage_information_map.js' %}"></script>
+<script
+src="https://maps.googleapis.com/maps/api/js?key={{map_api_key}}&callback=initMap" async defer>
+</script>
 {% endblock %}
