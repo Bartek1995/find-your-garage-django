@@ -1,12 +1,14 @@
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.detail import DetailView
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 
 from accounts.mixins import GroupRequiredMixin
-
 from .forms import GarageForm, GarageEditForm
 from .models import Garage
+
+import os
 
 
 class GarageCreateView(LoginRequiredMixin, GroupRequiredMixin, CreateView):
@@ -67,11 +69,12 @@ class GarageEditView(LoginRequiredMixin, GroupRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
-class GarageDeleteView(DeleteView):
+class GarageDeleteView(LoginRequiredMixin, GroupRequiredMixin, DeleteView):
     """
     View for deleting garage.
     """
     success_url = '/dashboard'
+    required_group = "Entrepreneur"
 
     def get(self, request, *args, **kwargs):
         self.messages = messages.error(
@@ -96,3 +99,15 @@ class GarageDeleteView(DeleteView):
 
     def get_object(self, queryset=None):
         return Garage.objects.get(id=self.kwargs['garage_id'])
+
+
+class GarageInformationView(LoginRequiredMixin, DetailView):
+    template_name = 'garages/garage_information.html'
+    
+    def get_queryset(self):
+        return Garage.objects.filter(id=self.kwargs['pk'])
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['map_api_key'] = os.environ.get('GOOGLE_API_KEY')
+        return context
