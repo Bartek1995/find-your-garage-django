@@ -84,7 +84,7 @@
                 <li><a class="item-expnd__link" href="{% url 'garage_create' %}">Utwórz warsztat</a></li>
                 {% else %}
                 <li><a class="item-expnd__link" href="{% url 'garage_edit' user_garage.id %}">Edytuj dane</a></li>
-                <li><a class="item-expnd__link" href="#">Wizytówka</a></li>
+                <li><a class="item-expnd__link" href="{% url 'garage_information' user_garage.id %}">Wizytówka</a></li>
                 {% endif %}
               </ul>
             </div>
@@ -222,7 +222,7 @@
                   <li><a class="item-expnd__link" href="{% url 'garage_create' %}">Utwórz warsztat</a></li>
                   {% else %}
                   <li><a class="item-expnd__link" href="{% url 'garage_edit' user_garage.id %}">Edytuj dane</a></li>
-                  <li><a class="item-expnd__link" href="#">Wizytówka</a></li>
+                  <li><a class="item-expnd__link" href="{% url 'garage_information' user_garage.id %}">Wizytówka</a></li>
                   {% endif %}
                 </ul>
               </div>
