@@ -9,8 +9,10 @@ def user_garage(request):
                 try:
                     garage = Garage.objects.get(user=request.user)
                 except Garage.DoesNotExist:
-                    return {'user_garage': None}
+                    return {}
                 else:
                     return {'user_garage': garage}
+            else:
+                return {}
     else:
-        return {'user_garage': None}
+        return {}
