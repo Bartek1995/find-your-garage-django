@@ -13,7 +13,7 @@
   <div class="container">
     <h2>O Warsztacie</h2>
 
-    <section class="garage-card">
+    <section class="garage-card pb-5">
       <div class="row justify-content-center m-0">
         <div class="col-12 col-lg-6 mb-3 px-0 px-lg-2">
           <div class="card">
@@ -89,4 +89,6 @@ let garageLongitude = parseFloat('{{garage.location.longitude}}'.replace(',', '.
 <script
 src="https://maps.googleapis.com/maps/api/js?key={{map_api_key}}&callback=initMap" async defer>
 </script>
+
+
 {% endblock %}
