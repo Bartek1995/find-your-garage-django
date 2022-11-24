@@ -55,3 +55,19 @@ class Garage(models.Model):
     
     def __str__(self) -> str:
         return f"{self.name} - {self.user.email}"
+    
+    
+class ServiceList(models.Model):
+    
+    garage = models.ForeignKey(Garage, on_delete=models.CASCADE)
+
+    mechanical_repairs = models.BooleanField(verbose_name="Naprawy mechaniczne", default=False)
+    electrical_repairs = models.BooleanField(verbose_name="Naprawy elektryczne", default=False)
+    chassis_maintenance = models.BooleanField(verbose_name="Konserwacja podwozia", default=False)
+    tire_vulcanization_and_replacement = models.BooleanField(verbose_name="Wulkanizacja i wymiana opon", default=False)
+    air_conditioning_repair_and_cleaning = models.BooleanField(verbose_name="Naprawa i czyszczenie klimatyzacji", default=False)
+    lpg_installations_and_periodic_inspections = models.BooleanField(verbose_name="Instalacje LPG i okresowe przeglądy", default=False)
+    bodywork_and_paint_repairs = models.BooleanField(verbose_name="Naprawy blacharsko-lakiernicze", default=False)
+    window_replacement = models.BooleanField(verbose_name="Wymiana szyb", default=False)
+    inspections = models.BooleanField(verbose_name="Przeglądy", default=False)
+    car_tuning_and_sports_modifications = models.BooleanField(verbose_name="Tuning i sportowe modyfikacje", default=False)
