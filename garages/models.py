@@ -27,9 +27,9 @@ class Garage(models.Model):
     
     is_active = models.BooleanField(verbose_name="Warsztat aktywny", default=True)
     
-    def clean(self) -> None:
+    def save(self) -> None:
         """
-        Override clean method and initialize google maps api. Then geocode location field data, and save details in model fields.
+        Override save method and initialize google maps api. Then geocode location field data, and save details in model fields.
         """
         
         gmaps = googlemaps.Client(key=os.environ.get('GOOGLE_API_KEY'))
