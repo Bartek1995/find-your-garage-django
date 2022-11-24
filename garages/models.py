@@ -51,8 +51,12 @@ class Garage(models.Model):
         self.full_address = reverse_geocode_result[0]['formatted_address']
         self.place_id = reverse_geocode_result[0]['place_id']
         
-        return super().clean()
-    
+        super(Garage, self).save()
+        
+        # Create service list on garage creation
+        new_service_list = ServiceList.objects.create(garage=self)
+        new_service_list.save()
+        
     def __str__(self) -> str:
         return f"{self.name} - {self.user.email}"
     
@@ -71,3 +75,6 @@ class ServiceList(models.Model):
     window_replacement = models.BooleanField(verbose_name="Wymiana szyb", default=False)
     inspections = models.BooleanField(verbose_name="Przeglądy", default=False)
     car_tuning_and_sports_modifications = models.BooleanField(verbose_name="Tuning i sportowe modyfikacje", default=False)
+    
+    def __str__(self):
+        return f"Warsztat: {self.garage.name}"
