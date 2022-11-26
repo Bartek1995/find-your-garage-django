@@ -1,6 +1,5 @@
-from django.db import models
 from django import forms
-from .models import Garage
+from .models import Garage, ServiceList
 
 
 class GarageForm(forms.ModelForm):
@@ -37,3 +36,11 @@ class GarageEditForm(forms.ModelForm):
         widgets = {
             'description': forms.Textarea(attrs={'rows': '5'})
         }
+        
+        
+class ServiceListEditForm(forms.ModelForm):
+    
+    class Meta:
+        model = ServiceList
+        fields = '__all__'
+        exclude = ['garage']
