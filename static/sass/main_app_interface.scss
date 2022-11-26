@@ -742,6 +742,44 @@ body {
     }
   }
 }
+
+.garage-services-edit {
+  .card {
+
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: -moz-none;
+    -o-user-select: none;
+    user-select: none;
+
+    img {
+      height: 200px;
+      object-fit: cover;
+    }
+    &:hover {
+      transform: scale(1.02);
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    }
+
+    .card-title {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 50px;
+      padding: 4 10px;
+    }
+  }
+
+  .card-selected {
+    transform: scale(1.02);
+    background-color: #a7a1a1a8;
+  }
+}
+
 @media (max-width:576px) {
   .buttons-group {
     display: flex;
