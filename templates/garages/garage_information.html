@@ -61,16 +61,17 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Zakres wykonywanych usług</h5>
-              <hr class="mb-4">
-
               <ul class="list-group">
-                <li class="list-group-item">Naprawy mechaniczne <span>Dostępna <i class="fa-solid fa-square-check"></i></span></li>
-                <li class="list-group-item">Naprawy elektryczne <span>Dostępna <i class="fa-solid fa-square-check"></i></span></li>
-                <li class="list-group-item">Konserwacja podwozia <span>Dostępna <i class="fa-solid fa-square-check"></i></span></li>
-                <li class="list-group-item">Wulkanizacja i wymiana opon <span>Niedostępna <i class="fa-solid fa-square-xmark"></i></span></li>
-                <li class="list-group-item">Naprawa i oczyszczanie klimatyzacji <span>Niedostępna <i class="fa-solid fa-square-xmark"></i></span></li>
-                <li class="list-group-item">Instalacje LPG i okresowe przeglądy <span>Niedostępna <i class="fa-solid fa-square-xmark"></i></span></li>
-                <li class="list-group-item">Naprawy blacharsko-lakiernicze <span>Niedostępna <i class="fa-solid fa-square-xmark"></i></span></li>
+                {% for service_name, state in garage_services %}
+                <li class="list-group-item">
+                  {{ service_name }}
+                  {% if state %}
+                  <span>Dostępna <i class="fa-solid fa-square-check"></i></span>
+                  {% else %}
+                  <span>Niedostępna <i class="fa-solid fa-square-xmark"></i></span>
+                  {% endif %}
+                </li>
+                {% endfor %}
               </ul>
             </div>
           </div>

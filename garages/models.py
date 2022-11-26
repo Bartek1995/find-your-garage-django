@@ -78,3 +78,9 @@ class ServiceList(models.Model):
     
     def __str__(self):
         return f"Warsztat: {self.garage.name}"
+    
+    def __iter__(self):
+        for field in self._meta.fields:
+            if field.name != 'id' and field.name != 'garage':
+                yield (field.verbose_name, field.value_from_object(self))
+            

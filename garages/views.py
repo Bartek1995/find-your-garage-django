@@ -110,6 +110,10 @@ class GarageInformationView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['map_api_key'] = os.environ.get('GOOGLE_API_KEY')
+        
+        # get garage to display garage services
+        user_garage = Garage.objects.get(id=self.kwargs['pk'])
+        context['garage_services'] = ServiceList.objects.get(garage=user_garage)
         return context
     
 
