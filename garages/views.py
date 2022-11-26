@@ -5,8 +5,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 
 from accounts.mixins import GroupRequiredMixin
-from .forms import GarageForm, GarageEditForm
-from .models import Garage
+from .forms import GarageForm, GarageEditForm, ServiceListEditForm
+from .models import Garage, ServiceList
 
 import os
 
@@ -111,3 +111,36 @@ class GarageInformationView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context['map_api_key'] = os.environ.get('GOOGLE_API_KEY')
         return context
+    
+
+class ServiceListUpdateView(LoginRequiredMixin, GroupRequiredMixin, UpdateView):
+    """
+    View for updating services list.
+    """
+    template_name = 'garages/garage_services_update.html'
+    form_class = ServiceListEditForm
+    success_url = '/dashboard'
+    required_group = "Entrepreneur"
+    
+    def get(self, request, *args, **kwargs):
+        try:
+            service_list = self.get_object()
+        except ServiceList.DoesNotExist:
+            self.messages = messages.error(
+                self.request, "Nie znaleziono warsztatu o podanym ID.")
+            return redirect('/dashboard')
+        if self.request.user.id == service_list.garage.user_id:
+            return super().get(request, *args, **kwargs)
+        else:
+            self.messages = messages.error(
+                self.request, "Nie masz uprawnień do edycji usług tego warsztatu.")
+            return redirect('/dashboard')
+        
+    def get_object(self, queryset=None):
+        garge = Garage.objects.get(id=self.kwargs['garage_id'])
+        return ServiceList.objects.get(garage=garge)
+
+    def form_valid(self, form):
+        self.request.messages = messages.success(
+            self.request, 'Lista usług została zaktualizowana.')
+        return super().form_valid(form)
