@@ -86,6 +86,7 @@
                 {% else %}
                 <li><a class="item-expnd__link" href="{% url 'garage_edit' user_garage.id %}">Edytuj dane</a></li>
                 <li><a class="item-expnd__link" href="{% url 'garage_services_edit' user_garage.id %}">Usługi</a></li>
+                <li><a class="item-expnd__link" href="{% url 'garage_opening_hours_edit' user_garage.id %}">Godziny otwarcia</a></li>
                 <li><a class="item-expnd__link" href="{% url 'garage_information' user_garage.id %}">Wizytówka</a></li>
                 {% endif %}
               </ul>
@@ -225,6 +226,7 @@
                   {% else %}
                   <li><a class="item-expnd__link" href="{% url 'garage_edit' user_garage.id %}">Edytuj dane</a></li>
                   <li><a class="item-expnd__link" href="{% url 'garage_services_edit' user_garage.id %}">Usługi</a></li>
+                  <li><a class="item-expnd__link" href="{% url 'garage_opening_hours_edit' user_garage.id %}">Godziny otwarcia</a></li>
                   <li><a class="item-expnd__link" href="{% url 'garage_information' user_garage.id %}">Wizytówka</a></li>
                   {% endif %}
                 </ul>

@@ -1,0 +1,77 @@
+{% extends "main/application_base_template.html" %} 
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}Panel główny{% endblock %} 
+{% block extra_head %} 
+{% endblock %}
+ 
+{% block content %}
+
+<div class="body-content" id="body-content">
+  <div class="container">
+    <h2>Godziny otwarcia</h2>
+    <section class="garage-opening-hours py-5">
+      <div class="row justify-content-center m-0">
+        <div class="col-md-10">
+          <form method="post">
+            <p class="mb-4">Skorzystaj z formularzy poniżej aby ustawić daty dostępności warsztatu.</p>
+
+            {% csrf_token %}
+            {{ formset.management_form }}
+            {% for form in formset %}
+              {% if forloop.counter == 1 %}
+                  <h4>Poniedziałek</h4>
+              {% elif forloop.counter == 2 %}
+                  <h4>Wtorek</h4>
+              {% elif forloop.counter == 3 %}
+                  <h4>Środa</h4>
+              {% elif forloop.counter == 4 %}
+                  <h4>Czwartek</h4>
+              {% elif forloop.counter == 5 %}
+                  <h4>Piątek</h4>
+              {% elif forloop.counter == 6 %}
+                  <h4>Sobota</h4>
+              {% elif forloop.counter == 7 %}
+                  <h4>Niedziela</h4>
+              {% endif %}
+
+              <div class="form-field-wrapper">
+                <div class="row justify-content-center">
+                  {{ form.id }}
+                  <div class="col-6">
+                    {{ form.from_hour.label }}
+                    {% render_field form.from_hour class+="form-control mb-2" %}
+                  </div>
+                  
+                  <div class="col-6">
+                    {{ form.to_hour.label }}
+                    {% render_field form.to_hour class+="form-control mb-2" %}
+                  </div>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="">
+                  <label class="form-check-label" for="defaultCheck1">
+                    Nieczynne
+                  </label>
+                </div>
+              </div>
+
+              {% if not forloop.last %}
+              <hr>
+              {% endif %}
+              
+              {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+              {% endfor %}
+            {% endfor%}
+            <input type="submit" value="Zatwierdź" class="btn app-btn app-primary-btn my-3">
+            
+          </form>
+        </div>
+      </div>
+
+    </section>
+  </div>
+</div>
+<script src="{% static 'js/garage_opening_hours.js' %}"></script>
+{% endblock %}
