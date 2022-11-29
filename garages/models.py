@@ -1,12 +1,16 @@
-import os
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils.translation import gettext as _
+
 from main.validators import validate_special_characters_and_numbers
 from .validators import validate_poland_country
 from accounts.models import CustomUser
+
 from places.fields import PlacesField
 import googlemaps
+
+import os
+import datetime
 
 
 class Garage(models.Model):
@@ -56,6 +60,19 @@ class Garage(models.Model):
         
     def __str__(self) -> str:
         return f"{self.name} - {self.user.email}"
+    
+    @property
+    def is_opened(self) -> bool:
+        """
+        Check if garage is opened now.
+        """
+        today = datetime.datetime.today().weekday() + 1
+        
+        opening_hours_today = OpeningHours.objects.get(garage=self, weekday=today)
+        if opening_hours_today.from_hour and opening_hours_today.to_hour is not None:
+            if opening_hours_today.from_hour < datetime.datetime.now().time() < opening_hours_today.to_hour:
+                return True
+        return False
     
     
 class ServiceList(models.Model):
