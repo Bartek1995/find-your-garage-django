@@ -1,6 +1,7 @@
 import os
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.utils.translation import gettext as _
 from main.validators import validate_special_characters_and_numbers
 from .validators import validate_poland_country
 from accounts.models import CustomUser
@@ -53,10 +54,6 @@ class Garage(models.Model):
         
         super(Garage, self).save()
         
-        # Create service list on garage creation
-        new_service_list = ServiceList.objects.create(garage=self)
-        new_service_list.save()
-        
     def __str__(self) -> str:
         return f"{self.name} - {self.user.email}"
     
@@ -84,3 +81,29 @@ class ServiceList(models.Model):
             if field.name != 'id' and field.name != 'garage':
                 yield (field.verbose_name, field.value_from_object(self))
             
+            
+WEEKDAYS = [
+    (1, _("Monday")),
+    (2, _("Tuesday")),
+    (3, _("Wednesday")),
+    (4, _("Thursday")),
+    (5, _("Friday")),
+    (6, _("Saturday")),
+    (7, _("Sunday")),
+]
+
+
+class OpeningHours(models.Model):
+    
+    garage = models.ForeignKey(Garage, on_delete=models.CASCADE)
+    
+    weekday = models.PositiveSmallIntegerField(choices=WEEKDAYS)
+    from_hour = models.TimeField(verbose_name="Godzina otwarcia", default=None, null=True, blank=True)
+    to_hour = models.TimeField(verbose_name="Godzina zamknięcia", default=None, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.garage} {self.weekday} - {self.from_hour} - {self.to_hour}"
+    
+    class Meta:
+        ordering = ('weekday', 'from_hour')
+        unique_together = ('weekday', 'from_hour', 'to_hour')
