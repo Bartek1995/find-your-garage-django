@@ -20,12 +20,20 @@
             <div class="card-body">
               <h5 class="card-title">Informacje o warsztacie</h5>
               <h6 class="card-subtitle mb-2 text-muted">{{ garage.name }}</h6>
+
+              <div class="d-flex justify-content-center">
+                {% if garage.is_opened %}
+                  <p class="card-text opening-status">Warsztat jest otwarty <i class="fa-solid fa-thumbs-up"></i></p>
+                {% else %}
+                  <p class="card-text opening-status">Warsztat jest zamknięty <i class="fa-solid fa-thumbs-down"></i></p>
+                {% endif %}
+              </div>
+
+
               <hr class="mb-4">
 
               <p class="mb-0">Adres:</p>
-              <p class="card-text m-0"><span>{{ garage.city }} {{ garage.postal_code}}</span></p>
-              <p class="card-text m-0"><span>ul. {{ garage.street }} {{ garage.street_number}}</span></p>
-              <p class="card-text"><span>{{ garage.country }}</span></p>
+              <p class="card-text m-0"><span>{{ garage.full_address }}</span></p>
               <hr class="mb-4">
 
               <p class="mb-0">Dodatkowe informacje:</p>
@@ -57,8 +65,8 @@
           </div>
         </div>
 
-        <div class="col-12 col-lg-6 px-0 px-lg-2">
-          <div class="card">
+        <div class="col-12 col-lg-6 mb-3 mb-lg-0 px-0 px-lg-2">
+          <div class="card garage-card__services">
             <div class="card-body">
               <h5 class="card-title">Zakres wykonywanych usług</h5>
               <ul class="list-group">
@@ -76,9 +84,56 @@
             </div>
           </div>
         </div>
+
+        <div class="col-12 col-lg-6 px-0 px-lg-2">
+          <div class="card garage-card__opening-hours">
+            <div class="card-body">
+              <h5 class="card-title">Godziny otwarcia warsztatu</h5>
+              <ul class="list-group">
+                
+                {% for day in garage_opening_hours %}
+                <li class="list-group-item">
+
+                  {% if day.weekday == 1 %}
+                      <p class="m-0 opening-hours__weekday">Poniedziałek</p>
+                  {% elif day.weekday == 2 %}
+                      <p class="m-0 opening-hours__weekday">Wtorek</p>
+                  {% elif day.weekday == 3 %}
+                      <p class="m-0 opening-hours__weekday">Środa</p>
+                  {% elif day.weekday == 4 %}
+                      <p class="m-0 opening-hours__weekday">Czwartek</p>
+                  {% elif day.weekday == 5 %}
+                      <p class="m-0 opening-hours__weekday">Piątek</p>
+                  {% elif day.weekday == 6 %}
+                      <p class="m-0 opening-hours__weekday">Sobota</p>
+                  {% elif day.weekday == 7 %}
+                      <p class="m-0 opening-hours__weekday">Niedziela</p>
+                  {% endif %}
+                {% if day.from_hour or day.to_hour %}
+                <p class="m-0">
+                  {% if day.from_hour %}
+                    {{ day.from_hour }}
+                  {% else %}
+                    Nie określono
+                  {% endif %}
+                  <span class="px-3">-</span>
+                  {% if day.to_hour %}
+                    {{ day.to_hour }}
+                  {% else %}
+                    Brak
+                  {% endif %}
+                </p>
+                {% else %}
+                <p class="text-danger m-0">Nieczynne</p>
+                {% endif %}
+                </li>
+              {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
-
   </div>
 </div>
 

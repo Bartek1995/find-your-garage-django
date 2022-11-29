@@ -698,8 +698,32 @@ body {
 }
 
 .garage-card {
-  .card {
+  .opening-status {
+    padding:  5px 10px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    background-color: rgb(209, 206, 206);
+    border-radius: 20px;
 
+    i {
+      font-size: 20px;
+    }
+    .fa-thumbs-up {
+      color: rgb(13, 185, 13);
+    }
+    .fa-thumbs-down {
+      color: red;
+    }
+  }
+
+  .card {
+    height: 100%;
+    
+    .card-subtitle {
+      font-size: 20px;
+    }
     .card-text {
       span {
         font-weight: bold;
@@ -722,7 +746,10 @@ body {
       height: 450px;
       width: 100%;
     }
+  }
 
+  .garage-card__services {
+    
     .list-group {
       li {
         display: flex;
@@ -739,6 +766,18 @@ body {
           color: red;
         }
       }
+    }
+  }
+  .garage-card__opening-hours {
+    .list-group {
+      li {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+    .opening-hours__weekday {
+      font-weight: bold;
     }
   }
 }
@@ -843,5 +882,19 @@ body {
     bottom: 3px;
     right: 10px;
     max-width: 90vw;
+  }
+}
+
+@media (max-width: 475px) {
+  .garage-card {
+    .garage-card__services {
+      .list-group {
+        li {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+    }
   }
 }
