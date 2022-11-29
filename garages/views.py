@@ -5,8 +5,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 
 from accounts.mixins import GroupRequiredMixin
-from .forms import GarageForm, GarageEditForm, ServiceListEditForm
-from .models import Garage, ServiceList
+from .forms import GarageForm, GarageEditForm, ServiceListEditForm, GarageEditOpeningHoursForm
+from .models import Garage, ServiceList, OpeningHours
+from extra_views import ModelFormSetView, SuccessMessageMixin
 
 import os
 
@@ -148,3 +149,38 @@ class ServiceListUpdateView(LoginRequiredMixin, GroupRequiredMixin, UpdateView):
         self.request.messages = messages.success(
             self.request, 'Lista usług została zaktualizowana.')
         return super().form_valid(form)
+    
+    
+class GarageEditOpeningHours(LoginRequiredMixin, GroupRequiredMixin, ModelFormSetView):
+    """
+    View for editing garage opening hours.
+    """
+    model = OpeningHours
+    template_name = 'garages/garage_edit_opening_hours.html'
+    form_class = GarageEditOpeningHoursForm
+    factory_kwargs = {'extra': 0}
+    success_url = '/dashboard'
+    required_group = "Entrepreneur"
+    success_message = "Godziny otwarcia zostały zaktualizowane."
+
+    def get(self, request, *args, **kwargs):
+        try:
+            garage = Garage.objects.get(id=self.kwargs['garage_id'])
+        except Garage.DoesNotExist:
+            self.messages = messages.error(
+                self.request, "Nie znaleziono warsztatu o podanym ID.")
+            return redirect('/dashboard')
+        if self.request.user.id == garage.user_id:
+            return super().get(request, *args, **kwargs)
+        else:
+            self.messages = messages.error(
+                self.request, "Nie masz uprawnień do edycji godzin otwarcia tego warsztatu.")
+            return redirect('/dashboard')
+    
+    def get_queryset(self):
+        garage = Garage.objects.get(id=self.kwargs['garage_id'])
+        return OpeningHours.objects.filter(garage=garage)
+    
+    def formset_valid(self, formset):
+        self.messages = messages.success(self.request, 'Godziny otwarcia zostały zaktualizowane.')
+        return super().formset_valid(formset)
