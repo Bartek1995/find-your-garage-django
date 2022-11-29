@@ -72,6 +72,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     "compressor",
     'storages',
+    'extra_views',
 ]
 
 SITE_ID = 1
