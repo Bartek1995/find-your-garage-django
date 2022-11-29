@@ -1,5 +1,5 @@
 from django import forms
-from .models import Garage, ServiceList
+from .models import Garage, ServiceList, OpeningHours
 
 
 class GarageForm(forms.ModelForm):
@@ -44,3 +44,12 @@ class ServiceListEditForm(forms.ModelForm):
         model = ServiceList
         fields = '__all__'
         exclude = ['garage']
+
+
+class GarageEditOpeningHoursForm(forms.ModelForm):
+    from_hour = forms.TimeField(label="Godzina otwarcia", required=False, widget=forms.TimeInput(attrs={'type': 'time'}))
+    to_hour = forms.TimeField(label="Godzina zamknięcia", required=False, widget=forms.TimeInput(attrs={'type': 'time'}))
+    
+    class Meta:
+        model = OpeningHours
+        fields = ['from_hour', 'to_hour'] 
