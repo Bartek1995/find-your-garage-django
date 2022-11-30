@@ -47,6 +47,15 @@
                     {{ form.to_hour.label }}
                     {% render_field form.to_hour class+="form-control mb-2" %}
                   </div>
+                  {% if form.errors %}
+                    {% for error in form.non_field_errors %}
+                      <div class="col-12">
+                        <div class="alert alert-danger">
+                          <strong>{{ error }}</strong>
+                        </div>
+                      </div>
+                    {% endfor %}
+                  {% endif %}
                 </div>
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" value="" id="">

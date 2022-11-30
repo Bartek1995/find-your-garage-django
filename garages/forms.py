@@ -52,4 +52,13 @@ class GarageEditOpeningHoursForm(forms.ModelForm):
     
     class Meta:
         model = OpeningHours
-        fields = ['from_hour', 'to_hour'] 
+        fields = ['from_hour', 'to_hour']
+        
+    def clean(self):
+        if self.cleaned_data['from_hour'] is not None and self.cleaned_data['to_hour'] is None or self.cleaned_data['from_hour'] is None and self.cleaned_data['to_hour'] is not None:
+            raise forms.ValidationError('Oba pola muszą być wypełnione.')
+        
+        if self.cleaned_data['from_hour'] and self.cleaned_data['to_hour']:
+            if self.cleaned_data['from_hour'] > self.cleaned_data['to_hour']:
+                raise forms.ValidationError('Godzina otwarcia nie może być późniejsza niż godzina zamknięcia.')
+            return super().clean()
