@@ -8,15 +8,16 @@
   <div class="body-content" id="body-content">
     <div class="container p-0">
       {% if user_cars != None %}
-
-      <div class="d-flex justify-content-between mb-3">
-        <button class="btn app-btn app-primary-btn" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev"><i class="fa-solid fa-arrow-left"></i></button>
-        <h2 class="mb-0">Pulpit</h2>
-        <button class="btn app-btn app-primary-btn" data-bs-target="#carouselExampleIndicators" data-bs-slide="next"><i class="fa-solid fa-arrow-right"></i></button>
-      </div>
-
+        {% if user_cars|length >= 2%}
+        <div class="d-flex justify-content-between mb-3">
+          <button class="btn app-btn app-primary-btn" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev"><i class="fa-solid fa-arrow-left"></i></button>
+          <h2 class="mb-0">Pulpit</h2>
+          <button class="btn app-btn app-primary-btn" data-bs-target="#carouselExampleIndicators" data-bs-slide="next"><i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+        {% endif %}
       <div id="carouselExampleIndicators" class="carousel slide dashboard-carousel" data-ride="carousel" data-interval="false">
         <div class="carousel-indicators">
+        {% if user_cars|length >= 2%}
           {% for car in user_cars %}
             {% if forloop.first %}
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -24,6 +25,7 @@
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ forloop.counter0 }}"aria-current="true" aria-label="Slide {{ forloop.counter }}"></button>
             {% endif %}
           {% endfor %}
+        {% endif %}
         </div>
 
         <div class="carousel-inner p-2">
@@ -79,10 +81,15 @@
                         <hr>
                         <i class="fa-solid fa-toolbox info-box__icon"></i>
                       </div>
+                      {% if last_service %}
                       <p class="info-box__details">Nazwa warsztatu: <span>Auto Sudacki</span></p>
                       <p class="info-box__details">Data wykonania: <span>19.07.2022</span></p>
                       <p class="info-box__details">Koszt: <span>370zł</span></p>
                       <button class="btn app-btn app-primary-btn">Więcej informacji</button>
+                      {% else %}
+                      <p class="m-0">Brak ostatnich zleceń</p>
+                      <button class="btn app-btn app-primary-btn">Utwórz zlecenie</button>
+                      {% endif %}
                     </div>
                   </div>
                   <div class="col-12 col-md-6 col-xl-5 my-3">
