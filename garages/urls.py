@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import GarageCreateView, GarageEditView, GarageDeleteView, GarageInformationView, ServiceListUpdateView, GarageEditOpeningHours
+from .views import GarageCreateView, GarageEditView, GarageDeleteView, GarageInformationView, ServiceListUpdateView, GarageEditOpeningHours, FindGarageView
 
 
 urlpatterns = [
@@ -9,4 +9,5 @@ urlpatterns = [
     path('edit/opening_hours/<int:garage_id>', GarageEditOpeningHours.as_view(), name='garage_opening_hours_edit'),
     path('delete/<int:garage_id>', GarageDeleteView.as_view(), name='garage_delete'),
     path('information/<int:pk>', GarageInformationView.as_view(), name='garage_information'),
+    path('find', FindGarageView.as_view(), name='find_garage'),
 ]
