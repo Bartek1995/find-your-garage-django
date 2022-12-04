@@ -57,6 +57,14 @@
               <span>Panel główny</span>
             </a>
           </li>
+          {% if request.user.is_customer %}
+          <li class="nav-items__item">
+            <a href="{% url 'find_garage' %}" class="item-expand__button collapsed">
+              <i class="main-icon fa-solid fa-magnifying-glass"></i>
+              <span>Znajdź warsztat</span>
+            </a>
+          </li>
+          {% endif %}
       
           <li class="nav-items__item">
             <a class="item-expand__button collapsed" href="#" type="button" id="accountExpand" data-bs-toggle="collapse" data-bs-target="#accountCollapse" aria-expanded="true" aria-controls="accountCollapse">
@@ -181,6 +189,14 @@
                 <span>Panel główny</span>
             </a>
             </li>
+            {% if request.user.is_customer %}
+            <li class="nav-items__item">
+              <a href="{% url 'find_garage' %}" class="item-expand__button collapsed">
+                <i class="main-icon fa-solid fa-magnifying-glass"></i>
+                <span>Znajdź warsztat</span>
+              </a>
+            </li>
+            {% endif %}
         
             <li class="nav-items__item">
             <a class="item-expand__button collapsed" href="#" type="button" id="accountExpand" data-bs-toggle="collapse" data-bs-target="#accountCollapse" aria-expanded="true" aria-controls="accountCollapse">

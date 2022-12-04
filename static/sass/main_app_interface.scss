@@ -819,6 +819,38 @@ body {
   }
 }
 
+.find-garage {
+  .map {
+    height: 500px;
+    width: 100%;
+
+    .gm-style-iw-c {
+      padding: 20px 15px!important;
+      
+      .gm-style-iw-d {
+        overflow: visible!important;
+      }
+      .link-button {
+        padding: 5px 10px;
+        text-decoration: none;
+        transition: 0.3s;
+
+        border: 2px solid royalblue;
+        border-radius: 5px;
+        color: white;
+        background-color: royalblue;
+
+        &:hover {
+        color: black;
+        background-color: white;
+        }
+      }
+    }
+  }
+  input {
+    width: 50%;
+  }
+}
 @media (max-width:576px) {
   .buttons-group {
     display: flex;
@@ -826,7 +858,7 @@ body {
     align-items: center;
   }
   
-  .garage-create, .profile-edit, .car-create, .garage-edit{
+  .garage-create, .profile-edit, .car-create, .garage-edit, .find-garage {
       input[type='text'],input[type='number']:not(.number-form), input[type='url'], .places, select {  
         width: 100%;
     }

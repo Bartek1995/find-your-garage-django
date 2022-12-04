@@ -1,0 +1,45 @@
+{% extends "main/application_base_template.html" %} 
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}Panel główny{% endblock %} 
+{% block extra_head %} 
+
+{% endblock %}
+ 
+ 
+ {% block content %}
+
+ 
+
+<div class="body-content" id="body-content">
+  <div class="container">
+    <h2>Wyszukaj warsztat</h2>
+
+    <section class="find-garage py-5">
+      <div class="row justify-content-center"</div>
+        <div class="col">
+          <p>Witaj w naszej wyszukiwarce warsztatów</p>
+          <p>Wyszukaj warsztat w swojej okolicy</p>
+          <p>W polu poniżej wprowadź miejscowość/adres, w którym poszukujesz warsztatu.</p>
+          <p>Naciśnij na znacznik, aby dowiedzieć się więcej o placówce.</p>
+          <input type="text" id="search-input" class="form-control mb-3" placeholder="Wprowadź informacje">
+        </div>
+
+        <div class="map" id="map"></div>
+          
+      </div>
+    </section>
+   
+  </div>  
+
+  <script type="text/javascript">
+    let garages_json = '{{ garages |safe }}'.replace("\n", "\\n").replace("\r", "\\r");
+    const garages = JSON.parse(garages_json);
+  </script>
+
+  <script src="{% static 'js/find_garages.js' %}"></script>
+  <script
+src="https://maps.googleapis.com/maps/api/js?key={{ map_api_key}}&libraries=places&callback=initMap" async defer>
+</script>
+
+{% endblock %}
