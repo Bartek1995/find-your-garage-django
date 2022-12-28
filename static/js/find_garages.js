@@ -64,7 +64,7 @@ for (i = 0; i < garages.length; i++) {
     google.maps.event.addListener(marker, 'click', (function(marker, i) {
     return function() {
         informationHref = '/garage/information/' + garages[i].pk
-        reservationHref = '/order/reserve/' + garages[i].pk
+        reservationHref = '/order/select_date/' + garages[i].pk
         let websiteStringUrl
         if (garages[i].fields.website_url == '')
             websiteStringUrl = "Brak informacji o stronie internetowej"
