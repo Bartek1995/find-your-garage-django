@@ -826,6 +826,7 @@ body {
 
     .gm-style-iw-c {
       padding: 20px 15px!important;
+      max-width: 100%!important;
       
       .gm-style-iw-d {
         overflow: visible!important;
@@ -849,6 +850,21 @@ body {
   }
   input {
     width: 50%;
+  }
+}
+
+.order-date-select {
+  .modal {
+    .card {
+      .card-body {
+        display: flex;
+        align-items: center;
+
+        .app-btn {
+          margin-left: auto;
+        }
+      }
+    }
   }
 }
 @media (max-width:576px) {
