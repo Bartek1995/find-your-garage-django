@@ -1,0 +1,51 @@
+{% extends "main/application_base_template.html" %} 
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}Panel główny{% endblock %} 
+{% block extra_head %} 
+{% endblock %}
+ 
+ 
+ {% block content %}
+
+ 
+
+<div class="body-content" id="body-content">
+  <div class="container">
+  <h2>Utwórz zlecenie</h2>
+
+    <section class="order-create py-5">
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <form method="post">
+
+            {% csrf_token %}
+            {{ form.car.label }}
+            {% render_field form.car class+="form-select mb-2" %}
+            {% if form.car.errors %}
+            <div class="alert alert-danger p-3">
+                <strong>{{ form.name.errors.as_text | cut:"* " }}</strong>
+            </div>
+            {% endif %}
+            <p class="form-text">Wybierz pojazd, dla którego chcesz utworzyć zlecenie.</p>
+            <p class="form-text mb-3">Jeżeli widzisz to pole puste to oznacza, że musisz dodać pojazd do swojego konta.</p>
+
+            {{ form.description.label }}
+            {% render_field form.description class+="form-control mb-2" %}
+            {% if form.description.errors %}
+            <div class="alert alert-danger p-3">
+                <strong>{{ form.description.errors.as_text | cut:"* " }}</strong>
+            </div>
+            {% endif %}
+            <p class="form-text">Opisz dokładnie problem związany z pojazdem. Większa ilość informacji przyśpieszy proces realizacji zlecenia.</p>
+
+            
+            <button type="submit" class="btn app-btn app-primary-btn my-3 me-3">Wyślij zgłoszenie</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+{% endblock %}
