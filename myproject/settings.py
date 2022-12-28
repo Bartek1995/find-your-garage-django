@@ -146,34 +146,34 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-if 'test' in sys.argv:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ.get('DBNAME_TEST'),
-            'USER': os.environ.get('DBUSER_TEST'),
-            'PASSWORD': os.environ.get('DBPASSWORD_TEST'),
-            'HOST': os.environ.get('DBENDPOINT_TEST'),
-            'PORT': os.environ.get('DBPORT'),
-            'TEST': {
-                'NAME': os.environ.get('DBNAME_TEST'),
-            }
-        }
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
+# if 'test' in sys.argv:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.postgresql',
+#             'NAME': os.environ.get('DBNAME_TEST'),
+#             'USER': os.environ.get('DBUSER_TEST'),
+#             'PASSWORD': os.environ.get('DBPASSWORD_TEST'),
+#             'HOST': os.environ.get('DBENDPOINT_TEST'),
+#             'PORT': os.environ.get('DBPORT'),
+#             'TEST': {
+#                 'NAME': os.environ.get('DBNAME_TEST'),
+#             }
+#         }
+#     }
+# else:
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DBNAME'),
+        'USER': os.environ.get('DBUSER'),
+        'PASSWORD': os.environ.get('DBPASSWORD'),
+        'HOST': os.environ.get('DBENDPOINT'),
+        'PORT': os.environ.get('DBPORT'),
+        'TEST': {
             'NAME': os.environ.get('DBNAME'),
-            'USER': os.environ.get('DBUSER'),
-            'PASSWORD': os.environ.get('DBPASSWORD'),
-            'HOST': os.environ.get('DBENDPOINT'),
-            'PORT': os.environ.get('DBPORT'),
-            'TEST': {
-                'NAME': os.environ.get('DBNAME'),
-            }
         }
     }
+}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
