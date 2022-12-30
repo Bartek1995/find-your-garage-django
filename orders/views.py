@@ -1,11 +1,12 @@
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
-from django.views.generic.base import TemplateView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
+from django.shortcuts import redirect
 
 from .forms import CreateOrderForm
 from orders.models import Order
+from cars.models import Car
 from garages.models import OpeningHours
 from accounts.mixins import GroupRequiredMixin
 
@@ -79,14 +80,65 @@ class SelectDateView(LoginRequiredMixin, GroupRequiredMixin, ListView):
         return context
 
 
-class CreateOrderView(CreateView):
+class CreateOrderView(LoginRequiredMixin, GroupRequiredMixin, UserPassesTestMixin, CreateView):
     """
     View for creating new order.
     """
     template_name = 'orders/order_create.html'
     form_class = CreateOrderForm
+    required_group = 'Customer'
     success_url = '/dashboard'
 
+    def get(self, *args, **kwargs):
+        date_from_url = f"{self.kwargs['year']}/{self.kwargs['month']}/{self.kwargs['day']}"
+        date_from_url = datetime.datetime.strptime(date_from_url, "%Y/%m/%d").date()
+        time_from_url = self.kwargs['hour']
+        time_from_url = datetime.datetime.strptime(time_from_url, "%H:%M").time()
+        
+        try:
+            garage_opening_hours = OpeningHours.objects.get(garage_id=self.kwargs['garage_id'], weekday=date_from_url.isoweekday())
+            if garage_opening_hours.from_hour is None or garage_opening_hours.to_hour is None:
+                raise OpeningHours.DoesNotExist
+        except OpeningHours.DoesNotExist:
+            self.request.messages = messages.error(
+                self.request, 'Nie można utworzyć zlecenia. Ten warsztat nie pracuje w wybranym dniu.')
+            return redirect('select_date', garage_id=self.kwargs['garage_id'])
+        else:
+            
+            # convert opening hours time to datetime
+            opening_hours_from_hour = datetime.datetime.combine(date_from_url, garage_opening_hours.from_hour)
+            opening_hours_to_hour = datetime.datetime.combine(date_from_url, garage_opening_hours.to_hour) - datetime.timedelta(hours=1)
+            
+            def time_in_range(start, end, x):
+                """Return true if x is in the range [start, end]"""
+                if start <= end:
+                    return start <= x <= end
+                else:
+                    return start <= x or x <= end
+                
+            test_time = time_in_range(opening_hours_from_hour.time(), opening_hours_to_hour.time(), time_from_url)
+                
+            if not test_time:
+                self.request.messages = messages.error(
+                    self.request, 'Nie można utworzyć zlecenia w wybranych godzinach.')
+                return redirect('select_date', garage_id=self.kwargs['garage_id'])
+            else:
+                try:
+                    Order.objects.get(date=date_from_url, time=time_from_url, garage=self.kwargs['garage_id'])
+                except Order.DoesNotExist:
+                    return super().get(self, *args, **kwargs)
+                else:
+                    self.request.messages = messages.error(
+                        self.request, 'Nie można utworzyć zlecenia. Wybrana godzina jest już zajęta.')
+                    return redirect('select_date', garage_id=self.kwargs['garage_id'])
+                
+    def test_func(self):
+        return Car.objects.filter(user=self.request.user).exists()
+    
+    def handle_no_permission(self):
+        self.request.messages = messages.error(self.request, 'Nie można utworzyć zlecenia. Nie posiadasz żadnego zarejestrowanego samochodu.')
+        return redirect('car_create_select_method')
+        
     def get_form_kwargs(self, **kwargs):
         form_kwargs = super(CreateOrderView, self).get_form_kwargs(**kwargs)
         form_kwargs["user"] = self.request.user
@@ -97,7 +149,6 @@ class CreateOrderView(CreateView):
         time_from_url = self.kwargs['hour']
         form.instance.garage_id = self.kwargs['garage_id']
         form.instance.user = self.request.user
-        form.instance.date = datetime.datetime.strptime(date_from_url, "%Y/%m/%d").date()
         form.instance.time = datetime.datetime.strptime(time_from_url, "%H:%M").time()
         self.request.messages = messages.success(
             self.request, 'Zlecenie zostało utworzone.')
