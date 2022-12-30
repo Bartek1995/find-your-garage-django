@@ -1,3 +1,4 @@
+import datetime
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -13,4 +14,7 @@ def create_additional_objects_with_garage_creating(sender, instance, created, **
     if created:
         ServiceList.objects.create(garage=instance)
         for i in range(1, 8):
-            OpeningHours.objects.create(garage=instance, weekday=i)
+            if i < 6:
+                OpeningHours.objects.create(garage=instance, weekday=i, from_hour=datetime.time(8, 0), to_hour=datetime.time(16, 0))
+            else:
+                OpeningHours.objects.create(garage=instance, weekday=i)
