@@ -13,9 +13,10 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
-.important-display {
-  display: block !important;
+html {
+  overflow-y: overlay;
 }
+
 .app-btn {
   font-size: 14px;
   color: white;

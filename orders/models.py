@@ -11,7 +11,6 @@ ORDER_STATE = (
     (3, 'W trakcie realizacji'),
     (4, 'Zrealizowane'),
     (5, 'Odrzucone'),
-    (6, 'Wstrzymane'),
 )
 
 
