@@ -191,10 +191,11 @@ class HistoryOfOrdersView(LoginRequiredMixin, ListView):
     """
     template_name = 'orders/history_of_orders.html'
     context_object_name = 'orders'
+    paginate_by = 10
 
     def get_queryset(self):
         if self.request.user.is_customer:
             return Order.objects.filter(user=self.request.user).order_by('-date', '-time')
         else:
             user_garage = Garage.objects.get(user=self.request.user)
-            return Order.objects.filter(garage=user_garage).order_by('-date', '-time')
+            return Order.objects.filter(garage=user_garage).order_by('-created')
