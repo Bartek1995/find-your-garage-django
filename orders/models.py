@@ -31,6 +31,25 @@ class Order(models.Model):
     def __str__(self):
         return f"{self.garage} - {self.car.vin_number} - {self.date} - {self.time}"
     
+    @property
+    def get_state_as_string(self):
+        for state in ORDER_STATE:
+            if state[0] == self.state:
+                return state[1]
+            
+    @property
+    def get_sum_of_expenditures(self):
+        
+        sum_of_expenditures = 0
+        try:
+            expenditure_set = Expenditure.objects.filter(order=self)
+        except Expenditure.DoesNotExist:
+            return None
+        else:
+            for expenditure in expenditure_set:
+                sum_of_expenditures += expenditure.price
+        return sum_of_expenditures
+    
     
 TYPE_OF_EXPENDITURE = (
     (1, 'Części'),
