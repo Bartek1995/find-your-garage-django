@@ -45,7 +45,11 @@
                   {% endif %}
                 </p>
                 <p class="mb-0">Godziny otwarcia:</p>
-                <p>{{day.opening_hours.from_hour}} - {{day.opening_hours.to_hour}}</p>
+                {% if day.is_today %}
+                  <p>{{day.original_opening_hours_from_hour}} - {{day.opening_hours.to_hour}}</p>
+                {% else %}
+                  <p>{{day.opening_hours.from_hour}} - {{day.opening_hours.to_hour}}</p>
+                {% endif %}
                 <hr>
                 <p class="mb-0">Dostępność terminów:</p>
                 <p>{{day.amount_of_available_orders}}/{{day.amount_of_orders}}</p>
