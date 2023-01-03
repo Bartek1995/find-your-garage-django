@@ -1,0 +1,477 @@
+{% extends "main/application_base_template.html" %} 
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}Aktywne zlecenia{% endblock %} 
+{% block extra_head %} 
+{% endblock %}
+ 
+{% block content %}
+
+<div class="body-content" id="body-content">
+  <div class="container">
+  <h2>Aktywne zlecenia</h2>
+
+    <section class="active-orders py-5">
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+
+          <p>Poniżej znajduje się lista aktywnych zleceń przypisanych do Twojego konta użytkownika. Rozwijaj wybrane pozycje aby dowiedzieć się wiecej na temat zgłoszeń.</p>
+
+          <div class="accordion" id="accordionExample">
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#waiting-orders-accordion" aria-expanded="true" aria-controls="waiting-orders-accordion">
+                  Zlecenia oczekujące
+                </button>
+              </h2>
+              <div id="waiting-orders-accordion" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <ul class="list-group">
+                    {% if waiting_orders %}
+                      {% for order in waiting_orders %}
+                      <li class="list-group-item list-group-item-action mb-1">
+                        <div class="d-flex w-100 justify-content-between">
+                          <h5 class="mb-1">Nr. #{{ order.id }}</h5>
+                          <div class="d-flex flex-column">
+                            <small>{{ order.date }}</small>
+                            <small>{{ order.time }}</small>
+                          </div>  
+                        </div>
+                        <div class="item-body">
+                          <div class="item-body__data">
+                            <p class="m-1">Status: {{ order.get_state_as_string }}</p>
+                            <small>Suma kosztów: {{ order.get_sum_of_expenditures }} zł</small>
+                          </div>
+                          <div class="item-body__buttons">
+                            <button data-bs-toggle="modal" id="modal-open-button" data-bs-target="#waiting_orders{{ forloop.counter }}">
+                              <i class="fa-solid fa-circle-info"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </li> 
+        
+                      <div class="modal fade" id="waiting_orders{{ forloop.counter }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h1 class="modal-title fs-5" id="OrderDetails">Zlecenie nr. {{order.id}}</h1>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <div class="row">
+                                <div class="col-12 col-md-6">
+                                  <h5>Informacje o samochodzie</h5>
+                                  <p>Marka: <span>{{order.car.brand}}</span></p>
+                                  <p>Model: <span>{{order.car.model}}</span></p>
+                                  <p>Numer VIN: <span>{{order.car.vin_number}}</span></p>
+                                  <p>Rok produkcji: <span>{{order.car.production_year}}</span></p>
+                                  <p>Pojemność silnika: <span>{{order.car.engine_capacity}} cm3</span></p>
+                                  <hr>
+                                  <h5>Opis zlecenia </h5>
+                                  {% if order.description %}
+                                    {{ order.description }}
+                                  {% else %}
+                                    <p>Brak opisu</p>
+                                  {% endif %}
+                                  <hr class="d-md-none">
+                                </div>
+        
+                                <div class="col-12 col-md-6">
+                                  <h5>Dodatkowe informacje</h5>
+                                  <p>Utworzono: <span>{{ order.created }}</span></p>
+                                  <p>Zmodyfikowano: <span>{{ order.modified }}</span></p>
+                                  <p>Aktualny status: <span>{{ order.get_state_as_string }}</span></p>
+                                  <hr>
+                                    <h5>Informacje o warsztacie</h5>
+                                    <p>Nazwa: <span>{{order.garage.name}}</span></p>
+                                    <p>Pełny adres: <span>{{order.garage.full_address}}</span></p>
+                                    <p>Numer NIP: <span>{{order.garage.nip_number}}</span></p>
+                                    <p>Strona internetowa: <span>{{order.garage.website_url}}</span></p>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button class="btn app-btn app-primary-btn me-auto">Wiecej informacji</button>
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {% endfor %}
+        
+                    {% else %}
+                      <p>Brak oczekujących zleceń</p>
+                    {% endif %}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accepted-orders-accordion" aria-expanded="true" aria-controls="accepted-orders-accordion">
+                  Zlecenia zaakceptowane
+                </button>
+              </h2>
+              <div id="accepted-orders-accordion" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <ul class="list-group">
+                    {% if accepted_orders %}
+                      {% for order in accepted_orders %}
+                      <li class="list-group-item list-group-item-action mb-1">
+                        <div class="d-flex w-100 justify-content-between">
+                          <h5 class="mb-1">Nr. #{{ order.id }}</h5>
+                          <div class="d-flex flex-column">
+                            <small>{{ order.date }}</small>
+                            <small>{{ order.time }}</small>
+                          </div>  
+                        </div>
+                        <div class="item-body">
+                          <div class="item-body__data">
+                            <p class="m-1">Status: {{ order.get_state_as_string }}</p>
+                            <small>Suma kosztów: {{ order.get_sum_of_expenditures }} zł</small>
+                          </div>
+                          <div class="item-body__buttons">
+                            <button data-bs-toggle="modal" id="modal-open-button" data-bs-target="#accepted_orders{{ forloop.counter }}">
+                              <i class="fa-solid fa-circle-info"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </li> 
+        
+                      <div class="modal fade" id="accepted_orders{{ forloop.counter }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h1 class="modal-title fs-5" id="OrderDetails">Zlecenie nr. {{order.id}}</h1>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <div class="row">
+                                <div class="col-12 col-md-6">
+                                  <h5>Informacje o samochodzie</h5>
+                                  <p>Marka: <span>{{order.car.brand}}</span></p>
+                                  <p>Model: <span>{{order.car.model}}</span></p>
+                                  <p>Numer VIN: <span>{{order.car.vin_number}}</span></p>
+                                  <p>Rok produkcji: <span>{{order.car.production_year}}</span></p>
+                                  <p>Pojemność silnika: <span>{{order.car.engine_capacity}} cm3</span></p>
+                                  <hr>
+                                  <h5>Opis zlecenia </h5>
+                                  {% if order.description %}
+                                    {{ order.description }}
+                                  {% else %}
+                                    <p>Brak opisu</p>
+                                  {% endif %}
+                                  <hr class="d-md-none">
+                                </div>
+        
+                                <div class="col-12 col-md-6">
+                                  <h5>Dodatkowe informacje</h5>
+                                  <p>Utworzono: <span>{{ order.created }}</span></p>
+                                  <p>Zmodyfikowano: <span>{{ order.modified }}</span></p>
+                                  <p>Aktualny status: <span>{{ order.get_state_as_string }}</span></p>
+                                  <hr>
+                                    <h5>Informacje o warsztacie</h5>
+                                    <p>Nazwa: <span>{{order.garage.name}}</span></p>
+                                    <p>Pełny adres: <span>{{order.garage.full_address}}</span></p>
+                                    <p>Numer NIP: <span>{{order.garage.nip_number}}</span></p>
+                                    <p>Strona internetowa: <span>{{order.garage.website_url}}</span></p>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button class="btn app-btn app-primary-btn me-auto">Wiecej informacji</button>
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {% endfor %}
+        
+                    {% else %}
+                      <p>Brak zaakceptowanych zleceń</p>
+                    {% endif %}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#in-progress-orders-accordion" aria-expanded="true" aria-controls="in-progress-orders-accordion">
+                  Zlecenia w trakcie realizacji
+                </button>
+              </h2>
+              <div id="in-progress-orders-accordion" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <ul class="list-group">
+                    {% if in_progress_orders %}
+                      {% for order in in_progress_orders %}
+                      <li class="list-group-item list-group-item-action mb-1">
+                        <div class="d-flex w-100 justify-content-between">
+                          <h5 class="mb-1">Nr. #{{ order.id }}</h5>
+                          <div class="d-flex flex-column">
+                            <small>{{ order.date }}</small>
+                            <small>{{ order.time }}</small>
+                          </div>  
+                        </div>
+                        <div class="item-body">
+                          <div class="item-body__data">
+                            <p class="m-1">Status: {{ order.get_state_as_string }}</p>
+                            <small>Suma kosztów: {{ order.get_sum_of_expenditures }} zł</small>
+                          </div>
+                          <div class="item-body__buttons">
+                            <button data-bs-toggle="modal" id="modal-open-button" data-bs-target="#in_progress_orders{{ forloop.counter }}">
+                              <i class="fa-solid fa-circle-info"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </li> 
+        
+                      <div class="modal fade" id="in_progress_orders{{ forloop.counter }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h1 class="modal-title fs-5" id="OrderDetails">Zlecenie nr. {{order.id}}</h1>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <div class="row">
+                                <div class="col-12 col-md-6">
+                                  <h5>Informacje o samochodzie</h5>
+                                  <p>Marka: <span>{{order.car.brand}}</span></p>
+                                  <p>Model: <span>{{order.car.model}}</span></p>
+                                  <p>Numer VIN: <span>{{order.car.vin_number}}</span></p>
+                                  <p>Rok produkcji: <span>{{order.car.production_year}}</span></p>
+                                  <p>Pojemność silnika: <span>{{order.car.engine_capacity}} cm3</span></p>
+                                  <hr>
+                                  <h5>Opis zlecenia </h5>
+                                  {% if order.description %}
+                                    {{ order.description }}
+                                  {% else %}
+                                    <p>Brak opisu</p>
+                                  {% endif %}
+                                  <hr class="d-md-none">
+                                </div>
+        
+                                <div class="col-12 col-md-6">
+                                  <h5>Dodatkowe informacje</h5>
+                                  <p>Utworzono: <span>{{ order.created }}</span></p>
+                                  <p>Zmodyfikowano: <span>{{ order.modified }}</span></p>
+                                  <p>Aktualny status: <span>{{ order.get_state_as_string }}</span></p>
+                                  <hr>
+                                    <h5>Informacje o warsztacie</h5>
+                                    <p>Nazwa: <span>{{order.garage.name}}</span></p>
+                                    <p>Pełny adres: <span>{{order.garage.full_address}}</span></p>
+                                    <p>Numer NIP: <span>{{order.garage.nip_number}}</span></p>
+                                    <p>Strona internetowa: <span>{{order.garage.website_url}}</span></p>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button class="btn app-btn app-primary-btn me-auto">Wiecej informacji</button>
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {% endfor %}
+        
+                    {% else %}
+                      <p>Brak zleceń w trakcie realizacji</p>
+                    {% endif %}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#finished-orders-accordion" aria-expanded="true" aria-controls="finished-orders-accordion">
+                  Zlecenia zakończone
+                </button>
+              </h2>
+              <div id="finished-orders-accordion" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <ul class="list-group">
+                    {% if finished_orders %}
+                      {% for order in finished_orders %}
+                      <li class="list-group-item list-group-item-action mb-1">
+                        <div class="d-flex w-100 justify-content-between">
+                          <h5 class="mb-1">Nr. #{{ order.id }}</h5>
+                          <div class="d-flex flex-column">
+                            <small>{{ order.date }}</small>
+                            <small>{{ order.time }}</small>
+                          </div>  
+                        </div>
+                        <div class="item-body">
+                          <div class="item-body__data">
+                            <p class="m-1">Status: {{ order.get_state_as_string }}</p>
+                            <small>Suma kosztów: {{ order.get_sum_of_expenditures }} zł</small>
+                          </div>
+                          <div class="item-body__buttons">
+                            <button data-bs-toggle="modal" id="modal-open-button" data-bs-target="#finished_orders{{ forloop.counter }}">
+                              <i class="fa-solid fa-circle-info"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </li> 
+        
+                      <div class="modal fade" id="finished_orders{{ forloop.counter }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h1 class="modal-title fs-5" id="OrderDetails">Zlecenie nr. {{order.id}}</h1>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <div class="row">
+                                <div class="col-12 col-md-6">
+                                  <h5>Informacje o samochodzie</h5>
+                                  <p>Marka: <span>{{order.car.brand}}</span></p>
+                                  <p>Model: <span>{{order.car.model}}</span></p>
+                                  <p>Numer VIN: <span>{{order.car.vin_number}}</span></p>
+                                  <p>Rok produkcji: <span>{{order.car.production_year}}</span></p>
+                                  <p>Pojemność silnika: <span>{{order.car.engine_capacity}} cm3</span></p>
+                                  <hr>
+                                  <h5>Opis zlecenia </h5>
+                                  {% if order.description %}
+                                    {{ order.description }}
+                                  {% else %}
+                                    <p>Brak opisu</p>
+                                  {% endif %}
+                                  <hr class="d-md-none">
+                                </div>
+        
+                                <div class="col-12 col-md-6">
+                                  <h5>Dodatkowe informacje</h5>
+                                  <p>Utworzono: <span>{{ order.created }}</span></p>
+                                  <p>Zmodyfikowano: <span>{{ order.modified }}</span></p>
+                                  <p>Aktualny status: <span>{{ order.get_state_as_string }}</span></p>
+                                  <hr>
+                                    <h5>Informacje o warsztacie</h5>
+                                    <p>Nazwa: <span>{{order.garage.name}}</span></p>
+                                    <p>Pełny adres: <span>{{order.garage.full_address}}</span></p>
+                                    <p>Numer NIP: <span>{{order.garage.nip_number}}</span></p>
+                                    <p>Strona internetowa: <span>{{order.garage.website_url}}</span></p>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button class="btn app-btn app-primary-btn me-auto">Wiecej informacji</button>
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {% endfor %}
+        
+                    {% else %}
+                      <p>Brak zakończonych zleceń</p>
+                    {% endif %}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#rejected-orders-accordion" aria-expanded="true" aria-controls="rejected-orders-accordion">
+                  Zlecenia odrzucone
+                </button>
+              </h2>
+              <div id="rejected-orders-accordion" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <ul class="list-group">
+            {% if rejected_orders %}
+              {% for order in rejected_orders %}
+              <li class="list-group-item list-group-item-action mb-1">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="mb-1">Nr. #{{ order.id }}</h5>
+                  <div class="d-flex flex-column">
+                    <small>{{ order.date }}</small>
+                    <small>{{ order.time }}</small>
+                  </div>  
+                </div>
+                <div class="item-body">
+                  <div class="item-body__data">
+                    <p class="m-1">Status: {{ order.get_state_as_string }}</p>
+                    <small>Suma kosztów: {{ order.get_sum_of_expenditures }} zł</small>
+                  </div>
+                  <div class="item-body__buttons">
+                    <button data-bs-toggle="modal" id="modal-open-button" data-bs-target="#rejected_orders{{ forloop.counter }}">
+                      <i class="fa-solid fa-circle-info"></i>
+                    </button>
+                  </div>
+                </div>
+              </li> 
+
+              <div class="modal fade" id="rejected_orders{{ forloop.counter }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="OrderDetails">Zlecenie nr. {{order.id}}</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="row">
+                        <div class="col-12 col-md-6">
+                          <h5>Informacje o samochodzie</h5>
+                          <p>Marka: <span>{{order.car.brand}}</span></p>
+                          <p>Model: <span>{{order.car.model}}</span></p>
+                          <p>Numer VIN: <span>{{order.car.vin_number}}</span></p>
+                          <p>Rok produkcji: <span>{{order.car.production_year}}</span></p>
+                          <p>Pojemność silnika: <span>{{order.car.engine_capacity}} cm3</span></p>
+                          <hr>
+                          <h5>Opis zlecenia </h5>
+                          {% if order.description %}
+                            {{ order.description }}
+                          {% else %}
+                            <p>Brak opisu</p>
+                          {% endif %}
+                          <hr class="d-md-none">
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                          <h5>Dodatkowe informacje</h5>
+                          <p>Utworzono: <span>{{ order.created }}</span></p>
+                          <p>Zmodyfikowano: <span>{{ order.modified }}</span></p>
+                          <p>Aktualny status: <span>{{ order.get_state_as_string }}</span></p>
+                          <hr>
+                            <h5>Informacje o warsztacie</h5>
+                            <p>Nazwa: <span>{{order.garage.name}}</span></p>
+                            <p>Pełny adres: <span>{{order.garage.full_address}}</span></p>
+                            <p>Numer NIP: <span>{{order.garage.nip_number}}</span></p>
+                            <p>Strona internetowa: <span>{{order.garage.website_url}}</span></p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button class="btn app-btn app-primary-btn me-auto">Wiecej informacji</button>
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+
+            {% else %}
+              <p>Brak odrzuconych zleceń</p>
+            {% endif %}
+          </ul>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+</div>
+
+<script src="{% static 'js/active_orders_accordion_fix.js' %}"></script>
+{% endblock %} 

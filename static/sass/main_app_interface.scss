@@ -13,6 +13,9 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
+.important-display {
+  display: block !important;
+}
 .app-btn {
   font-size: 14px;
   color: white;
@@ -413,13 +416,13 @@ body {
   height: 100vh;
 
   h2 {
-  margin-bottom: 30px;  
   text-align: center; 
   }
 
   .body-content__item {
     margin-top: 50px;
   }
+
 }
 
 .dashboard-carousel {
@@ -863,6 +866,30 @@ body {
         .app-btn {
           margin-left: auto;
         }
+      }
+    }
+  }
+}
+
+.order-history, .active-orders {
+  .item-body {
+    display: flex;
+    justify-content: space-between;
+
+    .item-body__buttons {
+      button {
+        border: none;
+        background-color: transparent;
+        font-size: 28px;
+      }
+    }
+  }
+
+  .modal {
+    --bs-modal-width: 900px;
+    .modal-body {
+      span {
+        font-weight: bold;
       }
     }
   }

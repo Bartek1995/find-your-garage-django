@@ -1,4 +1,5 @@
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import CreateView
+from django.views.generic import TemplateView
 from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
@@ -199,3 +200,21 @@ class HistoryOfOrdersView(LoginRequiredMixin, ListView):
         else:
             user_garage = Garage.objects.get(user=self.request.user)
             return Order.objects.filter(garage=user_garage).order_by('-created')
+        
+        
+class ActiveOrdersView(LoginRequiredMixin, GroupRequiredMixin, TemplateView):
+    """
+    View for showing active orders.
+    """
+    template_name = 'orders/active_orders.html'
+    context_object_name = 'orders'
+    required_group = 'Customer'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['waiting_orders'] = Order.objects.filter(state=1, user=self.request.user).order_by('date', 'time')
+        context['accepted_orders'] = Order.objects.filter(state=2, user=self.request.user).order_by('date', 'time')
+        context['in_progress_orders'] = Order.objects.filter(state=3, user=self.request.user).order_by('date', 'time')
+        context['finished_orders'] = Order.objects.filter(state=4, user=self.request.user).order_by('date', 'time')
+        context['rejected_orders'] = Order.objects.filter(state=5, user=self.request.user).order_by('date', 'time')
+        return context
