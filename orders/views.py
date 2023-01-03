@@ -7,6 +7,7 @@ from django.shortcuts import redirect
 from .forms import CreateOrderForm
 from orders.models import Order
 from cars.models import Car
+from garages.models import Garage
 from garages.models import OpeningHours
 from accounts.mixins import GroupRequiredMixin
 
@@ -14,6 +15,10 @@ import datetime
 
 
 class SelectDateView(LoginRequiredMixin, GroupRequiredMixin, ListView):
+    """
+    View for selecting date and time for new order.
+    """
+    
     template_name = 'orders/select_date.html'
     required_group = 'Customer'
 
@@ -37,10 +42,19 @@ class SelectDateView(LoginRequiredMixin, GroupRequiredMixin, ListView):
                 garage_id=self.kwargs['garage_id'], weekday=weekday)
 
             if opening_hours.from_hour is not None or opening_hours.to_hour is not None:
+                # check if onening_hours.from_hour is bigger than current time
+                # if day is today
+                if day == datetime.date.today():
+                    original_opening_hours_from_hour = opening_hours.from_hour
+                    opening_hours.from_hour = datetime.datetime.now().time()
+                    is_today = True
+                    
                 data_about_day = {
                     'date': day,
                     'weekday': weekday,
                     'opening_hours': opening_hours,
+                    'original_opening_hours_from_hour': original_opening_hours_from_hour,
+                    'is_today': is_today,
                     'amount_of_available_orders': 0,
                     'amount_of_orders': 0,
                     'avaliable_hours': {},
@@ -88,15 +102,13 @@ class CreateOrderView(LoginRequiredMixin, GroupRequiredMixin, UserPassesTestMixi
     form_class = CreateOrderForm
     required_group = 'Customer'
     success_url = '/dashboard'
-
-    def get(self, *args, **kwargs):
-        date_from_url = f"{self.kwargs['year']}/{self.kwargs['month']}/{self.kwargs['day']}"
-        date_from_url = datetime.datetime.strptime(date_from_url, "%Y/%m/%d").date()
-        time_from_url = self.kwargs['hour']
-        time_from_url = datetime.datetime.strptime(time_from_url, "%H:%M").time()
+    date_from_url = None
+    time_from_url = None
         
+    def get(self, *args, **kwargs):
+        self.init_date_and_time_from_url()
         try:
-            garage_opening_hours = OpeningHours.objects.get(garage_id=self.kwargs['garage_id'], weekday=date_from_url.isoweekday())
+            garage_opening_hours = OpeningHours.objects.get(garage_id=self.kwargs['garage_id'], weekday=self.date_from_url.isoweekday())
             if garage_opening_hours.from_hour is None or garage_opening_hours.to_hour is None:
                 raise OpeningHours.DoesNotExist
         except OpeningHours.DoesNotExist:
@@ -106,8 +118,8 @@ class CreateOrderView(LoginRequiredMixin, GroupRequiredMixin, UserPassesTestMixi
         else:
             
             # convert opening hours time to datetime
-            opening_hours_from_hour = datetime.datetime.combine(date_from_url, garage_opening_hours.from_hour)
-            opening_hours_to_hour = datetime.datetime.combine(date_from_url, garage_opening_hours.to_hour) - datetime.timedelta(hours=1)
+            opening_hours_from_hour = datetime.datetime.combine(self.date_from_url, garage_opening_hours.from_hour)
+            opening_hours_to_hour = datetime.datetime.combine(self.date_from_url, garage_opening_hours.to_hour) - datetime.timedelta(hours=1)
             
             def time_in_range(start, end, x):
                 """Return true if x is in the range [start, end]"""
@@ -116,25 +128,31 @@ class CreateOrderView(LoginRequiredMixin, GroupRequiredMixin, UserPassesTestMixi
                 else:
                     return start <= x or x <= end
                 
-            test_time = time_in_range(opening_hours_from_hour.time(), opening_hours_to_hour.time(), time_from_url)
+            test_time = time_in_range(opening_hours_from_hour.time(), opening_hours_to_hour.time(), self.time_from_url)
                 
             if not test_time:
                 self.request.messages = messages.error(
                     self.request, 'Nie można utworzyć zlecenia w wybranych godzinach.')
                 return redirect('select_date', garage_id=self.kwargs['garage_id'])
             else:
-                try:
-                    Order.objects.get(date=date_from_url, time=time_from_url, garage=self.kwargs['garage_id'])
-                except Order.DoesNotExist:
-                    return super().get(self, *args, **kwargs)
-                else:
-                    self.request.messages = messages.error(
-                        self.request, 'Nie można utworzyć zlecenia. Wybrana godzina jest już zajęta.')
-                    return redirect('select_date', garage_id=self.kwargs['garage_id'])
-                
+                if self.check_time_from_url():
+                    return super().get(*args, **kwargs)
+                return redirect('select_date', garage_id=self.kwargs['garage_id'])
+    
+    def post(self, request, *args, **kwargs):
+        if self.check_time_from_url():
+            return super().post(request, *args, **kwargs)
+        return redirect('select_date', garage_id=self.kwargs['garage_id'])
+        
     def test_func(self):
         return Car.objects.filter(user=self.request.user).exists()
     
+    def init_date_and_time_from_url(self):
+        self.date_from_url = f"{self.kwargs['year']}/{self.kwargs['month']}/{self.kwargs['day']}"
+        self.date_from_url = datetime.datetime.strptime(self.date_from_url, "%Y/%m/%d").date()
+        self.time_from_url = self.kwargs['hour']
+        self.time_from_url = datetime.datetime.strptime(self.time_from_url, "%H:%M").time()
+        
     def handle_no_permission(self):
         self.request.messages = messages.error(self.request, 'Nie można utworzyć zlecenia. Nie posiadasz żadnego zarejestrowanego samochodu.')
         return redirect('car_create_select_method')
@@ -144,12 +162,39 @@ class CreateOrderView(LoginRequiredMixin, GroupRequiredMixin, UserPassesTestMixi
         form_kwargs["user"] = self.request.user
         return form_kwargs
     
+    def check_time_from_url(self):
+        """
+        Function check if time from url is avaliable to create order.
+        """
+        self.init_date_and_time_from_url()
+        try:
+            Order.objects.get(date=self.date_from_url, time=self.time_from_url, garage=self.kwargs['garage_id'])
+        except Order.DoesNotExist:
+            return True
+        self.request.messages = messages.error(
+            self.request, 'Nie można utworzyć zlecenia. W wybranym terminie jest już zarezerwowane zlecenie.')
+        return False
+    
     def form_valid(self, form):
-        date_from_url = f"{self.kwargs['year']}/{self.kwargs['month']}/{self.kwargs['day']}"
-        time_from_url = self.kwargs['hour']
         form.instance.garage_id = self.kwargs['garage_id']
         form.instance.user = self.request.user
-        form.instance.time = datetime.datetime.strptime(time_from_url, "%H:%M").time()
+        form.instance.time = self.time_from_url
+        form.instance.date = self.date_from_url
         self.request.messages = messages.success(
             self.request, 'Zlecenie zostało utworzone.')
         return super().form_valid(form)
+
+
+class HistoryOfOrdersView(LoginRequiredMixin, ListView):
+    """
+    View for showing order history.
+    """
+    template_name = 'orders/history_of_orders.html'
+    context_object_name = 'orders'
+
+    def get_queryset(self):
+        if self.request.user.is_customer:
+            return Order.objects.filter(user=self.request.user).order_by('-date', '-time')
+        else:
+            user_garage = Garage.objects.get(user=self.request.user)
+            return Order.objects.filter(garage=user_garage).order_by('-date', '-time')
