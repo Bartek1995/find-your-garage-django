@@ -31,7 +31,7 @@ class SelectDateView(LoginRequiredMixin, GroupRequiredMixin, ListView):
         context['avaliable_days'] = []
         context['garage'] = self.kwargs['garage_id']
         
-        start_date = datetime.date.today()
+        start_date = datetime.date.today() + datetime.timedelta(days=1)
         end_date = start_date + datetime.timedelta(days=14)
 
         delta = end_date - start_date
@@ -43,39 +43,18 @@ class SelectDateView(LoginRequiredMixin, GroupRequiredMixin, ListView):
                 garage_id=self.kwargs['garage_id'], weekday=weekday)
 
             if opening_hours.from_hour is not None or opening_hours.to_hour is not None:
-                # check if onening_hours.from_hour is bigger than current time
-                # if day is today
-                if day == datetime.date.today():
-                    original_opening_hours_from_hour = opening_hours.from_hour
-                    opening_hours.from_hour = datetime.datetime.now().time()
-                    is_today = True
-                    
+
                 data_about_day = {
                     'date': day,
                     'weekday': weekday,
                     'opening_hours': opening_hours,
-                    'original_opening_hours_from_hour': original_opening_hours_from_hour,
-                    'is_today': is_today,
                     'amount_of_available_orders': 0,
                     'amount_of_orders': 0,
                     'avaliable_hours': {},
                 }
                 
-                #  This is the function that rounds the time to the nearest hour
-                def hour_rounder(t):
-                    time_as_int = int(t.strftime("%H"))
-                    temp_time = datetime.datetime.strptime(str(time_as_int), "%H").time()
-                    if temp_time < t:
-                        time_as_int += 1
-                        time_as_int = datetime.datetime.strptime(str(time_as_int), "%H").time()
-                        return int(time_as_int.strftime("%H"))
-                    else:
-                        return int(t.strftime("%H"))
-                
-                rounded_from_hour = hour_rounder(opening_hours.from_hour)
-                
                 hours_in_opening_hours_range = [(datetime.time(hour=x), '{:02d}:00'.format(x)) for x in range(
-                    rounded_from_hour, int(opening_hours.to_hour.strftime("%H")))]
+                    int(opening_hours.from_hour.strftime("%H")), int(opening_hours.to_hour.strftime("%H")))]
 
                 for hour in hours_in_opening_hours_range:
                     data_about_day['amount_of_orders'] += 1
