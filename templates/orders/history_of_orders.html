@@ -57,7 +57,7 @@
                           <hr>
                           <h5>Opis zlecenia </h5>
                           {% if order.description %}
-                            {{ order.description }}
+                            <p class="order-description">{{ order.description }}</p>
                           {% else %}
                             <p>Brak opisu</p>
                           {% endif %}
