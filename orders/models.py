@@ -1,7 +1,7 @@
 from django.db import models
 
 from garages.models import Garage
-from cars.models import Car
+import cars.models as cars
 from accounts.models import CustomUser
 
 
@@ -18,7 +18,7 @@ class Order(models.Model):
     
     garage = models.ForeignKey(Garage, on_delete=models.CASCADE, blank=False)
     user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=False)
-    car = models.ForeignKey(Car, on_delete=models.SET_NULL, null=True, blank=False)
+    car = models.ForeignKey(cars.Car, on_delete=models.SET_NULL, null=True, blank=False)
     
     date = models.DateField(verbose_name="Data", null=True)
     time = models.TimeField(verbose_name="Godzina", null=True)
@@ -40,13 +40,14 @@ class Order(models.Model):
     def get_sum_of_expenditures(self):
         
         sum_of_expenditures = 0
-        try:
-            expenditure_set = Expenditure.objects.filter(order=self)
-        except Expenditure.DoesNotExist:
+        
+        expenditure_set = Expenditure.objects.filter(order=self)
+        
+        for expenditure in expenditure_set:
+            sum_of_expenditures += expenditure.price
+            
+        if sum_of_expenditures == 0:
             return None
-        else:
-            for expenditure in expenditure_set:
-                sum_of_expenditures += expenditure.price
         return sum_of_expenditures
     
     
@@ -61,7 +62,7 @@ class Expenditure(models.Model):
     
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True, blank=False)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, blank=False)
-    car = models.ForeignKey(Car, on_delete=models.CASCADE, blank=False)
+    car = models.ForeignKey(cars.Car, on_delete=models.CASCADE, blank=False)
     
     type_of_expenditure = models.CharField(verbose_name="Typ wydatku", max_length=10, choices=TYPE_OF_EXPENDITURE, blank=False)
     name = models.CharField(verbose_name="Nazwa wydatku", max_length=50, blank=False)

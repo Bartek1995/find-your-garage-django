@@ -1,6 +1,9 @@
 from django.db import models
 from accounts.models import CustomUser
+
 from pyvin import VIN
+
+import orders
 from .validators import validate_vin
 from django.core.validators import MaxValueValidator, MinValueValidator
 
@@ -90,7 +93,14 @@ class Car(models.Model):
         self.cost_of_repairs = random.randint(100, 5000)
         self.cost_of_parts = random.randint(100, 5000)
         self.cost_of_anothers = random.randint(100, 5000)
-        
+    
+    @property
+    def get_last_order(self):
+        """
+        Returns the last order for the car.
+        """
+        return orders.models.Order.objects.filter(car=self).order_by('created').first()
+    
     @property
     def date_of_expiry_of_insurance_is_past_due(self):
         temp_date_of_expiry_of_insurance = datetime.datetime.strptime(self.date_of_expiry_of_insurance, "%Y-%m-%d")
