@@ -77,14 +77,22 @@
                   <div class="col-12 col-md-6 col-xl-5 my-3">
                     <div class="car-information__info-box last-service py-3">
                       <div class="car-information__title-box">
-                        <p class="info-box__title m-0">Ostatnia wykonywana usługa</p>
+                        <p class="info-box__title m-0">Ostatnia usługa</p>
                         <hr>
                         <i class="fa-solid fa-toolbox info-box__icon"></i>
                       </div>
-                      {% if last_service %}
-                      <p class="info-box__details">Nazwa warsztatu: <span>Auto Sudacki</span></p>
-                      <p class="info-box__details">Data wykonania: <span>19.07.2022</span></p>
-                      <p class="info-box__details">Koszt: <span>370zł</span></p>
+                      {% if car.get_last_order %}
+                      <p class="info-box__details">Nazwa warsztatu: <span>{{ car.get_last_order.garage.name}}</span></p>
+                      <p class="info-box__details">Data utworzenia: <span>{{ car.get_last_order.created }}</span></p>
+                      <p class="info-box__details">Data aktualizacji: <span>{{ car.get_last_order.modified }}</span></p>
+                      <p class="info-box__details">Koszty: 
+                        <span>
+                        {% if car.get_last_order.get_sum_of_expenditures %}
+                          {{ car.get_last_order.get_sum_of_expenditures }} zł
+                        {% else %}
+                          Brak
+                        {% endif %}
+                      </span></p>
                       <button class="btn app-btn app-primary-btn">Więcej informacji</button>
                       {% else %}
                       <p class="m-0">Brak ostatnich zleceń</p>
