@@ -142,6 +142,13 @@ class CreateOrderView(LoginRequiredMixin, GroupRequiredMixin, UserPassesTestMixi
         form_kwargs["user"] = self.request.user
         return form_kwargs
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['garage'] = Garage.objects.get(id=self.kwargs['garage_id'])
+        context['date'] = self.date_from_url
+        context['time'] = self.time_from_url
+        return context
+        
     def check_time_from_url(self):
         """
         Function check if time from url is avaliable to create order.

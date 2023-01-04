@@ -16,7 +16,21 @@
 
     <section class="order-create py-5">
       <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-12 col-md-4 mb-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Informacje</h5>
+              <p class="card-text">Zlecenie to zgłoszenie problemu związanego z pojazdem. Zlecenie jest przekazywane do serwisu, który zajmie się jego realizacją.</p>  
+              <p class="card-text">Realizacją Twojego zgłoszenia zajmie się serwis:</p>
+              <p class="card-text"><span class="fw-bold">{{ garage.name }}</span> z siedzibą w <span class="fw-bold">{{ garage.full_address }}</span></p>
+              <p class="card-text">Termin:</p>
+              <p class="card-text fw-bold">{{ date }} {{ time }}</p>
+              <p class="card-text">Po pomyślnym złożeniu zlecenia przechodzi ono na listę oczekujących. Czekaj na potwierdzenie od strony warsztatu.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-8">
           <form method="post">
 
             {% csrf_token %}
@@ -43,6 +57,7 @@
             <button type="submit" class="btn app-btn app-primary-btn my-3 me-3">Wyślij zgłoszenie</button>
           </form>
         </div>
+
       </div>
     </section>
   </div>
