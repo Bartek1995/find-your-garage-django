@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from django.urls import reverse
 import calendar
 from orders.models import Order
 from django.utils.translation import gettext as _
@@ -109,7 +109,7 @@ class Calendar(calendar.HTMLCalendar):
                     <p class="m-1">Status: { order.get_state_as_string }</p>
                     <small>Suma kosztów: { order.get_sum_of_expenditures + "zł" if order.get_sum_of_expenditures is not None else "Brak" }</small>
                     </div>
-                    <a href"" class="btn app-btn app-primary-btn"><i class="fa-regular fa-pen-to-square"></i></a>
+                    <a href="{reverse('manage_order', kwargs={'order_id': order.id})}" class="btn app-btn app-primary-btn"><i class="fa-regular fa-pen-to-square"></i></a>
                   </div>
                 </div>
               </li>
