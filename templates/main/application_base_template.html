@@ -131,7 +131,7 @@
                   <li><a class="item-expnd__link" href="{% url 'active_orders' %}">Aktywne zlecenia</a></li>
                 {% endif %}
                 {% if request.user.is_entrepreneur %}
-                  <li><a class="item-expnd__link" href="{% url 'calendar' garage_id=user_garage.id %}">Aktywne zlecenia</a></li>
+                  <li><a class="item-expnd__link" href="{% url 'calendar' %}">Kalendarz</a></li>
                 {% endif %}
                 <li><a class="item-expnd__link" href="{% url 'history_of_orders' %}">Historia zleceń</a></li>
               </ul>
@@ -267,7 +267,7 @@
                   <li><a class="item-expnd__link" href="{% url 'active_orders' %}">Aktywne zlecenia</a></li>
                 {% endif %}
                 {% if request.user.is_entrepreneur %}
-                <li><a class="item-expnd__link" href="{% url 'calendar' garage_id=user_garage.id %}">Aktywne zlecenia</a></li>
+                <li><a class="item-expnd__link" href="{% url 'calendar' %}">Kalendarz</a></li>
                 {% endif %}
                 <li><a class="item-expnd__link" href="{% url 'history_of_orders' %}">Historia zleceń</a></li>
                 </ul>

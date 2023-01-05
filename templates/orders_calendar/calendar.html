@@ -15,9 +15,9 @@
     <h2>Widok kalendarza zdarzeń</h2>
     <div class="row justify-content-center">
       <div class="d-flex justify-content-between mb-3">
-        <a class="btn app-btn app-primary-btn" href="{% url 'calendar' garage_id=garage_id %}?{{ prev_month }}"><i class="fa-solid fa-arrow-left"></i></a>
+        <a class="btn app-btn app-primary-btn" href="{% url 'calendar' %}?{{ prev_month }}"><i class="fa-solid fa-arrow-left"></i></a>
         <button class="btn app-btn app-primary-btn" data-bs-toggle="modal" data-bs-target="#legend">Legenda<i class="fa-solid fa-question ms-1"></i></button>
-        <a class="btn app-btn app-primary-btn" href="{% url 'calendar' garage_id=garage_id %}?{{ next_month }}"><i class="fa-solid fa-arrow-right"></i> </a>
+        <a class="btn app-btn app-primary-btn" href="{% url 'calendar' %}?{{ next_month }}"><i class="fa-solid fa-arrow-right"></i> </a>
       </div>
       <section class="calendar-block pb-5 col col-md-10">
         {{calendar}}
@@ -35,7 +35,7 @@
       </div>
       <div class="modal-body">
         <div class="row">
-          <div class="col col-md-6">
+          <div class="col-12 col-lg-6">
             <h5>Znaczniki</h5>
             <div class="d-flex">
               <div class="waiting-orders shape dot"></div>
@@ -59,7 +59,7 @@
             </div>
           </div>
           
-          <div class="col col-md-6">
+          <div class="col-12 col-lg-6">
             <h5>Pola</h5>
             <div class="d-flex">
               <div class="bg-success-subtle shape"></div>

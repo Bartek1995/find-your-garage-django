@@ -1,18 +1,28 @@
 from datetime import datetime, timedelta, date
-from django.shortcuts import render
-from django.http import HttpResponse
-from django.views import generic
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView
 from django.utils.safestring import mark_safe
+from django.contrib import messages
 
+from accounts.mixins import GroupRequiredMixin
 from orders.models import Order
+from garages.models import Garage
 from .utils import Calendar
 import calendar
 
 
-class CalendarView(generic.ListView):
+class CalendarView(LoginRequiredMixin, GroupRequiredMixin, ListView):
     model = Order
+    required_group = "Entrepreneur"
     template_name = 'orders_calendar/calendar.html'
 
+    def get(self, request, *args, **kwargs):
+        try:
+            self.user_garage = Garage.objects.get(user=self.request.user)
+        except Garage.DoesNotExist:
+            self.request.messages = messages.warning(self.request, message='Musisz najpierw utworzyć warsztat.')
+        return super().get(request, *args, **kwargs)
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
@@ -20,10 +30,9 @@ class CalendarView(generic.ListView):
         cal = Calendar(d.year, d.month)
         context['prev_month'] = prev_month(d)
         context['next_month'] = next_month(d)
-
         # Call the formatmonth method, which returns our calendar as a table
-        context['garage_id'] = self.kwargs['garage_id']
-        html_cal = cal.formatmonth(withyear=True, garage_id=self.kwargs['garage_id'])
+        context['garage_id'] = self.user_garage.id
+        html_cal = cal.formatmonth(withyear=True, garage_id=context['garage_id'])
         context['calendar'] = mark_safe(html_cal)
         return context
     
