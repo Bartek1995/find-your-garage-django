@@ -21,6 +21,10 @@ html {
   font-size: 14px;
   color: white;
   text-transform: uppercase;
+
+  &:hover {
+    border: 1px solid black;
+  }
 }
 
 .app-primary-btn {
@@ -483,6 +487,9 @@ html {
   }
 }
 
+.waiting-orders {
+  background-color: #2A78CD;
+}
 .pending-orders {
   background-color: #2A78CD;
 }
@@ -495,7 +502,7 @@ html {
   background-color: #038674;
 }
 
-.completed-orders {
+.completed-orders, .finished-orders {
   background-color: #458606;
 }
 
@@ -907,6 +914,77 @@ html {
   }
   }
 }
+
+
+.calendar {
+  margin: auto;
+  font-size: 13px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+
+  .date {
+    font-weight: bold;
+  }
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin: 0 8px;
+    
+  }
+  tr, td {
+    border: 1px solid black;
+  }
+
+  th {
+    padding: 10px 0;
+    text-align: center;
+    font-size: 18px;
+  }
+
+  td {
+    width: 140px;
+    height: 120px;
+    padding: 0 5px 0 5px;
+    
+
+  .modal-btn {
+      border: none;
+      background-color: transparent;
+      font-size: 20px;
+    }
+
+  }
+  .month {
+    font-size: 25px;
+  }
+  
+  .date {
+    font-size: 16px;
+  }
+  
+  .weekday {
+    background-color: #404040;
+    color: white;
+    box-shadow: 0 5px 6px 0px #404040
+  }
+
+  ul {
+    height: 100%;
+    padding: 0px 0 0px 5px;
+    list-style: none;
+  }
+}
+
+.legend-modal {
+  .shape {
+    width: 25px;
+    height: 25px;
+  }
+  .dot {
+    border-radius: 50%;
+  }
+}
+
 @media (max-width:576px) {
   .buttons-group {
     display: flex;
@@ -983,6 +1061,25 @@ html {
           align-items: center;
         }
       }
+    }
+  }
+
+  .calendar {
+    .weekday {
+      font-size: 12px;
+    }
+    .dot {
+      margin: 0 3px;
+      width: 6px;
+      height: 6px;
+    }
+
+    td {
+      height: 75px;
+    }
+
+    .modal-btn {
+      font-size: 20px;
     }
   }
 }

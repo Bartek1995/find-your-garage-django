@@ -1,0 +1,80 @@
+{% extends "main/application_base_template.html" %} 
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}Kalendarz{% endblock %} 
+{% block extra_head %} 
+{% endblock %}
+ 
+ 
+ {% block content %}
+
+ 
+
+<div class="body-content" id="body-content">
+  <div class="container">
+    <h2>Widok kalendarza zdarzeń</h2>
+    <div class="row justify-content-center">
+      <div class="d-flex justify-content-between mb-3">
+        <a class="btn app-btn app-primary-btn" href="{% url 'calendar' garage_id=garage_id %}?{{ prev_month }}"><i class="fa-solid fa-arrow-left"></i></a>
+        <button class="btn app-btn app-primary-btn" data-bs-toggle="modal" data-bs-target="#legend">Legenda<i class="fa-solid fa-question ms-1"></i></button>
+        <a class="btn app-btn app-primary-btn" href="{% url 'calendar' garage_id=garage_id %}?{{ next_month }}"><i class="fa-solid fa-arrow-right"></i> </a>
+      </div>
+      <section class="calendar-block pb-5 col col-md-10">
+        {{calendar}}
+      </section>
+    </div>
+  </div>
+</div>
+
+<div class="modal modal-lg fade legend-modal" id="legend" tabindex="-1" aria-labelledby="Legend" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Legenda</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col col-md-6">
+            <h5>Znaczniki</h5>
+            <div class="d-flex">
+              <div class="waiting-orders shape dot"></div>
+              <p class="ms-2">- Oczekujące na akceptację</p>
+            </div>
+            <div class="d-flex">
+              <div class="accepted-orders shape dot"></div>
+              <p class="ms-2">- Zaakceptowane</p>
+            </div>
+            <div class="d-flex">
+              <div class="in-progress-orders shape dot"></div>
+              <p class="ms-2">- W trakcie realizacji</p>
+            </div>
+            <div class="d-flex">
+              <div class="finished-orders shape dot"></div>
+              <p class="ms-2">- Zakończone</p>
+            </div>
+            <div class="d-flex">
+              <div class="bg-danger shape dot"></div>
+              <p class="ms-2">- Odrzucone</p>
+            </div>
+          </div>
+          
+          <div class="col col-md-6">
+            <h5>Pola</h5>
+            <div class="d-flex">
+              <div class="bg-success-subtle shape"></div>
+              <p class="ms-2">- Dzień w którym istnieją rezerwacje terminów</p>
+            </div>
+            <div class="d-flex">
+              <div class="bg-body-secondary shape"></div>
+              <p class="ms-2">- Dzień bez rezerwacji</p>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
