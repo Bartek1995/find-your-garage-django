@@ -28,7 +28,13 @@
                 <div class="item-body">
                   <div class="item-body__data">
                     <p class="m-1">Status: {{ order.get_state_as_string }}</p>
-                    <small>Suma kosztów: {{ order.get_sum_of_expenditures }} zł</small>
+                    <small>Suma kosztów: 
+                    {% if order.get_sum_of_expenditures != None %}
+                      {{ order.get_sum_of_expenditures }} zł
+                    {% else %}
+                      Brak
+                    {% endif %}
+                    </small>
                   </div>
                   <div class="item-body__buttons">
                     <button data-bs-toggle="modal" data-bs-target="#order{{ forloop.counter }}">
