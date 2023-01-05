@@ -5,6 +5,7 @@ from django.utils.decorators import method_decorator
 
 from garages.models import Garage
 from cars.models import Car
+from orders.models import Order
 
 import datetime
 from json import dumps
@@ -43,6 +44,12 @@ class Dashboard(LoginRequiredMixin, TemplateView):
                 context['user_garage'] = Garage.objects.get(user=self.request.user)
             except Garage.DoesNotExist:
                 context['user_garage'] = None
+            else:
+                all_garage_orders = Order.objects.filter(garage=context['user_garage'])
+                context['waiting_orders_amount'] = all_garage_orders.filter(state=1).count()
+                context['accepted_orders_amount'] = all_garage_orders.filter(state=2).count()
+                context['in_progress_orders_amount'] = all_garage_orders.filter(state=3).count()
+                context['finished_orders_amount'] = all_garage_orders.filter(state=4).count()
                 
         elif self.request.user.is_customer:
             mocked_data = []
