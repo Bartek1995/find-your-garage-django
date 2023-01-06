@@ -1,0 +1,57 @@
+{% extends "main/application_base_template.html" %} 
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}Edycja wydatków{% endblock %} 
+{% block extra_head %} 
+{% endblock %}
+ 
+{% block content %}
+
+<div class="body-content" id="body-content">
+  <div class="container">
+    <h2>Zarządzanie listą wydatków zlecenia</h2>
+    <section class="garage-opening-hours py-5">
+      <div class="row justify-content-center m-0">
+        <div class="col-md-10">
+          <form method="post">
+            <p class="mb-4">Skorzystaj z formularzy poniżej aby zmienić wydatki związane z zleceniem.</p>
+            {% csrf_token %}
+            {{ formset.management_form }}
+            {% for form in formset %}
+
+              {{form.type_of_expenditure.label}}
+              {% render_field form.type_of_expenditure class+="form-select mb-2" %}
+
+              {{form.name.label}}
+              {% render_field form.name class+="form-control mb-2" %}
+
+              {{form.price.label}}
+              {% render_field form.price class+="form-control mb-2" %}
+
+              {% if form.errors %}
+                {% for error in form.non_field_errors %}
+                  <div class="col-12">
+                    <div class="alert alert-danger">
+                      <strong>{{ error }}</strong>
+                    </div>
+                  </div>
+                {% endfor %}
+              {% endif %}
+              <hr>
+
+              
+              {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+              {% endfor %}
+            {% endfor%}
+            <input type="submit" value="Zatwierdź" class="btn app-btn app-primary-btn my-3">
+            <a class="btn app-btn app-primary-btn" href="{% url 'manage_order' order_id=order_id %}">Powrót do zarządzania zleceniem</a>
+          </form>
+        </div>
+      </div>
+
+    </section>
+  </div>
+</div>
+<script src="{% static 'js/garage_opening_hours.js' %}"></script>
+{% endblock %}

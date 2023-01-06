@@ -52,9 +52,9 @@ class Order(models.Model):
     
     
 TYPE_OF_EXPENDITURE = (
-    (1, 'Części'),
-    (2, 'Usługa'),
-    (3, 'Inne'),
+    ("1", 'Części'),
+    ("2", 'Usługa'),
+    ("3", 'Inne'),
 )
 
 
@@ -68,3 +68,9 @@ class Expenditure(models.Model):
     name = models.CharField(verbose_name="Nazwa wydatku", max_length=50, blank=False)
     price = models.DecimalField(verbose_name="Cena", max_digits=10, decimal_places=2, blank=False)
     created = models.DateTimeField(verbose_name="Data utworzenia", auto_now_add=True)
+    
+    @property
+    def get_expenditure_as_text(self):
+        for expenditure in TYPE_OF_EXPENDITURE:
+            if expenditure[0] == self.type_of_expenditure:
+                return expenditure[1]

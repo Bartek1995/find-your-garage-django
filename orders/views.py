@@ -6,12 +6,13 @@ from django.views.generic.edit import UpdateView
 from django.contrib import messages
 from django.shortcuts import redirect
 
-from .forms import CreateOrderForm, ChangeOrderStateForm
+from .forms import CreateOrderForm, ChangeOrderStateForm, EditExpendituresForm
 from orders.models import Order, Expenditure
 from cars.models import Car
 from garages.models import Garage
 from garages.models import OpeningHours
 from accounts.mixins import GroupRequiredMixin
+from extra_views import ModelFormSetView
 
 import datetime
 
@@ -237,3 +238,31 @@ class ManageOrderView(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         self.request.messages = messages.success(self.request, 'Status zlecenia został zaktualizowany.')
         return super().form_valid(form)
+    
+    
+class EditExpendituresView(LoginRequiredMixin, GroupRequiredMixin, ModelFormSetView):
+    model = Expenditure
+    template_name = 'orders/edit_expenditures.html'
+    form_class = EditExpendituresForm
+    required_group = 'Entrepreneur'
+    factory_kwargs = {'extra': 1}   
+    
+    def get_success_url(self):
+        return self.request.path
+
+    def get_queryset(self):
+        self.order = Order.objects.get(id=self.kwargs['order_id'])
+        return Expenditure.objects.filter(order=self.order)
+    
+    def formset_valid(self, formset):
+        for form in formset:
+            form.instance.car = self.order.car
+            form.instance.user = self.order.user
+            form.instance.order = self.order
+        self.request.messages = messages.success(self.request, 'Lista kosztów została zaktualizowana.')
+        return super().formset_valid(formset)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['order_id'] = self.order.id
+        return context

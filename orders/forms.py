@@ -1,7 +1,7 @@
 from django import forms
 
 from cars.models import Car
-from .models import Order
+from .models import Order, Expenditure, TYPE_OF_EXPENDITURE
 
 
 class CreateOrderForm(forms.ModelForm):
@@ -32,3 +32,12 @@ class ChangeOrderStateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ChangeOrderStateForm, self).__init__(*args, **kwargs)
         self.fields['state'].widget.attrs['class'] = 'form-control'
+        
+        
+class EditExpendituresForm(forms.ModelForm):
+    """
+    Form for editing expenditures.
+    """
+    class Meta:
+        model = Expenditure
+        fields = ['type_of_expenditure', 'name', 'price']

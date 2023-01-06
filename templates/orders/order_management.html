@@ -17,7 +17,7 @@
           <div class="row">
             <h4 class="text-center mb-4">Zlecenie nr. {{ order.id }}</h4>
 
-            <div class="col col-md-6 col-lg-4">
+            <div class="col col-md-6">
               
               <h5>Informacje o kliencie</h5>
               <p class="m-0 fw-bold">{{order.user.first_name}} {{order.user.last_name}}</p>
@@ -66,7 +66,7 @@
               <hr class="my-3 d-md-none">
             </div>
 
-            <div class="col-12 col-md-6 col-lg-4">
+            <div class="col-12 col-md-6">
               <h5>Informacje o zleceniu</h5>
               <p class="m-0">Data złożenia: <span>{{order.created}}</span></p>
               <p class="m-0">Data modyfikacji: <span>{{order.modified}}</span></p>
@@ -88,8 +88,8 @@
               <p class="m-0 order-description">{{order.description}}</p>
             </div>
             
-            <div class="col-12 col-md-6 col-lg-4">
-              <hr class="my-3 d-lg-none">
+            <div class="col-12 col-lg-8">
+              <hr class="my-3">
               <h5>Lista kosztów</h5>
               {% if expenditures %}
                 <table class="table table-striped">
@@ -103,6 +103,7 @@
                   <tbody>
                     {% for expenditure in expenditures %}
                       <tr>
+                        <td>{{expenditure.get_expenditure_as_text}}</td>
                         <td>{{expenditure.name}}</td>
                         <td>{% if expenditure.price %}
                           {{expenditure.price}} zł
@@ -114,10 +115,10 @@
                     {% endfor %}
                   </tbody>
                 </table>
-              {% else %}
+                {% else %}
                 <p>Brak kosztów związanych z tym zleceniem</p>
-                <a class="btn app-btn app-primary-btn">Zarządzaj wydatkami zlecenia</a>
-              {% endif %}
+                {% endif %}
+                <a href="{% url 'edit_expenditures' order_id=order.id %}" class="btn app-btn app-primary-btn">Zarządzaj wydatkami zlecenia</a>
             </div>
           </div>
         </div>
