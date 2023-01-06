@@ -6,7 +6,6 @@ from pyvin import VIN
 import orders
 from .validators import validate_vin
 from django.core.validators import MaxValueValidator, MinValueValidator
-
 import datetime
 import json
 import random
@@ -90,10 +89,19 @@ class Car(models.Model):
         """
         Temporary method to mock information about orders.
         """
-        self.cost_of_repairs = random.randint(100, 5000)
-        self.cost_of_parts = random.randint(100, 5000)
-        self.cost_of_anothers = random.randint(100, 5000)
-    
+        self.cost_of_parts = 0
+        self.cost_of_repairs = 0
+        self.cost_of_anothers = 0
+        
+        for expenditure in orders.models.Expenditure.objects.filter(car=self, type_of_expenditure="1"):
+            self.cost_of_parts += int(expenditure.price)
+            
+        for expenditure in orders.models.Expenditure.objects.filter(car=self, type_of_expenditure="2"):
+            self.cost_of_repairs += int(expenditure.price)
+            
+        for expenditure in orders.models.Expenditure.objects.filter(car=self, type_of_expenditure="3"):
+            self.cost_of_anothers += int(expenditure.price)
+
     @property
     def get_last_order(self):
         """
