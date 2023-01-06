@@ -107,7 +107,7 @@ class Calendar(calendar.HTMLCalendar):
                   <div class="item-body__data d-flex align-items-center justify-content-between">
                     <div>
                     <p class="m-1">Status: { order.get_state_as_string }</p>
-                    <small>Suma kosztów: { order.get_sum_of_expenditures + "zł" if order.get_sum_of_expenditures is not None else "Brak" }</small>
+                    <small>Suma kosztów: { str(order.get_sum_of_expenditures) + " zł" if order.get_sum_of_expenditures is not None else "Brak" }</small>
                     </div>
                     <a href="{reverse('manage_order', kwargs={'order_id': order.id})}" class="btn app-btn app-primary-btn"><i class="fa-regular fa-pen-to-square"></i></a>
                   </div>
