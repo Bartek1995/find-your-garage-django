@@ -118,3 +118,7 @@ class Car(models.Model):
     def date_of_expiry_of_technical_inspection_is_past_due(self):
         temp_date_of_expiry_of_technical_inspection = datetime.datetime.strptime(self.date_of_expiry_of_technical_inspection, "%Y-%m-%d")
         return date.today() < temp_date_of_expiry_of_technical_inspection
+    
+    @property
+    def is_car_has_expenditures(self):
+        return orders.models.Expenditure.objects.filter(car=self).exists()

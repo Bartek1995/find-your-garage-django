@@ -1052,6 +1052,10 @@ html {
   .alert-dashboard {
     width: calc(100% - 78px);
   }
+
+  .garage-information__info-box,.car-information__info-box {
+    min-height: 270px;
+  }
 }
 
 @media (max-width:400px){

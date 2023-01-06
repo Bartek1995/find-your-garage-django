@@ -93,16 +93,20 @@
                           Brak
                         {% endif %}
                       </span></p>
-                      <button class="btn app-btn app-primary-btn">Więcej informacji</button>
+                      <a class="btn app-btn app-primary-btn" href="{% url 'manage_order' order_id=car.get_last_order.id%}">Więcej informacji</a>
                       {% else %}
                       <p class="m-0">Brak ostatnich zleceń</p>
-                      <button class="btn app-btn app-primary-btn">Utwórz zlecenie</button>
+                      <a class="btn app-btn app-primary-btn" href="{% url 'find_garage' %}">Utwórz zlecenie</a>
                       {% endif %}
                     </div>
                   </div>
                   <div class="col-12 col-md-6 col-xl-5 my-3">
                     <div class="car-information__info-box d-flex align-items-center justify-content-center p-3">
-                      <div id="sumOfCarCosts-{{car.id}}"></div>
+                      {% if car.is_car_has_expenditures %}
+                        <div id="sumOfCarCosts-{{car.id}}"></div>
+                      {% else %}
+                        <p class="m-0 d-flex align-content-center">Brak wydatków związanych z tym pojazdem</p>
+                      {% endif %}
                     </div>
                   </div>
                 </div>
