@@ -985,6 +985,17 @@ html {
   }
 }
 
+
+.order-management {
+  .order-description {
+    word-break: break-word;
+  }
+  p {
+    span {
+      font-weight: bold;
+    }
+  }
+}
 @media (max-width:576px) {
   .buttons-group {
     display: flex;
