@@ -29,11 +29,11 @@
                   <div class="item-body__data">
                     <p class="m-1">Status: {{ order.get_state_as_string }}</p>
                     <small>Suma kosztów: 
-                    {% if order.get_sum_of_expenditures != None %}
-                      {{ order.get_sum_of_expenditures }} zł
-                    {% else %}
-                      Brak
-                    {% endif %}
+                      {% if order.get_sum_of_expenditures %}
+                        <span class="fw-bold">{{ order.get_sum_of_expenditures }} zł</span>
+                      {% else %}
+                        <span class="fw-bold">Brak</span>
+                      {% endif %}
                     </small>
                   </div>
                   <div class="item-body__buttons">

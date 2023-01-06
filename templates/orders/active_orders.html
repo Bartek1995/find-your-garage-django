@@ -41,7 +41,13 @@
                         <div class="item-body">
                           <div class="item-body__data">
                             <p class="m-1">Status: {{ order.get_state_as_string }}</p>
-                            <small>Suma kosztów: {{ order.get_sum_of_expenditures }} zł</small>
+                            <small>Suma kosztów: 
+                              {% if order.get_sum_of_expenditures %}
+                                <span class="fw-bold">{{ order.get_sum_of_expenditures }} zł</span>
+                              {% else %}
+                                <span class="fw-bold">Brak</span>
+                              {% endif %}
+                            </small>
                           </div>
                           <div class="item-body__buttons">
                             <button data-bs-toggle="modal" id="modal-open-button" data-bs-target="#waiting_orders{{ forloop.counter }}">
@@ -49,7 +55,7 @@
                             </button>
                           </div>
                         </div>
-                      </li> 
+                      </li>
         
                       <div class="modal fade" id="waiting_orders{{ forloop.counter }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
@@ -130,7 +136,13 @@
                         <div class="item-body">
                           <div class="item-body__data">
                             <p class="m-1">Status: {{ order.get_state_as_string }}</p>
-                            <small>Suma kosztów: {{ order.get_sum_of_expenditures }} zł</small>
+                            <small>Suma kosztów: 
+                              {% if order.get_sum_of_expenditures %}
+                                <span class="fw-bold">{{ order.get_sum_of_expenditures }} zł</span>
+                              {% else %}
+                                <span class="fw-bold">Brak</span>
+                              {% endif %}
+                            </small>
                           </div>
                           <div class="item-body__buttons">
                             <button data-bs-toggle="modal" id="modal-open-button" data-bs-target="#accepted_orders{{ forloop.counter }}">
@@ -219,7 +231,13 @@
                         <div class="item-body">
                           <div class="item-body__data">
                             <p class="m-1">Status: {{ order.get_state_as_string }}</p>
-                            <small>Suma kosztów: {{ order.get_sum_of_expenditures }} zł</small>
+                            <small>Suma kosztów: 
+                              {% if order.get_sum_of_expenditures %}
+                                <span class="fw-bold">{{ order.get_sum_of_expenditures }} zł</span>
+                              {% else %}
+                                <span class="fw-bold">Brak</span>
+                              {% endif %}
+                            </small>
                           </div>
                           <div class="item-body__buttons">
                             <button data-bs-toggle="modal" id="modal-open-button" data-bs-target="#in_progress_orders{{ forloop.counter }}">
@@ -308,7 +326,13 @@
                         <div class="item-body">
                           <div class="item-body__data">
                             <p class="m-1">Status: {{ order.get_state_as_string }}</p>
-                            <small>Suma kosztów: {{ order.get_sum_of_expenditures }} zł</small>
+                            <small>Suma kosztów: 
+                              {% if order.get_sum_of_expenditures %}
+                                <span class="fw-bold">{{ order.get_sum_of_expenditures }} zł</span>
+                              {% else %}
+                                <span class="fw-bold">Brak</span>
+                              {% endif %}
+                            </small>
                           </div>
                           <div class="item-body__buttons">
                             <button data-bs-toggle="modal" id="modal-open-button" data-bs-target="#finished_orders{{ forloop.counter }}">
@@ -397,7 +421,13 @@
                 <div class="item-body">
                   <div class="item-body__data">
                     <p class="m-1">Status: {{ order.get_state_as_string }}</p>
-                    <small>Suma kosztów: {{ order.get_sum_of_expenditures }} zł</small>
+                    <small>Suma kosztów: 
+                      {% if order.get_sum_of_expenditures %}
+                        <span class="fw-bold">{{ order.get_sum_of_expenditures }} zł</span>
+                      {% else %}
+                        <span class="fw-bold">Brak</span>
+                      {% endif %}
+                    </small>
                   </div>
                   <div class="item-body__buttons">
                     <button data-bs-toggle="modal" id="modal-open-button" data-bs-target="#rejected_orders{{ forloop.counter }}">
