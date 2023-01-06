@@ -1,0 +1,153 @@
+{% extends "main/application_base_template.html" %} 
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}Zarządzanie zleceniem{% endblock %} 
+{% block extra_head %} 
+{% endblock %}
+ 
+{% block content %}
+
+<div class="body-content" id="body-content">
+  <div class="container">
+    <h2>Zarządzanie zleceniem</h2>
+    <section class="order-management py-5">
+      <div class="row justify-content-center m-0">
+
+        <div class="col-12 col-md-10 col-lg-12">
+          <div class="row">
+            <h4 class="text-center mb-4">Zlecenie nr. {{ order.id }}</h4>
+
+            <div class="col col-md-6 col-lg-4">
+              
+              <h5>Informacje o kliencie</h5>
+              <p class="m-0 fw-bold">{{order.user.first_name}} {{order.user.last_name}}</p>
+              <p class="m-0 fw-bold">{{order.user.email}}</p>
+              <hr class="my-3">
+
+              <h5>Informacje o samochodzie</h5>
+              <p class="m-0 fw-bold">{{order.car.brand}} {{order.car.model}}</p>
+              <p class="m-0">Rok produkcji: <span>{{order.car.production_year}}</span></p>
+              <p class="m-0">VIN: <span>{{order.car.vin_number}}</span></p>
+              <p class="m-0">Moc: <span>
+                {% if order.car.engine_power %}
+                  {{order.car.engine_power}} KM
+                {% else %}
+                  Brak danych
+                {% endif %}
+              </span></p>
+              <p class="m-0">Pojemność: <span>
+                {% if order.car.engine_capacity %}
+                  {{order.car.engine_capacity}} cm<sup>3</sup>
+                {% else %}
+                  Brak danych
+                {% endif %}
+              </span></p>
+              <p class="m-0">Typ silnika: <span>
+                {% if order.car.engine_type %}
+                  {{order.car.engine_type}}
+                {% else %}
+                  Brak danych
+                {% endif %}
+              </span></p>
+              <p class="m-0">Typ skrzyni biegów: <span>
+                {% if order.car.gearbox_type %}
+                  {{order.car.gearbox_type}}
+                {% else %}
+                  Brak danych
+                {% endif %}
+              </span></p>
+              <p class="m-0">Typ nadwozia: <span>
+                {% if order.car.body_type %}
+                  {{order.car.body_type}}
+                {% else %}
+                  Brak danych
+                {% endif %}
+              </span></p>
+              <hr class="my-3 d-md-none">
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+              <h5>Informacje o zleceniu</h5>
+              <p class="m-0">Data złożenia: <span>{{order.created}}</span></p>
+              <p class="m-0">Data modyfikacji: <span>{{order.modified}}</span></p>
+              <p class="m-0">Data rezerwacji: <span>{{order.date}} {{order.time}}</span></p>
+              <p class="m-0">Koszt: <span> 
+                {% if order.get_sum_of_expenditures != None %}
+                {{order.get_sum_of_expenditures}} zł
+                {% else %}
+                Brak danych
+                {% endif %}
+              </span></p>
+              <p class="m-0">Aktualny status: <span>{{order.get_state_as_string}}</span></p>
+              {% if request.user.is_entrepreneur %}
+                <button class="btn app-btn app-primary-btn mt-1" data-bs-toggle="modal" data-bs-target="#changeOrderState">Zmień status</button>
+              {% endif %}
+
+              <hr class="my-3">
+              <h5>Opis zlecenia</h5>
+              <p class="m-0 order-description">{{order.description}}</p>
+            </div>
+            
+            <div class="col-12 col-md-6 col-lg-4">
+              <hr class="my-3 d-lg-none">
+              <h5>Lista kosztów</h5>
+              {% if expenditures %}
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Typ</th>
+                      <th scope="col">Nazwa</th>
+                      <th scope="col">Kwota</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for expenditure in expenditures %}
+                      <tr>
+                        <td>{{expenditure.name}}</td>
+                        <td>{% if expenditure.price %}
+                          {{expenditure.price}} zł
+                        {% else %}
+                          Bezpłatne
+                        {% endif %}</td>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              {% else %}
+                <p>Brak kosztów związanych z tym zleceniem</p>
+                <a class="btn app-btn app-primary-btn">Zarządzaj wydatkami zlecenia</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+  </div>
+</div>
+
+<div class="modal fade" id="changeOrderState" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Zmiana statusu zlecenia</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="post">
+          {% csrf_token %}
+          <div class="mb-3">
+            {% render_field form.state class+="form-select mb-2" %}
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
+          <button type="submit" class="btn app-btn app-primary-btn">Zatwierdź</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

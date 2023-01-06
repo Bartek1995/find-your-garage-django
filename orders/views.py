@@ -2,11 +2,12 @@ from django.views.generic.edit import CreateView
 from django.views.generic import TemplateView
 from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.generic.edit import UpdateView
 from django.contrib import messages
 from django.shortcuts import redirect
 
-from .forms import CreateOrderForm
-from orders.models import Order
+from .forms import CreateOrderForm, ChangeOrderStateForm
+from orders.models import Order, Expenditure
 from cars.models import Car
 from garages.models import Garage
 from garages.models import OpeningHours
@@ -204,3 +205,35 @@ class ActiveOrdersView(LoginRequiredMixin, GroupRequiredMixin, TemplateView):
         context['finished_orders'] = Order.objects.filter(state=4, user=self.request.user).order_by('date', 'time')
         context['rejected_orders'] = Order.objects.filter(state=5, user=self.request.user).order_by('date', 'time')
         return context
+    
+    
+class ManageOrderView(LoginRequiredMixin, UpdateView):
+    model = Order
+    template_name = 'orders/order_management.html'
+    form_class = ChangeOrderStateForm
+    
+    def get(self, request, *args, **kwargs):
+        try:
+            order = self.get_object()
+            if self.request.user.is_customer and order.user != self.request.user:
+                self.request.messages = messages.error(self.request, 'Nie jesteś właścicielem tego zlecenia.')
+                return redirect('dashboard')
+        except Order.DoesNotExist:
+            self.request.messages = messages.error(self.request, 'Nie można znaleźć zlecenia.')
+            return redirect('dashboard')
+        return super().get(request, *args, **kwargs)
+    
+    def get_success_url(self):
+        return self.request.path
+
+    def get_object(self):
+        return Order.objects.get(id=self.kwargs['order_id'])
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['expenditures'] = Expenditure.objects.filter(order=self.kwargs['order_id'])
+        return context
+    
+    def form_valid(self, form):
+        self.request.messages = messages.success(self.request, 'Status zlecenia został zaktualizowany.')
+        return super().form_valid(form)
