@@ -44,7 +44,6 @@ The application is hosted on the Heroku platform.
 
 ## To Do
 
-- Add Calendar to view active and upcoming orders
 - Create notification system after sucessfully actions
 - Dockerize application
 - Create tests for functions
