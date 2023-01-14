@@ -1,0 +1,146 @@
+{% extends "main/application_base_template.html" %} 
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}Oczekujące{% endblock %} 
+{% block extra_head %} 
+{% endblock %}
+ 
+{% block content %}
+
+<div class="body-content" id="body-content">
+  <div class="container">
+  <h2>Zlecenia oczekujące na akceptację</h2>
+
+    <section class="order-history py-5">
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <ul class="list-group">
+            {% if orders %}
+              {% for order in orders %}
+              <li class="list-group-item list-group-item-action mb-1">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="mb-1">Nr. #{{ order.id }}</h5>
+                  <div class="d-flex flex-column">
+                    <small>{{ order.date }}</small>
+                    <small>{{ order.time }}</small>
+                  </div>  
+                </div>
+                <div class="item-body">
+                  <div class="item-body__data">
+                    <p class="m-1">Utworzono: <span class="fw-bold">{{ order.created }}</span></p>
+                  </div>
+                  <div class="item-body__buttons">
+
+                    <div class="d-flex">
+                      <form class="me-2" action="{% url 'manage_order' order.id %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="state" value="2">
+                        <button type="submit"><i class="fa-solid fa-check text-success"></i></button>
+                      </form>
+  
+                      <form action="{% url 'manage_order' order.id %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="state" value="5">
+                        <button type="submit"><i class="fa-solid fa-xmark text-danger"></i></button>
+                      </form>
+                    </div>
+
+                    <button data-bs-toggle="modal" data-bs-target="#order{{ forloop.counter }}">
+                      <i class="fa-solid fa-circle-info"></i>
+                    </button>
+                  </div>
+                </div>
+              </li> 
+
+              <div class="modal fade" id="order{{ forloop.counter }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="OrderDetails">Zlecenie nr. {{order.id}}</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="row">
+                        <div class="col-12 col-md-6">
+                          <h5>Informacje o samochodzie</h5>
+                          <p>Marka: <span>{{order.car.brand}}</span></p>
+                          <p>Model: <span>{{order.car.model}}</span></p>
+                          <p>Numer VIN: <span>{{order.car.vin_number}}</span></p>
+                          <p>Rok produkcji: <span>{{order.car.production_year}}</span></p>
+                          <p>Pojemność silnika: <span>{{order.car.engine_capacity}} cm3</span></p>
+                          <hr>
+                          <h5>Opis zlecenia </h5>
+                          {% if order.description %}
+                            <p class="order-description">{{ order.description }}</p>
+                          {% else %}
+                            <p>Brak opisu</p>
+                          {% endif %}
+                          <hr class="d-md-none">
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                          <h5>Dodatkowe informacje</h5>
+                          <p>Utworzono: <span>{{ order.created }}</span></p>
+                          <p>Zmodyfikowano: <span>{{ order.modified }}</span></p>
+                          <p>Aktualny status: <span>{{ order.get_state_as_string }}</span></p>
+                          <hr>
+                          {% if request.user.is_customer %}
+                            <h5>Informacje o warsztacie</h5>
+                            <p>Nazwa: <span>{{order.garage.name}}</span></p>
+                            <p>Pełny adres: <span>{{order.garage.full_address}}</span></p>
+                            <p>Numer NIP: <span>{{order.garage.nip_number}}</span></p>
+                            <p>Strona internetowa: <span>{{order.garage.website_url}}</span></p>
+                          {% else %}
+                            <h5>Informacje o kliencie</h5>
+                            <p>Imie: <span>{{order.user.first_name}}</span></p>
+                            <p>Nazwisko: <span>{{order.user.last_name}}</span></p>
+                            <p>Adres email: <span>{{order.user.email}}</span></p>
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <a href="{% url 'manage_order' order_id=order.id %}" class="btn app-btn app-primary-btn me-auto">Zarządzaj</a>
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          {% else %}
+            <p>Brak zleceń do wyświetlenia</p>
+          {% endif %}
+          </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {% if is_paginated %}
+      <nav aria-label="..." class="pb-5">
+        <ul class="pagination justify-content-center">
+          {% if page_obj.has_previous %}
+            <li class="page-item">
+              <a class="page-link" href="{% url 'history_of_orders' %}?page={{ page_obj.previous_page_number }}">Poprzednia</a>
+            </li>
+          {% endif %}
+          <li class="page-item active" aria-current="page">
+            <a class="page-link" href="#">{{ page_obj.number }}</a>
+          </li>
+
+          {% if page_obj.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="{% url 'history_of_orders' %}?page={{ page_obj.next_page_number }}">Następna</a>
+            </li>
+          {% endif %}
+        </ul>
+        <p class="text-center mb-1">Znaleziono {{ page_obj.paginator.count }} wyników</p>
+        <p class="text-center">Wyniki wyświetlane są po maksymalnie 10 na stronę</p>
+      </nav>
+      
+    {% endif %}
+
+  </div>
+</div>
+
+{% endblock %} 

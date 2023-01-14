@@ -208,6 +208,20 @@ class ActiveOrdersView(LoginRequiredMixin, GroupRequiredMixin, TemplateView):
         return context
     
     
+class WaitingOrdersView(LoginRequiredMixin, GroupRequiredMixin, ListView):
+    """
+    View for showing waiting orders.
+    """
+    template_name = 'orders/waiting_orders.html'
+    context_object_name = 'orders'
+    paginate_by = 10
+    required_group = 'Entrepreneur'
+
+    def get_queryset(self):
+        user_garage = Garage.objects.get(user=self.request.user)
+        return Order.objects.filter(state=1, garage=user_garage).order_by('date', 'time')
+    
+    
 class ManageOrderView(LoginRequiredMixin, UpdateView):
     model = Order
     template_name = 'orders/order_management.html'
@@ -237,6 +251,8 @@ class ManageOrderView(LoginRequiredMixin, UpdateView):
     
     def form_valid(self, form):
         self.request.messages = messages.success(self.request, 'Status zlecenia został zaktualizowany.')
+        form.save()
+        print(form.cleaned_data['state'])
         return super().form_valid(form)
     
     
