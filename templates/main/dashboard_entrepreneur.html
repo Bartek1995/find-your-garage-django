@@ -70,7 +70,15 @@
 
         <div class="col-12 col-md-6 col-lg-6 col-xl-4 mb-3">
           <div class="garage-information__info-box pt-3">
-            <div id="garageRate"></div>
+            <div class="garage-information__title-box profits">
+              <h4 class="info-box__title">Podsumowanie zysków</h4>
+              <hr>
+              <i class="fa-regular fa-credit-card info-box__icon"></i>
+            </div>
+            <div class="profits__amount mt-sm-4">
+              <p class="text-center">W tym roku <span class="fw-bold">{{ this_year_profit }} zł</span></p>
+              <p class="text-center">W tym miesiącu <span class="fw-bold">{{ this_month_profit }} zł</span></p>
+            </div>
           </div>
         </div>
         <div class="col-12 col-lg-8">

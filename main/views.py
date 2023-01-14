@@ -2,10 +2,10 @@ from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.decorators.gzip import gzip_page
 from django.utils.decorators import method_decorator
-
+from django.db.models import Sum
 from garages.models import Garage
 from cars.models import Car
-from orders.models import Order
+from orders.models import Order, Expenditure
 
 import datetime
 from json import dumps
@@ -50,6 +50,23 @@ class Dashboard(LoginRequiredMixin, TemplateView):
                 context['accepted_orders_amount'] = all_garage_orders.filter(state=2).count()
                 context['in_progress_orders_amount'] = all_garage_orders.filter(state=3).count()
                 context['finished_orders_amount'] = all_garage_orders.filter(state=4).count()
+                
+                this_year_profit = 0
+                this_month_profit = 0
+
+                for order in all_garage_orders:
+                    this_order_expenditures = Expenditure.objects.filter(order=order, type_of_expenditure="2").aggregate(Sum('price'))['price__sum']
+                    
+                    if order.date.year == datetime.date.today().year:
+                        if this_order_expenditures:
+                            this_year_profit += this_order_expenditures
+                            
+                    if order.date.month == datetime.date.today().month:
+                        if this_order_expenditures:
+                            this_month_profit += this_order_expenditures
+
+                context['this_year_profit'] = this_year_profit
+                context['this_month_profit'] = this_month_profit
                 
         elif self.request.user.is_customer:
             mocked_data = []
