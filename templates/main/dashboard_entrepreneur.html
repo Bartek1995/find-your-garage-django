@@ -81,8 +81,19 @@
             </div>
           </div>
         </div>
-        <div class="col-12 col-lg-8">
+        <div class="col-12 col-xl-8">
           <div class="garage-information__info-box py-3">
+            <div class="row">
+              {% if last_orders|length > 4 %}
+              <div class="col-12 col-lg-6" id="lastOrdersProfit"></div>
+              {% else %}
+              <div class="col-12 col-lg-6 d-flex flex-column justify-content-center align-items-center px-4">
+                <p class="fw-bold">Nie wystarczająca ilość zleceń aby wyświetlić wykres zysku ostatnich zleceń</p>
+                <p class="fw-bold">Porzeba minimum 3 zleceń aby wykres został wyświetlony</p>
+              </div>
+              {% endif %}
+              <div class="col-12 col-lg-6" id="lastMonthsProfit"></div>
+            </div>
             <div id="lastDaysProfit"></div>
           </div>
         </div>
@@ -107,6 +118,10 @@
 </div>
 
 {% if user_garage != None %}
+<script type="text/javascript">
+  const lastOrdersProfitData = JSON.parse('{{ last_orders|safe }}');
+  const lastMonthsProfitData = JSON.parse('{{ last_monthly_profits|safe }}');
+</script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script src="{% static 'js/entrepreneur_dashboard_charts.js' %}"></script>
 {% endif %}

@@ -1,127 +1,96 @@
-var lastDaysProfit = {
-  series: [
-    {
-      name: "Zysk",
-      type: "column",
-      data: [1300, 700, 350, 1400, 225, 775, 650],
-    },
-    {
-      name: "Ilość wykonanych zleceń",
-      type: "line",
-      data: [1, 2, 3, 1, 4, 6, 4],
-    },
-  ],
+let LastOrdersProfitDateAndTime = []
+let LastOrdersProfitValues = []
+let lastMonthsProfitMonths = []
+let lastMonthsProfitValues = []
+
+lastOrdersProfitData.forEach(element => {
+  LastOrdersProfitDateAndTime.push([element[0], element[1]])
+  LastOrdersProfitValues.push(element[2])
+});
+
+for (let key in lastMonthsProfitData) {
+  lastMonthsProfitMonths.push(lastMonthsProfitData[key][0])
+  lastMonthsProfitValues.push(lastMonthsProfitData[key][1])
+}
+
+let lastOrdersProfit = {
+  series: [{
+  data: LastOrdersProfitValues,
+  name: "Zysk",
+}],
   chart: {
-    height: 350,
-    type: "line",
-    dropShadow: {
-      enabled: true,
-      color: '#000',
-      top: 18,
-      left: 7,
-      blur: 5,
-      opacity: 0.2
-    },
-    fontFamily: 'Roboto, sans-serif',
-    toolbar: {
-      show: false,
-    },
-  },
-  colors: ["#77B6EA", "#458606"],
-  dataLabels: {
-    enabled: true,
-  },
-  stroke: {
-    curve: "smooth",
-  },
-  title: {
-    text: "Analiza ostatnich zleceń",
-    align: "center",
-    style: {
-      fontSize:  '20px',
+  height: 350,
+  type: 'bar',
+  fontFamily: 'Roboto, sans-serif',
+  events: {
+    click: function(chart, w, e) {
+      // console.log(chart, w, e)
     }
   },
-  xaxis: {
-    labels: {
-      show: true,
-      rotate: -45,
-      rotateAlways: true,
-    },
-    categories: [
-      "26.08.22",
-      "27.08.22",
-      "28.08.22",
-      "29.09.22",
-      "30.08.22",
-      "31.08.22",
-      "01.09.22",
-    ],
-  },
-  yaxis: [
-    {
-      axisTicks: {
-        show: true,
-      },
-      axisBorder: {
-        show: true,
-        color: "#008FFB",
-      },
-      labels: {
-        style: {
-          colors: "#008FFB",
-        },
-      },
-      title: {
-        text: "Zyski",
-        style: {
-          color: "#008FFB",
-          fontSize:  '16px',
-        },
-      },
-      tooltip: {
-        enabled: true,
-      },
-    },
-    {
-      seriesName: "Income",
-      opposite: true,
-      axisTicks: {
-        show: true,
-      },
-      axisBorder: {
-        show: true,
-        color: "#458606",
-      },
-      labels: {
-        style: {
-          colors: "#545454",
-        },
-      },
-      title: {
-        text: "Ilość zleceń",
-        style: {
-          color: "#458606",
-          fontSize:  '16px',
-        },
-      },
-    },
-  ],
-  tooltip: {
-    fixed: {
-      enabled: true,
-      position: "topLeft", // topRight, topLeft, bottomRight, bottomLeft
-      offsetY: 30,
-      offsetX: 60,
-    },
-  },
-  legend: {
-    horizontalAlign: "left",
-    offsetX: 40,
-    onItemClick: {
-      toggleDataSeries: false
-    },
-  },
+},
+plotOptions: {
+  bar: {
+    columnWidth: '45%',
+    distributed: true,
+  }
+},
+dataLabels: {
+  enabled: false
+},
+legend: {
+  show: false
+},
+title: {
+  text: "Zysk z ostatnich zleceń",
+  align: "center",
+  style: {
+    fontSize:  '20px',
+  }
+},
+xaxis: {
+  categories: LastOrdersProfitDateAndTime,
+  labels: {
+    style: {
+      fontSize: '12px'
+    }
+  }
+}
 };
 
-var chart = new ApexCharts(document.querySelector("#lastDaysProfit"), lastDaysProfit);
+var chart = new ApexCharts(document.querySelector("#lastOrdersProfit"), lastOrdersProfit);
+chart.render();
+
+
+let lastMonthsProfit = {
+  series: [{
+  data: lastMonthsProfitValues,
+  name: "Zysk",
+}],
+  chart: {
+  type: 'bar',
+  height: 350,
+  fontFamily: 'Roboto, sans-serif',
+},
+plotOptions: {
+  bar: {
+    borderRadius: 4,
+    horizontal: true,
+  }
+},
+dataLabels: {
+  enabled: false
+},
+xaxis: {
+  categories: lastMonthsProfitMonths,
+},
+title: {
+  text: "Zysk z ostatnich miesięcy",
+  align: "center",
+  style: {
+    fontSize:  '20px',
+  }
+},
+};
+
+var chart = new ApexCharts(document.querySelector("#lastMonthsProfit"), lastMonthsProfit);
 chart.render();
