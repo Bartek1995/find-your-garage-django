@@ -15,21 +15,15 @@
 
         <div class="col-5 d-none d-sm-flex car-create-select-method__box">
           <h3 class="car-create-select-method__title">Ręczny</h3>
-          <div class="car-create-select-method__method_recommendation">
-            <p class="m-0"><i class="fa-solid fa-circle-check"></i>Zalecana</p>
-          </div>
           <p class="car-create-select-method__description">Tworzenie pojazdu obdywa się na zasadzie ręcznego wypełnienie każdego pola w formularzu tworzenia pojazdu. Zapewnia do elastyczność w procesie uzupełniania informacji o swoim samochodzie.</p>
           <a href="{% url 'car_create_manual' %}" class="btn app-btn app-primary-btn">Wybierz</a>
         </div>
 
         <div class="col-5 d-none d-sm-flex car-create-select-method__box">
           <h3 class="car-create-select-method__title">Dekoder vin</h3>
-          <div class="car-create-select-method__method_recommendation">
-            <p class="m-0"><i class="fa-solid fa-xmark"></i>Nie zalecana</p>
-          </div>
           <p class="car-create-select-method__description">Tworzenie pojazdu obdywa się na zasadzie dekodowania numeru VIN za pomocą naszego systemu. Prawdopodobnie będziesz musiał uzupełnić niektóre informacje o samochodzę korzystając z tej metody</p>
           <a href="{% url 'car_create_vin_decoding' %}" class="btn app-btn app-primary-btn">Wybierz</a>
-          <p class="text-danger mt-2">Metoda ta jest w trakcie aktualizacji, dlatego zalecamy ręczne dodanie pojazdu.</p>
+
         </div>
 
         <div class="col d-sm-none px-0">
