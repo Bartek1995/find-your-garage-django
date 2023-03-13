@@ -12,6 +12,10 @@ Online Version available at:
 
 https://www.znajdzwarsztacik.pl
 
+Video presentation available at:
+
+https://www.youtube.com/watch?v=l93-WZ0G5Ws
+
 
 ## Tech Stack
 
